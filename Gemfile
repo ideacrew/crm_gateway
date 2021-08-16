@@ -11,6 +11,7 @@ gem 'puma', '~> 5.0'
 gem 'sass-rails', '>= 6'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'event_source', git: 'https://github.com/ideacrew/event_source.git', branch: 'trunk'
 
 gem 'dry-matcher',          '~> 0.8'
 gem 'dry-monads',           '~> 1.3'
