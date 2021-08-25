@@ -22,6 +22,7 @@ gem 'dry-transaction'
 gem 'dry-types',            '~> 1.4'
 gem 'dry-validation',       '~> 1.6'
 gem 'mongoid',             '~> 7.2.1'
+gem 'overcommit'
 
 group :development, :test do
   gem 'brakeman'
