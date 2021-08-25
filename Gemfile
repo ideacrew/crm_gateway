@@ -31,11 +31,13 @@ group :development, :test do
   gem 'rspec-rails',            '~> 4.0'
   gem 'shoulda-matchers',       '~> 3'
   gem 'yard'
-
 end
 
 group :development do
   gem 'listen', '~> 3.3'
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec'
+  gem 'rubocop-git'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
