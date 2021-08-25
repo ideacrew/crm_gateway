@@ -88,6 +88,7 @@ GEM
       zeitwerk (~> 2.3)
     amq-protocol (2.3.2)
     ast (2.4.2)
+    brakeman (5.1.1)
     bson (4.12.1)
     builder (3.2.4)
     bunny (2.19.0)
@@ -382,6 +383,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  brakeman
   byebug
   dry-matcher (~> 0.8)
   dry-monads (~> 1.3)
