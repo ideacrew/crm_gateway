@@ -3,7 +3,7 @@
 module Subscribers
   # Receive family updates published from Enroll
   class FamilyUpdateSubscriber
-    include ::EventSource::Subscriber[amqp: 'sugar_crm.families.family_records']
+    include ::EventSource::Subscriber[amqp: 'crm_gateway.famileis.family_update']
 
 
         # rubocop:disable Lint/RescueException
