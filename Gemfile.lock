@@ -1,4 +1,20 @@
 GIT
+  remote: https://github.com/ideacrew/aca_entities.git
+  revision: 242f3733895739282059ce074e94c240aecd67be
+  branch: trunk
+  specs:
+    aca_entities (0.4.0)
+      deep_merge
+      dry-monads (~> 1.2)
+      dry-struct (~> 1.0)
+      dry-transformer (~> 0.1.1)
+      dry-types (~> 1.0)
+      dry-validation (~> 1.2)
+      iso_country_codes
+      nokogiri-happymapper
+      oj (~> 3.11)
+
+GIT
   remote: https://github.com/ideacrew/event_source.git
   revision: 7f261d5a8f985b8434572390b50065b02b6bcfcd
   branch: trunk
@@ -139,6 +155,7 @@ GEM
       dry-events (>= 0.1.0)
       dry-matcher (>= 0.7.0)
       dry-monads (>= 0.4.0)
+    dry-transformer (0.1.1)
     dry-types (1.5.1)
       concurrent-ruby (~> 1.0)
       dry-container (~> 0.3)
@@ -187,6 +204,7 @@ GEM
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     iniparse (1.5.0)
+    iso_country_codes (0.7.8)
     listen (3.6.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -222,6 +240,8 @@ GEM
     nokogiri (1.12.3)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
+    nokogiri-happymapper (0.8.1)
+      nokogiri (~> 1.5)
     oj (3.13.1)
     overcommit (0.58.0)
       childprocess (>= 0.6.3, < 5)
@@ -389,6 +409,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aca_entities!
   brakeman
   byebug
   dry-matcher (~> 0.8)

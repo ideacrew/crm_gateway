@@ -11,6 +11,7 @@ gem 'puma', '~> 5.0'
 gem 'sass-rails', '>= 6'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'aca_entities',  git:  'https://github.com/ideacrew/aca_entities.git', branch: 'trunk'
 # Enroll branch enroll_ridp_1.0 has some activity around this
 # https://github.com/ideacrew/enroll/tree/enroll_ridp_1.0/app/event_source
 gem 'event_source', git: 'https://github.com/ideacrew/event_source.git', branch: 'trunk'

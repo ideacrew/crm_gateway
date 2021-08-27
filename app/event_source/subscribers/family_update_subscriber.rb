@@ -1,0 +1,48 @@
+# frozen_string_literal: true
+
+module Subscribers
+  # Receive family updates published from Enroll
+  class FamilyUpdateSubscriber
+    include ::EventSource::Subscriber[amqp: 'sugar_crm.families.family_records']
+
+
+        # rubocop:disable Lint/RescueException
+        # rubocop:disable Style/LineEndConcatenation
+        # rubocop:disable Style/StringConcatenation
+        subscribe(:on_family_update) do |delivery_info, properties, payload|
+          # Sequence of steps that are executed as single operation
+          correlation_id = properties.correlation_id
+          event_key = "family_update"
+
+          family_update_result = ::Families::HandleFamilyUpdate.new.call(
+            {
+              payload: payload,
+            }
+          )
+
+          if determination_result.success?
+            logger.info(
+              "OK: :family_update successful and acked"
+            )
+            ack(delivery_info.delivery_tag)
+          else
+            logger.error(
+              "Error: :family_update; nacked due to:#{determination_result.inspect}"
+            )
+            nack(delivery_info.delivery_tag)
+          end
+
+        rescue Exception => e
+          logger.error(
+            "Exception: :family_update\n Exception: #{e.inspect}" +
+            "\n Backtrace:\n" + e.backtrace.join("\n")
+          )
+          nack(delivery_info.delivery_tag)
+        end
+        # rubocop:enable Lint/RescueException
+        # rubocop:enable Style/LineEndConcatenation
+        # rubocop:enable Style/StringConcatenation
+      end
+    end
+  end
+end
