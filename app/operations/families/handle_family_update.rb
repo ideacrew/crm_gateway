@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 module Families
@@ -20,7 +19,7 @@ module Families
 
     def parse_and_build_family(json_string)
       parsing_result = Try do
-        JSON.parse(json_string, :symbolize_names => true)
+        JSON.parse(json_string, symbolize_names: true)
       end
 
       if parsing_result.success?
