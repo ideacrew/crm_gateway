@@ -22,12 +22,8 @@ module Families
     end
 
     # This is from sugar CRM stuff
-    def build_accounts_and_contacts(validated_family)
+    def build_accounts_and_contacts(validated_family); end
 
-    end
-
-    def validate_contacts_and_accounts(initialized_contacts_and_accounts)
-
-    end
+    def validate_contacts_and_accounts(initialized_contacts_and_accounts); end
   end
 end
