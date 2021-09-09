@@ -18,7 +18,7 @@ module Subscribers
         ack(delivery_info.delivery_tag)
       else
         logger.error(
-          "Error: :family_update; nacked due to:#{determination_result.inspect}"
+          "Error: :family_update; nacked due to:#{family_update_result.inspect}"
         )
         nack(delivery_info.delivery_tag)
       end

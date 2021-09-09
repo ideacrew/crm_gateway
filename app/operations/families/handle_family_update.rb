@@ -22,8 +22,12 @@ module Families
     end
 
     # This is from sugar CRM stuff
-    def build_accounts_and_contacts(validated_family); end
+    def build_accounts_and_contacts(validated_family)
+      initialized_contacts_and_accounts = Operations::Transformers::FamilyTo::AccountAndContacts.new.call(validated_family.value!)
+    end
 
-    def validate_contacts_and_accounts(initialized_contacts_and_accounts); end
+    def validate_contacts_and_accounts(initialized_contacts_and_accounts)
+
+    end
   end
 end
