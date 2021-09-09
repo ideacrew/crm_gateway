@@ -16,6 +16,9 @@ gem 'aca_entities',  git:  'https://github.com/ideacrew/aca_entities.git', branc
 # https://github.com/ideacrew/enroll/tree/enroll_ridp_1.0/app/event_source
 gem 'event_source', git: 'https://github.com/ideacrew/event_source.git', branch: 'trunk'
 
+## Verify Rails 5 eliminates need for this gem with MongoDB
+gem 'database_cleaner',       '~> 1.7'
+
 gem 'dry-matcher',          '~> 0.8'
 gem 'dry-monads',           '~> 1.3'
 gem 'dry-struct',           '~> 1.3'
