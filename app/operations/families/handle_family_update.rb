@@ -15,12 +15,17 @@ module Families
 
     # @return [Dry::Monads::Result]
     def call(family_payload)
-      initialized_contacts_and_accounts = build_accounts_and_contacts(family_payload)
-      result = validate_contacts_and_accounts(initialized_contacts_and_accounts)
+      initialized_contacts_and_accounts = yield build_accounts_and_contacts(family_payload)
+      validated_payload = yield validate_contacts_and_accounts(initialized_contacts_and_accounts)
+      result = yield publish_to_crm(validated_payload)
       Success(result)
     end
 
     protected
+
+    def publish_to_crm(validated_payload)
+      SugarCrm::Operations::FamilyUpsert(validated_payload)
+    end
 
     # Famlily Payload is a Hash
     def build_accounts_and_contacts(family_payload)
@@ -31,12 +36,12 @@ module Families
       # result = AcaEntities::Crms::Accounts::AccountContract.new.call(value)
       account_params = initialized_contacts_and_accounts.except(:contacts)
       account_validation = Crms::Accounts::AccountContract.new.call(account_params)
-      raise('Invalid account') if account_validation.failure?
+      Fail('Invalid account') if account_validation.failure?
 
       contact_params = initialized_contacts_and_accounts[:contacts]
       contact_params.each do |contact_hash|
         contact_validation = Crms::Contacts::ContactContract.new.call(contact_hash)
-        raise('Invalid contact') if contact_validation.failure?
+        Fail('Invalid contact') if contact_validation.failure?
       end
     end
   end
