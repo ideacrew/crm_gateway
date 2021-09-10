@@ -6,20 +6,26 @@ module Operations
     class PrimaryUpsert
       include Dry::Monads[:result, :do, :try]
 
+      attr_accessor :event
+
       def call(params)
+        @event = ::Event.create(event_name_identifier: self.class.name.to_s)
         existing_account = find_existing_account(
           first_name: params[:first_name],
           last_name: params[:last_name]
         )
         if existing_account.success?
+          event.process
           yield update_account_and_contact(
 
           )
         else
+          event.process
           yield create_account_and_contact(
 
           )
         end
+        # event.complete # If this completes
       end
 
       def find_existing_account(first_name:, last_name:)
