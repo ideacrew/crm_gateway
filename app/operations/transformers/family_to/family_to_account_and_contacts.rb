@@ -42,8 +42,8 @@ module Operations
             email: primary_family_member[:person][:emails].first[:address],
             alt_email: primary_family_member[:person][:emails].length > 1 ? primary_family_member[:person][:emails][1][:address] : nil,
             phone: primary_family_member[:person][:phones].first[:full_phone_number],
-            mobile: "",
-            date_of_birth: primary_family_member[:person][:person_demographics][:dob]&.to_date,
+            mobile: '',
+            date_of_birth: primary_family_member[:person][:person_demographics][:dob]&.to_date
           }
         end
 
@@ -54,9 +54,9 @@ module Operations
             last_name: family_member_hash[:person][:person_name][:last_name],
             date_of_birth: family_member_hash[:person][:person_demographics][:dob]&.to_date,
             gender: family_member_hash[:person][:person_demographics][:gender],
-            preferrred_language: "",
+            preferrred_language: '',
             email: family_member_hash[:person][:emails]&.first[:address],
-            ssn: family_member_hash[:person][:person_demographics][:ssn],
+            ssn: family_member_hash[:person][:person_demographics][:ssn]
           }
         end
       end
