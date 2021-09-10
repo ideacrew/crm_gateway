@@ -35,6 +35,7 @@ module Operations
         def to_account(family_hash)
           primary_family_member = family_hash[:family_members].detect { |fm| fm[:is_primary_applicant] == true }
           payload = {
+            primary_person_hbx_id: primary_family_member[:hbx_id],
             name: primary_family_member[:person][:person_name][:full_name],
             contacts_count: family_hash[:family_members].count,
             opportunities_count: 0,
@@ -48,6 +49,7 @@ module Operations
 
         def to_contact(family_member_hash)
           payload = {
+            hbx_id: family_member_hash[:person][:hbx_id],
             first_name: family_member_hash[:person][:person_name][:first_name],
             last_name: family_member_hash[:person][:person_name][:last_name],
             date_of_birth: family_member_hash[:person][:person_demographics][:dob]&.to_date,
