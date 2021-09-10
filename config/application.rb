@@ -34,5 +34,7 @@ module CrmGateway
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.autoload_paths += ["#{config.root}/app/domain"]
+    config.sugar_crm = config_for(:sugar_crm)
   end
 end

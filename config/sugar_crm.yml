@@ -1,0 +1,7 @@
+default: &default
+  host: sandbox-crm.cme.openhbx.org
+  username: bill.transue
+  password: password
+
+development: *default
+test: *default
