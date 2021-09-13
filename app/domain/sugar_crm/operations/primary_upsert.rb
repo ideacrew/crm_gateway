@@ -1,8 +1,9 @@
 require 'dry/monads'
 require 'dry/monads/do'
+require_relative "../../sugar_crm/services/connection"
 
 module Operations
-  module SugarCRM
+  module SugarCrm
     class PrimaryUpsert
       include Dry::Monads[:result, :do, :try]
 
@@ -37,7 +38,7 @@ module Operations
       end
 
       def service
-        @service ||= Services::SugarCRM::Connection.new
+        @service ||= SugarCRM::Services::Connection.new
       end
     end
   end
