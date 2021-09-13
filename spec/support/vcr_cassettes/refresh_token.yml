@@ -1,0 +1,42 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
+    body:
+      encoding: UTF-8
+      string: client_id=sugar&client_secret=&grant_type=refresh_token&refresh_token=e2387d65-a7f9-4646-a900-966d29802e67
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Mon, 13 Sep 2021 20:25:39 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '248'
+      connection:
+      - keep-alive
+      set-cookie:
+      - PHPSESSID=886e96e7-4a96-484b-902c-8177bef3420b; path=/, download_token_base=2166ec43-adeb-424b-8d1d-40bf3430672b;
+        expires=Mon, 27-Sep-2021 20:25:39 GMT; Max-Age=1209600; path=/; HttpOnly
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate
+      pragma:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"886e96e7-4a96-484b-902c-8177bef3420b","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"d3a4e43d-707a-45b4-b8f3-f6588275e868","refresh_expires_in":1209600,"download_token":"2166ec43-adeb-424b-8d1d-40bf3430672b"}'
+  recorded_at: Mon, 13 Sep 2021 20:25:38 GMT
+recorded_with: VCR 6.0.0

@@ -19,7 +19,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Mon, 13 Sep 2021 12:53:29 GMT
+      - Mon, 13 Sep 2021 20:25:29 GMT
       content-type:
       - application/json
       content-length:
@@ -27,9 +27,9 @@ http_interactions:
       connection:
       - keep-alive
       set-cookie:
-      - PHPSESSID=s2jnr782ouqdpfufkk2q2nr2eo; path=/, PHPSESSID=12318fbd-d9b0-4bbc-802c-c998bcbfacff;
-        path=/, download_token_base=9296f8f4-1d55-4aae-93b2-1184e9716a87; expires=Mon,
-        27-Sep-2021 12:53:29 GMT; Max-Age=1209600; path=/; HttpOnly
+      - PHPSESSID=bp7vdld6ap2sdqhmoh07dnffco; path=/, PHPSESSID=f33b9ab8-2b39-4c43-acdc-cd1d67c3e90c;
+        path=/, download_token_base=85118f98-d7dc-4710-83bc-58c2a9364ebb; expires=Mon,
+        27-Sep-2021 20:25:29 GMT; Max-Age=1209600; path=/; HttpOnly
       expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       cache-control:
@@ -38,6 +38,6 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"access_token":"12318fbd-d9b0-4bbc-802c-c998bcbfacff","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"29912bc9-a845-4c23-837f-56f1018fde77","refresh_expires_in":1209600,"download_token":"9296f8f4-1d55-4aae-93b2-1184e9716a87"}'
-  recorded_at: Mon, 13 Sep 2021 12:53:29 GMT
+      string: '{"access_token":"f33b9ab8-2b39-4c43-acdc-cd1d67c3e90c","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"e2387d65-a7f9-4646-a900-966d29802e67","refresh_expires_in":1209600,"download_token":"85118f98-d7dc-4710-83bc-58c2a9364ebb"}'
+  recorded_at: Mon, 13 Sep 2021 20:25:29 GMT
 recorded_with: VCR 6.0.0

@@ -1,0 +1,41 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts?filter%5B%5D%5Bhbxid_c%5D=zzzz435g
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Authorization:
+      - Bearer 61d2a9fe-a9db-4726-8cf2-3115cd8675f0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Mon, 13 Sep 2021 20:07:18 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '31'
+      connection:
+      - keep-alive
+      expires:
+      - ''
+      cache-control:
+      - max-age=0, private
+      pragma:
+      - ''
+      etag:
+      - 5d0cf03cd35880151b2f59eae817b564
+    body:
+      encoding: UTF-8
+      string: '{"records":[],"next_offset":-1}'
+  recorded_at: Mon, 13 Sep 2021 20:07:18 GMT
+recorded_with: VCR 6.0.0

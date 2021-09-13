@@ -2,39 +2,87 @@ require 'dry/monads'
 require 'dry/monads/do'
 require_relative "../../sugar_crm/services/connection"
 
-module Operations
-  module SugarCrm
+module SugarCRM
+  module Operations
     class PrimaryUpsert
       include Dry::Monads[:result, :do, :try]
 
       attr_accessor :event
 
-      def call(params)
-        @event = ::Event.create(event_name_identifier: self.class.name.to_s)
+      def call(payload:)
         existing_account = find_existing_account(
-          first_name: params[:first_name],
-          last_name: params[:last_name]
+          hbx_id: payload[:hbx_id]
         )
-        if existing_account.success?
-          event.process
-          yield update_account_and_contact(
-
+       result = if existing_account.success?
+          yield update_account(
+            payload_to_account_params(payload)
+          )
+          yield update_contact(
+            payload_to_contact_params(payload)
           )
         else
-          event.process
           yield create_account_and_contact(
-
+            payload
           )
         end
-        # event.complete # If this completes
+        Success(result)
       end
 
-      def find_existing_account(first_name:, last_name:)
-        if existing_account = service.find_existing_account(params.slice(:first_name, :last_name))
+      def payload_to_contact_params(payload)
+        {
+          hbx_id: payload[:hbx_id],
+          first_name: payload[:first_name],
+          last_name: payload[:last_name]
+        }
+      end
+
+      def payload_to_account_params(payload)
+        {
+          hbx_id: payload[:hbx_id],
+          first_name: payload[:first_name],
+          last_name: payload[:last_name]
+        }
+      end
+
+      def find_existing_account(hbx_id:)
+        if existing_account = service.find_account_by_hbx_id(hbx_id)
           Success(existing_account)
         else
-          Fail("No account found")
+          Failure("No account found")
         end
+      end
+
+      def create_account_and_contact(payload)
+        account = service.create_account(
+          payload_to_account_params(payload)
+        )
+        Failure("Couldn't create account") unless account
+
+        contact = service.create_contact_for_account(
+          **payload_to_contact_params(payload), account_id: account
+        )
+        Failure("Couldn't create contact") unless contact
+        Success(contact)
+      end
+
+      def update_account(hbx_id:, first_name:, last_name:)
+        account = service.update_account(
+          hbx_id: hbx_id,
+          first_name: first_name,
+          last_name: last_name
+        )
+        Failure("Couldn't update account") unless account
+        Success(account)
+      end
+
+      def update_contact(hbx_id:, first_name:, last_name:)
+        contact = service.update_contact(
+          hbx_id: hbx_id,
+          first_name: first_name,
+          last_name: last_name
+        )
+        Failure("Couldn't update contact") unless contact
+        Success(contact)
       end
 
       def service
