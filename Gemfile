@@ -26,9 +26,11 @@ gem 'dry-struct',           '~> 1.3'
 gem 'dry-transaction'
 gem 'dry-types',            '~> 1.4'
 gem 'dry-validation',       '~> 1.6'
-gem 'mongoid',             '~> 7.2.1'
+gem 'mongoid',              '~> 7.2.1'
 gem 'oauth2'
 gem 'overcommit'
+gem 'stimulus_reflex',      '~> 3.4'
+gem 'webpacker'
 
 group :development, :test do
   gem 'brakeman'
@@ -54,3 +56,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
