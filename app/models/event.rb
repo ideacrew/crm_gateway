@@ -25,4 +25,7 @@ class Event
       transitions from: :publishing, to: :successful
     end
   end
+  def processed?
+    processed_at.present?
+  end
 end
