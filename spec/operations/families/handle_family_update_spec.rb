@@ -64,11 +64,9 @@ RSpec.describe Families::HandleFamilyUpdate, dbclean: :after_each do
     Families::HandleFamilyUpdate.new.call(params)
   end
 
-  before do
-    update_handler
-  end
-
-  xit 'should handle family update and create valid account/contact' do
+  it 'should handle family update and create valid account/contact' do
+    binding.irb
+    expect(update_handler.errors.to_h).to eq({})
   end
 end
 

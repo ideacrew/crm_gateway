@@ -29,7 +29,7 @@ module Operations
           family_payload[:family_members].each do |family_member|
             payload[:contacts] << to_contact(family_member)
           end
-          payload
+          Success(payload)
         end
 
         def to_account(family_hash)

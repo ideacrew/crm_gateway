@@ -15,7 +15,7 @@ module Families
 
     # @return [Dry::Monads::Result]
     def call(family_payload)
-      initialized_contacts_and_accounts = yield build_accounts_and_contacts(family_payload)
+      initialized_contacts_and_accounts = build_accounts_and_contacts(family_payload)
       validated_payload = yield validate_contacts_and_accounts(initialized_contacts_and_accounts)
       result = yield publish_to_crm(validated_payload)
       Success(result)
@@ -29,20 +29,11 @@ module Families
 
     # Famlily Payload is a Hash
     def build_accounts_and_contacts(family_payload)
-      initialized_contacts_and_accounts = Operations::Transformers::FamilyTo::AccountAndContacts.new.call(family_payload.to_h)
+      Operations::Transformers::FamilyTo::AccountAndContacts.new.call(family_payload.to_h)
     end
 
     def validate_contacts_and_accounts(initialized_contacts_and_accounts)
-      # result = AcaEntities::Crms::Accounts::AccountContract.new.call(value)
-      account_params = initialized_contacts_and_accounts.except(:contacts)
-      account_validation = Crms::Accounts::AccountContract.new.call(account_params)
-      Fail('Invalid account') if account_validation.failure?
-
-      contact_params = initialized_contacts_and_accounts[:contacts]
-      contact_params.each do |contact_hash|
-        contact_validation = Crms::Contacts::ContactContract.new.call(contact_hash)
-        Fail('Invalid contact') if contact_validation.failure?
-      end
+      account_validation_and_contract_validation = Crms::Accounts::AccountContract.new.call(initialized_contacts_and_accounts)
     end
   end
 end
