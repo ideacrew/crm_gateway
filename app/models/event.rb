@@ -9,10 +9,11 @@ class Event
   field :processed_at, type: DateTime, default: nil
   field :event_name_identifier, type: String, default: ""
   field :data, type: Hash
+  field :aasm_state, type: String
 
   aasm do
     state :draft, initial: true
-    state :publishing
+    state :processing
     state :successful
     state :failure
 
