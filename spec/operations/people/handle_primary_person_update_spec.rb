@@ -39,11 +39,18 @@ RSpec.describe People::HandlePrimaryPersonUpdate, dbclean: :after_each do
       :identity_validation=>"na", :identity_update_reason=>nil, :application_validation=>"na", :application_update_reason=>nil, :identity_rejected=>false, :application_rejected=>false, :documents=>[], :vlp_documents=>[], :ridp_documents=>[], :verification_type_history_elements=>[], :lawful_presence_determination=>{:vlp_verified_at=>nil, :vlp_authority=>nil, :vlp_document_id=>nil, :citizen_status=>"us_citizen", :citizenship_result=>nil, :qualified_non_citizenship_result=>nil, :aasm_state=>"verification_pending", :ssa_responses=>[], :ssa_requests=>[], :vlp_responses=>[], :vlp_requests=>[]}, :local_residency_responses=>[], :local_residency_requests=>[]}, :resident_role=>nil, :individual_market_transitions=>[], :verification_types=>[], :user=>nil, :broker_role=>nil, :addresses=>[{:kind=>"home", :address_1=>"1111 Awesome Street NE", :address_2=>"#111", :address_3=>"", :city=>"Washington", :county=>"Hampden", :state=>"DC", :zip=>"01001", :country_name=>"United States of America", :has_fixed_address=>true}, {:kind=>"home", :address_1=>"1112 Awesome Street NE", :address_2=>"#112", :address_3=>"", :city=>"Washington", :county=>"Hampden", :state=>"DC", :zip=>"01001", :country_name=>"United States of America", :has_fixed_address=>true}], :phones=>[{:kind=>"home", :country_code=>"", :area_code=>"202", :number=>"1030404", :extension=>"", :primary=>nil, :full_phone_number=>"2021030404"}], :emails=>[{:kind=>"home", :address=>"example1@example.com"}, {:kind=>"home", :address=>"example2@example.com"}], :documents=>[], :timestamp=>{:created_at=>Time.now, :modified_at=>Time.now} 
   }
   end
-  let(:update_handler) do
-    People::HandlePrimaryPersonUpdate.new.call(params)
+
+  subject do
+    VCR.use_cassette 'handle_primary_person' do
+      People::HandlePrimaryPersonUpdate.new.call(params)
+    end
   end
 
-  it 'should handle the primary person update' do
-    expect(update_handler.errors.to_h).to eq({})
+  it 'subject should be successful' do
+    expect(subject).to be_success
+  end
+
+  it 'creates and updates an event' do
+    expect(subject.event.aasm_state).to eql(:successful)
   end
 end

@@ -15,12 +15,14 @@ module Operations
         require 'securerandom'
 
         def call(person_payload)
-          convert_payload(person_payload)
+          result = yield convert_payload(person_payload)
+          Success(result)
         end
 
         private
 
         def convert_payload(person_payload)
+          return Failure()
           pereson_payload = person_payload.to_h
           payload = {}
           payload.merge!(to_contact(pereson_payload))

@@ -10,22 +10,36 @@ class Event
   field :event_name_identifier, type: String, default: ""
   field :data, type: Hash
   field :aasm_state, type: String
+  field :account_id, type: String
+  field :contact_id, type: String
+  field :error_message, type: String
+  field :processing_at, type: DateTime
+  field :completed_at, type: DateTime
 
   aasm do
-    state :draft, initial: true
+    state :received, initial: true
     state :processing
     state :successful
     state :failure
 
     event :process do
-      transitions from: :draft, to: :processing
+      transitions from: :received, to: :processing
     end
 
+    # event :fail do
+    #   transitions from: :processing, to: :failure
+    # end
+
     event :complete do
-      transitions from: :publishing, to: :successful
+      transitions from: :processing, to: :successful
     end
   end
+
   def processed?
     processed_at.present?
+  end
+
+  def process
+    self.processed_at = DateTime.now
   end
 end

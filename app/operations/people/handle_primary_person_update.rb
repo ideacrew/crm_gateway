@@ -14,26 +14,55 @@ module People
     require 'aca_entities/crms/contacts/contact'
     require_relative "../../domain/sugar_crm/operations/primary_upsert"
 
+    attr_reader :event
+
     # @return [Dry::Monads::Result]
     def call(person_payload)
-      initialized_contact = build_contact(person_payload)
-      validated_payload = yield validate_contact(initialized_contact)
-      result = yield publish_to_crm(validated_payload)
-      Success(result)
+      @event = Event.create(
+        event_name_identifier: 'Primary Subscriber Update',
+        data: person_payload
+      )
+      validated_payload = event_step(validate_contact(build_contact(person_payload)), 'process!')
+      result = event_step(publish_to_crm(validated_payload), 'complete!')
+    end
+
+    def event_step(result, state = nil)
+      if result.failure?
+        @event.error_message = result.failure
+        @event.fail!
+        @event.save!
+      elsif state
+        @event.send(state)
+        @event.save!
+      end
+      puts @event.inspect
+      result
     end
 
     protected
 
     def publish_to_crm(validated_payload)
-      Operations::SugarCrm::PrimaryUpsert.new.call(validated_payload)
+      SugarCRM::Operations::PrimaryUpsert.new.call(payload: validated_payload.value!)
     end
 
     def build_contact(person_payload)
-      Operations::Transformers::PersonTo::Contact.new.call(person_payload.to_h)
+      {
+        hbx_id: person_payload[:hbx_id],
+        first_name: person_payload.dig(:person_name, :first_name),
+        last_name: person_payload.dig(:person_name, :last_name),
+        date_of_birth: person_payload.dig(:person_demographics, :dob),
+        email: person_payload[:emails].detect { |email| email[:address].present? }.try(:[], :address),
+        ssn: person_payload.dig(:person_demographics, :ssn)
+      }
     end
 
     def validate_contact(contact_payload)
-      Crms::Contacts::ContactContract.new.call(contact_payload)
+      result = Crms::Contacts::ContactContract.new.call(contact_payload)
+      if result.success?
+        Success(result)
+      else 
+        Failure(result.errors.to_h)
+      end
     end
   end
 end

@@ -7,8 +7,6 @@ module SugarCRM
     class PrimaryUpsert
       include Dry::Monads[:result, :do, :try]
 
-      attr_accessor :event
-
       def call(payload:)
         existing_account = find_existing_account(
           hbx_id: payload[:hbx_id]
