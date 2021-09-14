@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Families
+module SugarCRM::Operations::Families
   # Invoke a Family update service and update/create their corresponding contact records
   class HandleFamilyUpdate
     include Dry::Monads[:result, :do, :try]
@@ -15,10 +15,13 @@ module Families
 
     # @return [Dry::Monads::Result]
     def call(family_payload)
+      @event = Event.create(
+        event_name_identifier: 'Family Update',
+        data: payload
+      )
       initialized_contacts_and_accounts = build_accounts_and_contacts(family_payload)
       validated_payload = yield validate_contacts_and_accounts(initialized_contacts_and_accounts)
       result = yield publish_to_crm(validated_payload)
-      Success(result)
     end
 
     protected
