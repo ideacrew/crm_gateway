@@ -8,7 +8,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @events = Eevent.new(
+    @events = Event.new(
       event_name_identifier: event_name_identifier,
       aasm_state: 'draft'
     )
