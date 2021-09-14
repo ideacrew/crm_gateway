@@ -4,7 +4,7 @@ EventSource.configure do |config|
   config.protocols = %w[amqp http]
   config.pub_sub_root = Pathname.pwd.join('app', 'event_source')
   config.server_key = ENV['RAILS_ENV'] || Rails.env.to_sym
-  config.app_name = :enroll
+  config.app_name = :crm_gateway
 
   config.servers do |server|
     server.amqp do |rabbitmq|
@@ -25,7 +25,7 @@ EventSource.configure do |config|
   end
 
   async_api_resources = ::AcaEntities.async_api_config_find_by_service_name({protocol: :amqp, service_name: nil}).success
-  async_api_resources += ::AcaEntities.async_api_config_find_by_service_name({protocol: :http, service_name: :enroll}).success
+  # async_api_resources += ::AcaEntities.async_api_config_find_by_service_name({protocol: :http, service_name: :crm_gateway}).success
 
   config.async_api_schemas =
     async_api_resources.collect do |resource|
