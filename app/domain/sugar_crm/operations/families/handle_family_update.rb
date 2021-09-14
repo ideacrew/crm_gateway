@@ -17,7 +17,7 @@ module SugarCRM::Operations::Families
     def call(family_payload)
       @event = Event.create(
         event_name_identifier: 'Family Update',
-        data: payload
+        data: family_payload
       )
       initialized_contacts_and_accounts = build_accounts_and_contacts(family_payload)
       validated_payload = yield validate_contacts_and_accounts(initialized_contacts_and_accounts)
