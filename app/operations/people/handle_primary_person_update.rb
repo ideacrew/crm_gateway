@@ -18,6 +18,10 @@ module People
 
     # @return [Dry::Monads::Result]
     def call(person_payload)
+      # TODO: Coming through as a string on enroll for some reason
+      if person_payload.class == String
+        person_payload = JSON.parse(person_payload).with_indifferent_access
+      end
       @event = Event.create(
         event_name_identifier: 'Primary Subscriber Update',
         data: person_payload
