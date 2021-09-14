@@ -65,6 +65,10 @@ class Event
   #   self.failure!
   # end
 
+  after_save do
+    morph
+  end
+
   def morph
     html = ApplicationController.render(
       partial: "events/event_row",
