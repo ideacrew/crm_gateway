@@ -1,4 +1,5 @@
-<tr>
+<% event ||= @event %>
+<tr scope="row" id="<%= "event-#{event.id}" %>">
   <td><%= event._id %></td>
   <td></td>
   <td><%= event.event_name_identifier %></td>

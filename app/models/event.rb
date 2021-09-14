@@ -5,6 +5,7 @@ class Event
   include Mongoid::Document
   include Mongoid::Timestamps
   include AASM
+  include CableReady::Broadcaster
 
   field :processed_at, type: DateTime, default: nil
   field :event_name_identifier, type: String, default: ""
@@ -41,5 +42,20 @@ class Event
 
   def process
     self.processed_at = DateTime.now
+  end
+  
+  def morph
+    html = ApplicationController.render(
+      partial: "events/event_row",
+      locals: { event: self }
+    )
+    puts("Beginning row morph for event #{id}")
+
+    cable_ready["events"].morph(
+      selector: "#event-#{id}",
+      html: html
+    )
+
+    cable_ready.broadcast
   end
 end
