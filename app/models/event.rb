@@ -8,14 +8,14 @@ class Event
   include CableReady::Broadcaster
 
   field :processed_at, type: DateTime, default: nil
+  # field :failed_at, type: DateTime, default: nil
+  field :completed_at, type: DateTime, default: nil
   field :event_name_identifier, type: String, default: ""
   field :data, type: Hash
   field :aasm_state, type: String
   field :account_id, type: String
   field :contact_id, type: String
   field :error_message, type: String
-  field :processing_at, type: DateTime
-  field :completed_at, type: DateTime
 
   aasm do
     state :received, initial: true
@@ -42,8 +42,19 @@ class Event
 
   def process
     self.processed_at = DateTime.now
+    self.process!
   end
-  
+
+  def complete
+    self.completed_at = DateTime.now
+    self.complete!
+  end
+
+  # def failure
+  #   self.failed_at = DateTime.now
+  #   self.failure!
+  # end
+
   def morph
     html = ApplicationController.render(
       partial: "events/event_row",
