@@ -2,8 +2,6 @@
 
 require 'rails_helper'
 
-#TODO: spec find_contacts_by_hbx_id
-
 RSpec.describe SugarCRM::Services::Connection do
   describe 'self.connection' do
     it 'connects to SugarCRM and gets an access_token' do
@@ -102,7 +100,7 @@ RSpec.describe SugarCRM::Services::Connection do
   describe '#update_account' do
     let(:response) do
       VCR.use_cassette('update_account') do
-        subject.create_account(
+        account = subject.create_account(
           hbx_id: '123',
           first_name: 'John',
           last_name: 'Jacob'
@@ -129,13 +127,40 @@ RSpec.describe SugarCRM::Services::Connection do
           first_name: 'John',
           last_name: 'Jacob'
         )
-        subject.create_contact_for_account(
+        contact = subject.create_contact_for_account(
           account_id: account['id'],
           hbx_id: '123',
           first_name: 'John',
           last_name: 'Jacob'
         )
         subject.update_contact(
+          id: contact['id'],
+          first_name: 'Tim',
+          last_name: 'Robinson'
+        )
+      end
+    end
+
+    it "should update contact" do 
+      expect(response['name']).to eql('Tim Robinson')
+    end
+  end
+
+  describe '#update_contact_by_hbx_id' do
+    let(:response) do
+      VCR.use_cassette('update_contact_by_hbx_id') do
+        account = subject.create_account(
+          hbx_id: '123',
+          first_name: 'John',
+          last_name: 'Jacob'
+        )
+        subject.create_contact_for_account(
+          account_id: account['id'],
+          hbx_id: '123',
+          first_name: 'John',
+          last_name: 'Jacob'
+        )
+        subject.update_contact_by_hbx_id(
           hbx_id: '123',
           first_name: 'Tim',
           last_name: 'Robinson'

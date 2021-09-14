@@ -74,7 +74,7 @@ module SugarCRM
       end
 
       def update_contact(hbx_id:, first_name:, last_name:)
-        contact = service.update_contact(
+        contact = service.update_contact_by_hbx_id(
           hbx_id: hbx_id,
           first_name: first_name,
           last_name: last_name

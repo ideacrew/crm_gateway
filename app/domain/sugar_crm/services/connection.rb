@@ -91,10 +91,21 @@ module SugarCRM
         response.parsed
       end
 
-      def update_contact(hbx_id:, first_name:, last_name:)
+      def update_contact_by_hbx_id(hbx_id:, first_name:, last_name:) #change spec
         contact = find_contact_by_hbx_id(hbx_id)
         response = put(
           "/rest/v11_8/Contacts/#{contact}",
+          params: {
+            first_name: first_name,
+            last_name: last_name,
+          }
+        )
+        response.parsed
+      end
+
+      def update_contact(id:, first_name:, last_name:)
+        response = put(
+          "/rest/v11_8/Contacts/#{id}",
           params: {
             first_name: first_name,
             last_name: last_name,
