@@ -9,7 +9,7 @@ module Subscribers
     # rubocop:disable Style/LineEndConcatenation
     # rubocop:disable Style/StringConcatenation
     subscribe(:on_family_update) do |delivery_info, _properties, payload|
-      family_update_result = ::Families::HandleFamilyUpdate.new.call(payload)
+      family_update_result = ::SugarCRM::Operations::Families::HandleFamilyUpdate.new.call(payload)
 
       if family_update_result.success?
         logger.info(

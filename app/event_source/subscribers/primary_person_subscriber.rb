@@ -3,7 +3,7 @@
 module Subscribers
   # Receive family updates published from Enroll
   class PrimaryPersonSubscriber
-    include ::EventSource::Subscriber[amqp: 'crm_gateway.families']
+    include ::EventSource::Subscriber[amqp: 'crm_gateway.people']
 
     # rubocop:disable Lint/RescueException
     # rubocop:disable Style/LineEndConcatenation
