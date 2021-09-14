@@ -40,6 +40,16 @@ class Event
     processed_at.present?
   end
 
+  def latest_timestamp
+    if self.aasm_state == 'processing'
+      return self.processed_at
+    elsif self.aasm_state == 'successful'
+      return self.completed_at
+    else self.aasm_state == 'received'
+      return self.created_at
+    end
+  end
+
   def process
     self.processed_at = DateTime.now
     self.process!

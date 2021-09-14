@@ -1,7 +1,20 @@
 <% event ||= @event %>
 <tr scope="row" id="<%= "event-#{event.id}" %>">
-  <td><%= event._id %></td>
-  <td></td>
-  <td><%= event.event_name_identifier %></td>
-  <td><%= event.aasm_state %></td>
+  <% if event.data.present? %>
+    <% if event.event_name_identifier == "Primary Subscriber Update" %>
+      <td><%= event.data[:hbx_id] %></td>
+      <td><%= event.data[:person_name][:first_name] %>
+        <%= event.data[:person_name][:last_name] %>
+      </td>
+    <% end %>
+    <% if event.event_name_identifier == "Family Update" %>
+      <td><%= event.data[:hbx_id] %></td>
+      <td>
+        <%= event.data[:family_members].map { |p| p[:person][:person_name][:full_name] }.join("<br>").html_safe %>
+      </td>
+    <% end %>
+    <td><%= event.event_name_identifier %></td>
+    <td><%= event.aasm_state %></td>
+    <td><%= event.latest_timestamp %></td>
+  <% end %>
 </tr>

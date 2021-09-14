@@ -10,7 +10,7 @@ class EventsController < ApplicationController
   def create
     @events = Event.new(
       event_name_identifier: event_name_identifier,
-      aasm_state: 'draft'
+      aasm_state: 'received'
     )
     @events.save
   end
