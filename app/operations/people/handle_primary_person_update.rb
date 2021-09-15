@@ -5,7 +5,6 @@ module People
   class HandlePrimaryPersonUpdate
     include Dry::Monads[:result, :do, :try]
     include EventSource::Command
-    require File.join(Rails.root, 'app', 'operations', 'transformers', 'person_to', 'person_to_contact')
     require 'dry/monads'
     require 'dry/monads/do'
     require 'aca_entities/crms/accounts/account'
