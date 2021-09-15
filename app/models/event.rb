@@ -36,7 +36,7 @@ class Event
     end
 
     event :fail do
-      transitions from: :processing, to: :failure
+      transitions from: [:processing, :received], to: :failure
     end
   end
 
