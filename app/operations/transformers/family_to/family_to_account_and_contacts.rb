@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require 'dry/monads'
-require 'dry/monads/do'
-require 'aca_entities/magi_medicaid/libraries/iap_library'
+awefrequire 'aca_entities/magi_medicaid/libraries/iap_library'
 
 module Operations
   module Transformers
@@ -30,7 +29,6 @@ module Operations
           family[:family_members].each do |family_member|
             payload[:contacts] << to_contact(family_member.with_indifferent_access, primary_family_member)
           end
-          Success(payload)
         end
 
         def to_account(family_hash, primary_family_member)
