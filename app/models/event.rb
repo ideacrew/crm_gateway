@@ -27,9 +27,9 @@ class Event
       transitions from: :received, to: :processing
     end
 
-    # event :fail do
-    #   transitions from: :processing, to: :failure
-    # end
+    event :fail do
+      transitions from: :processing, to: :failure
+    end
 
     event :complete do
       transitions from: :processing, to: :successful

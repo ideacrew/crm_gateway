@@ -3,6 +3,35 @@
 require 'rails_helper'
 
 RSpec.describe SugarCRM::Services::Connection do
+  let(:hbx_id) { 'aa918614ae014d42bb8547a1ae5734e1' }
+
+  let(:account_params) do
+    {
+      :hbxid_c=>"aa918614ae014d42bb8547a1ae5734e1",
+      :name=>"John Jacob",
+      :email1=>"example1@example.com",
+      :dob_c=>"1981-09-14",
+      :billing_address_street=>"1111 Awesome Street NE",
+      :billing_address_street_2=>"#111",
+      :billing_address_street_3=>"",
+      :billing_address_street_4=>nil,
+      :billing_address_city=>"Washington",
+      :billing_address_postalcode=>"01001",
+      :billing_address_state=>"DC",
+      :phone_office=>"2021030404"
+    }
+  end
+
+  let(:contact_params) do
+    {
+      :hbxid_c=>"aa918614ae014d42bb8547a1ae5734e1",
+      :first_name=>"John",
+      :last_name=>"Jacob",
+      :phone_mobile=>"2021030404",
+      :email1=>"example1@example.com"
+    }
+  end
+
   describe 'self.connection' do
     it 'connects to SugarCRM and gets an access_token' do
       VCR.use_cassette('connection') do
@@ -14,11 +43,7 @@ RSpec.describe SugarCRM::Services::Connection do
   describe '#create_account' do
     let(:response) do
       VCR.use_cassette('create_account') do
-        subject.create_account(
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
+        subject.create_account(payload: account_params)
       end
     end
 
@@ -34,18 +59,8 @@ RSpec.describe SugarCRM::Services::Connection do
   describe '#create_contact_for_account' do
     let(:response) do
       VCR.use_cassette('create_contact') do
-        account = subject.create_account(
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
-
-        subject.create_contact_for_account(
-          account_id: account['id'],
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
+        account = subject.create_account(payload: account_params)
+        subject.create_contact_for_account(payload: contact_params.merge('account.id': account['id']))
       end
     end
 
@@ -57,12 +72,8 @@ RSpec.describe SugarCRM::Services::Connection do
   describe '#find_account_by_hbx_id' do
     let(:response) do
       VCR.use_cassette('find_account_by_name') do
-        subject.create_account(
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
-        subject.find_account_by_hbx_id('123')
+        subject.create_account(payload: account_params)
+        subject.find_account_by_hbx_id(hbx_id)
       end
     end
 
@@ -74,21 +85,10 @@ RSpec.describe SugarCRM::Services::Connection do
   describe '#find_contacts_by_account' do
     let(:response) do
       VCR.use_cassette('find_contacts_by_account') do
-        account = subject.create_account(
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
-        subject.create_contact_for_account(
-          account_id: account['id'],
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
-        response = subject.find_account_by_hbx_id('123')
-        subject.find_contacts_by_account(
-          response
-        )
+        account = subject.create_account(payload: account_params)
+        subject.create_contact_for_account(payload: contact_params.merge('account.id': account['id']))
+        response = subject.find_account_by_hbx_id(hbx_id)
+        subject.find_contacts_by_account(response)
       end
     end
 
@@ -100,16 +100,8 @@ RSpec.describe SugarCRM::Services::Connection do
   describe '#update_account' do
     let(:response) do
       VCR.use_cassette('update_account') do
-        account = subject.create_account(
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
-        subject.update_account(
-          hbx_id: '123',
-          first_name: 'Tim',
-          last_name: 'Robinson'
-        )
+        account = subject.create_account(payload: account_params)
+        subject.update_account(hbx_id: hbx_id, payload: account_params.merge('name': 'Tim Robinson'))
       end
     end
 
@@ -123,53 +115,32 @@ RSpec.describe SugarCRM::Services::Connection do
     let(:response) do
       VCR.use_cassette('update_contact') do
         account = subject.create_account(
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
+          payload: account_params
         )
         contact = subject.create_contact_for_account(
-          account_id: account['id'],
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
+          payload: contact_params.merge('account.id': account['id'])
         )
-        subject.update_contact(
-          id: contact['id'],
-          first_name: 'Tim',
-          last_name: 'Robinson'
-        )
+        subject.update_contact(id: contact['id'], payload: contact_params.merge('first_name': 'Tim'))
       end
     end
 
     it "should update contact" do 
-      expect(response['name']).to eql('Tim Robinson')
+      expect(response['first_name']).to eql('Tim')
     end
   end
 
   describe '#update_contact_by_hbx_id' do
     let(:response) do
       VCR.use_cassette('update_contact_by_hbx_id') do
-        account = subject.create_account(
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
-        subject.create_contact_for_account(
-          account_id: account['id'],
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
-        subject.update_contact_by_hbx_id(
-          hbx_id: '123',
-          first_name: 'Tim',
-          last_name: 'Robinson'
-        )
+        account = subject.create_account(payload: account_params)
+         
+        subject.create_contact_for_account(payload: contact_params.merge('account_id': account['id']))
+        subject.update_contact_by_hbx_id(hbx_id: hbx_id, payload: contact_params.merge('first_name': 'Tim'))
       end
     end
 
     it "should update contact" do 
-      expect(response['name']).to eql('Tim Robinson')
+      expect(response['first_name']).to eql('Tim')
     end
   end
 
@@ -177,18 +148,11 @@ RSpec.describe SugarCRM::Services::Connection do
 
     let(:response) do
       VCR.use_cassette('find_contact_by_hbx_id') do
-        account = subject.create_account(
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
-        subject.create_contact_for_account(
-          account_id: account['id'],
-          hbx_id: '123',
-          first_name: 'John',
-          last_name: 'Jacob'
-        )
-        subject.find_contact_by_hbx_id('123')
+        account = subject.create_account(payload: account_params)
+         
+        subject.create_contact_for_account(payload: contact_params.merge('account.id': account['id']))
+          
+        subject.find_contact_by_hbx_id(hbx_id)
       end
     end
 

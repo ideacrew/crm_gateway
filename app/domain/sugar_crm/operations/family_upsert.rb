@@ -8,8 +8,9 @@ module SugarCRM
       include Dry::Monads[:result, :do, :try]
 
       def call(payload:)
+        binding.pry
         existing_account = yield find_existing_account(
-          hbx_id: payload[:hbx_id]
+          hbx_id: payload[:primary_person_hbx_id]
         )
         contacts = yield find_contacts_by_account(existing_account)
         results = payload[:family_members].map do |family_member|

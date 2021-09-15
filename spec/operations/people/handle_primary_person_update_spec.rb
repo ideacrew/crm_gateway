@@ -10,16 +10,20 @@ RSpec.describe People::HandlePrimaryPersonUpdate, dbclean: :after_each do
   end
 
   subject do
-    VCR.use_cassette 'handle_primary_person' do
-      People::HandlePrimaryPersonUpdate.new.call(payload)
-    end
+    described_class.new
   end
 
+  let!(:result) do
+    VCR.use_cassette 'handle_primary_person' do
+      subject.call(payload)
+    end
+  end
+  
   it 'subject should be successful' do
-    expect(subject).to be_success
+    expect(result).to be_success
   end
 
   it 'creates and updates an event' do
-    expect(Event.where(event_name_identifier: "Primary Subscriber Update").last.aasm_state).to eq("")
+    expect(subject.event.aasm_state).to eql("successful")
   end
 end

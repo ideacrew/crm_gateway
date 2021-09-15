@@ -14,28 +14,29 @@ module Operations
         require 'securerandom'
 
         def call(family_payload)
-          convert_payload(family_payload)
-        end
-
-        private
-
-        def convert_payload(family_payload)
-          family = family_payload.to_h.with_indifferent_access
-          primary_family_member = family[:family_members].detect { |fm| fm[:is_primary_applicant] == true }
-          payload = {}.with_indifferent_access
-          account_params = to_account(family, primary_family_member)
-          payload.merge!(account_params)
+          @family_payload = family_payload
+          payload = to_account
           payload[:contacts] = []
           family[:family_members].each do |family_member|
             payload[:contacts] << to_contact(family_member.with_indifferent_access, primary_family_member)
           end
         end
 
-        def to_account(family_hash, primary_family_member)
-          payload = {
+        private
+
+        def primary_family_member
+          @primary_family_member ||= @family_payload[:family_members].detect { |fm| fm[:is_primary_applicant] == true }
+        end
+
+        def primary_family_member_hbx_id
+          primary_family_member[:hbx_id]
+        end
+
+        def to_account
+          {
             primary_person_hbx_id: primary_family_member[:hbx_id],
             name: primary_family_member[:person][:person_name][:full_name],
-            contacts_count: family_hash[:family_members].count,
+            contacts_count: @family_payload[:family_members].count,
             opportunities_count: 0,
             email: primary_family_member[:person][:emails].first[:address],
             alt_email: primary_family_member[:person][:emails].length > 1 ? primary_family_member[:person][:emails][1][:address] : nil,
@@ -45,13 +46,8 @@ module Operations
           }.with_indifferent_access
         end
 
-        def to_contact(family_member_hash, primary_family_member)
-          relationship_to_primary = if family_member_hash[:is_primary_applicant] == true
-                                      "self"
-                                    else
-                                      primary_family_member[:person][:person_relationships].detect { |relative_hash| relative_hash[:relative][:hbx_id] == family_member_hash[:person][:hbx_id] }[:kind]
-                                    end
-          payload = {
+        def to_contact(family_member_hash)
+          {
             hbx_id: family_member_hash[:person][:hbx_id],
             first_name: family_member_hash[:person][:person_name][:first_name],
             last_name: family_member_hash[:person][:person_name][:last_name],
@@ -60,9 +56,20 @@ module Operations
             preferrred_language: '',
             email: family_member_hash[:person][:emails]&.first[:address],
             ssn: family_member_hash[:person][:person_demographics][:ssn],
-            relationship_to_primary: relationship_to_primary
-          }.with_indifferent_access
+            relationship_to_primary: find_relationship(family_member_hash)
+          }
         end
+
+        def find_relationship(family_member_hash)
+          relationship = family_member_hash[:person][:person_relationships].detect do |relationship|
+            puts (relationship[:relative][:hbx_id] == primary_family_member_hbx_id).inspect
+            relationship[:relative][:hbx_id] == primary_family_member_hbx_id
+          end
+          binding.pry
+          relationship[:kind]
+        end
+
+
       end
     end
   end

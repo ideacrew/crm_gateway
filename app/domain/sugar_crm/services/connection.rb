@@ -57,59 +57,44 @@ module SugarCRM
         response.parsed
       end
 
-      def create_account(hbx_id:, first_name:, last_name:)
+      def create_account(payload:)
         response = post('/rest/v11_8/Accounts',
-          params: {
-            hbxid_c: hbx_id,
-            name: "#{first_name} #{last_name}"
-          }
+          params: payload
         )
         response.parsed
       end
 
-      def create_contact_for_account(account_id:, hbx_id:, first_name:, last_name:)
+      def create_contact_for_account(payload:)
         response = post(
           '/rest/v11_8/Contacts',
-          params: {
-            'account.id': account_id,
-            hbxid_c: hbx_id,
-            first_name: first_name,
-            last_name: last_name
-          }
+          params: payload
         )
         response.parsed
       end
-
-      def update_account(hbx_id:, first_name:, last_name:)
+      
+      # pass name
+      def update_account(hbx_id:, payload:)
         account = find_account_by_hbx_id(hbx_id)
         response = put(
           "/rest/v11_8/Accounts/#{account}",
-          params: {
-            name: "#{first_name} #{last_name}"
-          }
+          params: payload
         )
         response.parsed
       end
 
-      def update_contact_by_hbx_id(hbx_id:, first_name:, last_name:) #change spec
+      def update_contact_by_hbx_id(hbx_id:, payload:) #change spec
         contact = find_contact_by_hbx_id(hbx_id)
         response = put(
           "/rest/v11_8/Contacts/#{contact}",
-          params: {
-            first_name: first_name,
-            last_name: last_name,
-          }
+          params: payload
         )
         response.parsed
       end
 
-      def update_contact(id:, first_name:, last_name:)
+      def update_contact(id:, payload:)
         response = put(
           "/rest/v11_8/Contacts/#{id}",
-          params: {
-            first_name: first_name,
-            last_name: last_name,
-          }
+          params: payload
         )
         response.parsed
       end

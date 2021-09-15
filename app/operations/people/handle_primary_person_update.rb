@@ -25,27 +25,26 @@ module People
         event_name_identifier: 'Primary Subscriber Update',
         data: person_payload
       )
-      validated_payload = event_step(validate_contact(build_contact(person_payload)), 'process!')
-      result = event_step(publish_to_crm(validated_payload), 'complete!')
+      validated_payload = event_step(validate_contact(build_contact(person_payload)), 'process')
+      event_step(publish_to_crm(person_payload), 'complete')
     end
 
     def event_step(result, state = nil)
       if result.failure?
         @event.error_message = result.failure
         @event.fail!
-        @event.save!
       elsif state
         @event.send(state)
-        @event.save!
       end
-      puts @event.inspect
+      @event.save!
       result
     end
 
     protected
 
     def publish_to_crm(validated_payload)
-      SugarCRM::Operations::PrimaryUpsert.new.call(payload: validated_payload.value!)
+      pp validated_payload
+      SugarCRM::Operations::PrimaryUpsert.new.call(payload: validated_payload)
     end
 
     def build_contact(person_payload)
@@ -63,7 +62,7 @@ module People
     def validate_contact(contact_payload)
       result = AcaEntities::Crms::Contacts::ContactContract.new.call(contact_payload)
       if result.success?
-        Success(result)
+        Success(result.to_h)
       else 
         Failure(result.errors.to_h)
       end
