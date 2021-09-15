@@ -12,23 +12,37 @@ module SugarCRM::Operations::Families
     require 'aca_entities/crms/contracts/contacts/contact_contract'
     require 'aca_entities/crms/contacts/contact'
 
+    attr_reader :event_log
+
     # @return [Dry::Monads::Result]
     def call(family_payload)
       if family_payload.class == String
         family_payload = JSON.parse(family_payload).with_indifferent_access
       end
-      @event = Event.create(
+      @event_log = Event.create(
         event_name_identifier: 'Family Update',
         data: family_payload
       )
       initialized_contacts_and_accounts = build_accounts_and_contacts(family_payload)
+      @event_log.process
+      @event_log.save!
       validated_payload = yield validate_contacts_and_accounts(initialized_contacts_and_accounts)
-      result = yield publish_to_crm(validated_payload)
+      result = publish_to_crm(family_payload)
+      if result.success?
+        @event_log.complete
+        @event_log.save!
+        Success("Update the family")
+      else
+        @event_log.fail
+        @event_log.save!
+      end
+      result
     end
 
     protected
 
     def publish_to_crm(validated_payload)
+      pp validated_payload
       SugarCRM::Operations::FamilyUpsert.new.call(payload: validated_payload)
     end
 
