@@ -58,8 +58,7 @@ module SugarCRM
 
       def create_account(payload:)
         response = post('/rest/v11_8/Accounts',
-          params: payload
-        )
+                        params: payload)
         response.parsed
       end
 
@@ -70,7 +69,7 @@ module SugarCRM
         )
         response.parsed
       end
-      
+
       # pass name
       def update_account(hbx_id:, payload:)
         account = find_account_by_hbx_id(hbx_id)
@@ -81,7 +80,8 @@ module SugarCRM
         response.parsed
       end
 
-      def update_contact_by_hbx_id(hbx_id:, payload:) #change spec
+#change spec
+      def update_contact_by_hbx_id(hbx_id:, payload:)
         contact = find_contact_by_hbx_id(hbx_id)
         response = put(
           "/rest/v11_8/Contacts/#{contact}",

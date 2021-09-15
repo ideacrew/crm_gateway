@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 # rubocop:disable Layout/LineLength
-# rubocop:disable Naming/VariableNumber
 RSpec.describe SugarCRM::Operations::Families::HandleFamilyUpdate, dbclean: :after_each do
   # Get an example of this from enroll
   let(:params) do

@@ -54,21 +54,21 @@ module Operations
             date_of_birth: family_member_hash[:person][:person_demographics][:dob]&.to_date,
             gender: family_member_hash[:person][:person_demographics][:gender],
             preferrred_language: '',
-            email: family_member_hash[:person][:emails]&.first[:address],
+            email: family_member_hash[:person][:emails]&.first&.[](:address),
             ssn: family_member_hash[:person][:person_demographics][:ssn],
             relationship_to_primary: find_relationship(family_member_hash)
           }
         end
 
+        #rubocop:disable Lint/ShadowingOuterLocalVariable
         def find_relationship(family_member_hash)
           relationship = family_member_hash[:person][:person_relationships].detect do |relationship|
             puts (relationship[:relative][:hbx_id] == primary_family_member_hbx_id).inspect
             relationship[:relative][:hbx_id] == primary_family_member_hbx_id
           end
-          binding.pry
           relationship[:kind]
         end
-
+        #rubocop:enable Lint/ShadowingOuterLocalVariable
       end
     end
   end

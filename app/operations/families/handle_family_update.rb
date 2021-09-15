@@ -48,7 +48,7 @@ module Families
       result = Operations::Transformers::FamilyTo::AccountAndContacts.new.call(family_payload.to_h)
       if result.success?
         Success(result.to_h)
-      else 
+      else
         Failure(result.errors.to_h)
       end
     end

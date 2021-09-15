@@ -43,9 +43,9 @@ module SugarCRM
       end
 
       def mobile_phone_finder(payload)
-        phone_number = payload.detect { |number| number[:kind] == 'mobile' } || 
-          payload.detect { |number| number[:kind] == 'home' } ||
-          payload.first
+        phone_number = payload.detect { |number| number[:kind] == 'mobile' } ||
+                       payload.detect { |number| number[:kind] == 'home' } ||
+                       payload.first
         phone_number[:full_phone_number]
       end
 
@@ -97,7 +97,7 @@ module SugarCRM
       end
 
       def update_contact(payload)
-        contact = service.update_contact_by_hbx_id( 
+        contact = service.update_contact_by_hbx_id(
           hbx_id: @hbx_id,
           payload: payload
         )

@@ -17,7 +17,7 @@ RSpec.describe People::HandlePrimaryPersonUpdate, dbclean: :after_each do
       subject.call(payload)
     end
   end
-  
+
   it 'subject should be successful' do
     expect(result).to be_success
   end

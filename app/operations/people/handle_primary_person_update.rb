@@ -18,14 +18,12 @@ module People
     # @return [Dry::Monads::Result]
     def call(person_payload)
       # TODO: Coming through as a string on enroll for some reason
-      if person_payload.class == String
-        person_payload = JSON.parse(person_payload).with_indifferent_access
-      end
+      person_payload = JSON.parse(person_payload).with_indifferent_access if person_payload.instance_of?(String)
       @event = Event.create(
         event_name_identifier: 'Primary Subscriber Update',
         data: person_payload
       )
-      validated_payload = event_step(validate_contact(build_contact(person_payload)), 'process')
+      event_step(validate_contact(build_contact(person_payload)), 'process')
       event_step(publish_to_crm(person_payload), 'complete')
     end
 
@@ -63,7 +61,7 @@ module People
       result = AcaEntities::Crms::Contacts::ContactContract.new.call(contact_payload)
       if result.success?
         Success(result.to_h)
-      else 
+      else
         Failure(result.errors.to_h)
       end
     end

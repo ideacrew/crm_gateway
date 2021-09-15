@@ -11,7 +11,6 @@ module SugarCRM
       include Dry::Monads[:result, :do, :try]
 
       def call(payload:)
-        binding.pry
         existing_account = yield find_existing_account(
           hbx_id: payload[:primary_person_hbx_id]
         )
