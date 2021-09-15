@@ -61,7 +61,7 @@ module People
     end
 
     def validate_contact(contact_payload)
-      result = Crms::Contacts::ContactContract.new.call(contact_payload)
+      result = AcaEntities::Crms::Contacts::ContactContract.new.call(contact_payload)
       if result.success?
         Success(result)
       else 

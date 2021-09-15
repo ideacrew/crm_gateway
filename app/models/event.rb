@@ -34,6 +34,10 @@ class Event
     event :complete do
       transitions from: :processing, to: :successful
     end
+
+    event :fail do
+      transitions from: :processing, to: :failure
+    end
   end
 
   def processed?
