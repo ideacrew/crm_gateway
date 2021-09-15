@@ -35,7 +35,7 @@ module SugarCRM::Operations::Families
 
     # Famlily Payload is a Hash
     def build_accounts_and_contacts(family_payload)
-      Operations::Transformers::FamilyTo::AccountAndContacts.new.call(family_payload.to_h)
+      Operations::Transformers::FamilyTo::AccountAndContacts.new.call(family_payload.to_h.with_indifferent_access)
     end
 
     def validate_contacts_and_accounts(initialized_contacts_and_accounts)
