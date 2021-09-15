@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'dry/monads'
-awefrequire 'aca_entities/magi_medicaid/libraries/iap_library'
+# require 'aca_entities/magi_medicaid/libraries/iap_library'
 
 module Operations
   module Transformers
