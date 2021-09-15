@@ -13,6 +13,10 @@
   <body>
     <nav class="navbar navbar-dark bg-dark mb-3">
       <a class="navbar-brand" href="#">CRM Gateway</a>
+      <div class="text-white">
+        Host: <%= Rails.application.config.sugar_crm[:host] %> &nbsp; &nbsp;
+        User: <%= Rails.application.config.sugar_crm[:username] %>
+      </div>
     </nav>
 
     <div class="containter">
