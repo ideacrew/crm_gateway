@@ -5,3 +5,7 @@ default: &default
 
 development: *default
 test: *default
+production:
+  host: <%= ENV['SUGAR_CRM_HOST'] %>
+  username: <%= ENV['SUGAR_CRM_USERNAME'] %>
+  password: <%= ENV['SUGAR_CRM_PASSWORD'] %>
