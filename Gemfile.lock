@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ideacrew/aca_entities.git
-  revision: c7720a318d16cc9667abc3a2e0eb375d1ffb2bc2
+  revision: 8a1c1e2ed9b6079b392328d83379f10c99861238
   branch: fix_account_contact_contracts_classes_for_crm_gateway
   specs:
     aca_entities (0.4.0)
