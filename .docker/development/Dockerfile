@@ -1,4 +1,4 @@
-FROM ruby:2.7.2 AS crm_gateway
+FROM ruby:2.6.6 AS crm_gateway
 
 LABEL author="IdeaCrew"
 
@@ -31,12 +31,18 @@ RUN apt-get update && \
 RUN gem install --source "https://rubygems.org" bundler:2.2.14
 
 
-COPY . $HOME
+COPY Gemfile .
+COPY Gemfile.lock .
+COPY package.json .
+COPY yarn.lock .
 
 # Setting env up
 ENV RAILS_ENV='development'
 ENV NODE_ENV='development'
 
 # RUN bundle config set deployment 'true' && \
-RUN bundle install
-RUN yarn install
+RUN cat $HOME/Gemfile
+RUN cd $HOME && bundle install
+RUN cd $HOME && yarn install
+
+COPY . $HOME

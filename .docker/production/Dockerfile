@@ -2,7 +2,7 @@
 ###    app config    ###
 ########################
 
-FROM ruby:2.7.2 AS app
+FROM ruby:2.6.6 AS crm_gateway
 
 LABEL author="IdeaCrew"
 
