@@ -10,7 +10,7 @@
     <% if event.event_name_identifier == "Family Update" %>
       <td><%= event.data[:hbx_id] %></td>
       <td>
-        <%= event.data[:family_members].map { |p| p[:person][:person_name][:full_name] }.join("<br>").html_safe %>
+        <%= event_row(event) %>
       </td>
     <% end %>
     <td><%= event.event_name_identifier %></td>
