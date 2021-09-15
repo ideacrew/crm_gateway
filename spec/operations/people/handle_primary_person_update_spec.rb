@@ -51,6 +51,6 @@ RSpec.describe People::HandlePrimaryPersonUpdate, dbclean: :after_each do
   end
 
   it 'creates and updates an event' do
-    expect(subject.event.aasm_state).to eql(:successful)
+    expect(Event.where(event_name_identifier: "Primary Subscriber Update").last.aasm_state).to eq("")
   end
 end
