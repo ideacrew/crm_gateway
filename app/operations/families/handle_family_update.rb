@@ -5,7 +5,6 @@ module Families
   class HandleFamilyUpdate
     include Dry::Monads[:result, :do, :try]
     include EventSource::Command
-    require File.join(Rails.root, 'app', 'operations', 'transformers', 'family_to', 'family_to_account_and_contacts')
     require 'dry/monads'
     require 'dry/monads/do'
     require 'aca_entities/crms/accounts/account'
