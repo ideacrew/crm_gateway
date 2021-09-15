@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 module Subscribers
   # Receive family updates published from Enroll
   class FamilyUpdateSubscriber

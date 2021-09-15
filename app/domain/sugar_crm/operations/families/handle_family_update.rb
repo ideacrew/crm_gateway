@@ -15,6 +15,9 @@ module SugarCRM::Operations::Families
 
     # @return [Dry::Monads::Result]
     def call(family_payload)
+      if family_payload.class == String
+        family_payload = JSON.parse(family_payload).with_indifferent_access
+      end
       @event = Event.create(
         event_name_identifier: 'Family Update',
         data: family_payload
@@ -36,6 +39,7 @@ module SugarCRM::Operations::Families
     end
 
     def validate_contacts_and_accounts(initialized_contacts_and_accounts)
+      binding.irb
       account_validation_and_contract_validation = Crms::Accounts::AccountContract.new.call(initialized_contacts_and_accounts)
     end
   end
