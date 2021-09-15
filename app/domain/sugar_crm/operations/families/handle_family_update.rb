@@ -39,7 +39,6 @@ module SugarCRM::Operations::Families
     end
 
     def validate_contacts_and_accounts(initialized_contacts_and_accounts)
-      binding.irb
       account_validation_and_contract_validation = Crms::Accounts::AccountContract.new.call(initialized_contacts_and_accounts)
     end
   end
