@@ -56,7 +56,8 @@ module People
         last_name: person_payload.dig(:person_name, :last_name),
         date_of_birth: person_payload.dig(:person_demographics, :dob),
         email: person_payload[:emails].detect { |email| email[:address].present? }.try(:[], :address),
-        ssn: person_payload.dig(:person_demographics, :ssn)
+        ssn: person_payload.dig(:person_demographics, :ssn),
+        relationship_to_primary: "self"
       }
     end
 
