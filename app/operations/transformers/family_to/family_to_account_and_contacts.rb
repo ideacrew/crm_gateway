@@ -69,7 +69,6 @@ module Operations
           relationship[:kind]
         end
 
-
       end
     end
   end

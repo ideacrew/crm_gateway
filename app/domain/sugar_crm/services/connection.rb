@@ -12,17 +12,16 @@ module SugarCRM
         host, username, password = Rails.application.config.sugar_crm.values_at(:host, :username, :password)
         @client ||= OAuth2::Client.new('sugar', '', site: "https://#{host}", token_url: '/rest/v11_8/oauth2/token')
         @connection ||= @client.password.get_token(username, password,
-          params: {
-            username: username,
-            password: password,
-            grant_type: 'password',
-            platform: 'mobile'
-          }
-        )
+                                                   params: {
+                                                     username: username,
+                                                     password: password,
+                                                     grant_type: 'password',
+                                                     platform: 'mobile'
+                                                   })
       end
-      
+
       def self.refresh_token
-        @connection = connection.refresh! #should be truthy
+        @connection = connection.refresh! # should be truthy
       end
 
       delegate :get, :post, :put, :delete, to: 'self.class.connection'
@@ -38,7 +37,7 @@ module SugarCRM
         response = get('/rest/v11_8/Accounts', params: { filter: [{ hbxid_c: hbx_id }] })
         if response.parsed['records'].empty?
           false
-        else 
+        else
           response.parsed['records'].first['id']
         end
       end
@@ -53,7 +52,7 @@ module SugarCRM
       end
 
       def find_contacts_by_account(account_id)
-        response = get('/rest/v11_8/Contacts', params: { filter: [{'accounts.id': account_id}] })
+        response = get('/rest/v11_8/Contacts', params: { filter: [{ 'accounts.id': account_id }] })
         response.parsed
       end
 

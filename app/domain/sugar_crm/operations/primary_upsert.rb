@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'dry/monads'
 require 'dry/monads/do'
-require_relative "../../sugar_crm/services/connection"
+require_relative '../../sugar_crm/services/connection'
 
 module SugarCRM
   module Operations
+    # Passes in the primary payload to create an event
     class PrimaryUpsert
       include Dry::Monads[:result, :do, :try]
 
@@ -15,17 +18,17 @@ module SugarCRM
           hbx_id: @hbx_id
         )
         result = if existing_account.success?
-          yield update_account(
-            payload_to_account_params(payload)
-          )
-          yield update_contact(
-            payload_to_contact_params(payload)
-          )
-        else
-          yield create_account_and_contact(
-            payload
-          )
-        end
+                   yield update_account(
+                     payload_to_account_params(payload)
+                   )
+                   yield update_contact(
+                     payload_to_contact_params(payload)
+                   )
+                 else
+                   yield create_account_and_contact(
+                     payload
+                   )
+                 end
         Success(result)
       end
 
@@ -64,10 +67,10 @@ module SugarCRM
       end
 
       def find_existing_account(hbx_id:)
-        if existing_account = service.find_account_by_hbx_id(hbx_id)
+        if existing_account == service.find_account_by_hbx_id(hbx_id)
           Success(existing_account)
         else
-          Failure("No account found")
+          Failure('No account found')
         end
       end
 

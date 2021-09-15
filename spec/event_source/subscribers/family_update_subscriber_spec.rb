@@ -7,6 +7,6 @@ RSpec.describe Subscribers::FamilyUpdateSubscriber, dbclean: :after_each do
     Subscribers::FamilyUpdateSubscriber.new
   end
 
-  let(:payload) do
-  end
+  # let(:payload) do
+  # end
 end

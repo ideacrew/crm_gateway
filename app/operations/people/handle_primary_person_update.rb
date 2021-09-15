@@ -11,7 +11,7 @@ module People
     require 'aca_entities/crms/contracts/accounts/account_contract'
     require 'aca_entities/crms/contracts/contacts/contact_contract'
     require 'aca_entities/crms/contacts/contact'
-    require_relative "../../domain/sugar_crm/operations/primary_upsert"
+    require_relative '../../domain/sugar_crm/operations/primary_upsert'
 
     attr_reader :event
 

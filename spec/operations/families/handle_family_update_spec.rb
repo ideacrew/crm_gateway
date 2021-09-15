@@ -95,4 +95,3 @@ RSpec.describe SugarCRM::Operations::Families::HandleFamilyUpdate, dbclean: :aft
 end
 
 # rubocop:enable Layout/LineLength
-# rubocop:enable Naming/VariableNumber

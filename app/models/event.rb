@@ -10,7 +10,7 @@ class Event
   field :processed_at, type: DateTime, default: nil
   # field :failed_at, type: DateTime, default: nil
   field :completed_at, type: DateTime, default: nil
-  field :event_name_identifier, type: String, default: ""
+  field :event_name_identifier, type: String, default: ''
   field :data, type: Hash
   field :aasm_state, type: String
   field :account_id, type: String
@@ -45,23 +45,24 @@ class Event
   end
 
   def latest_timestamp
-    if self.aasm_state == 'processing'
-      return self.processed_at
-    elsif self.aasm_state == 'successful'
-      return self.completed_at
-    else self.aasm_state == 'received'
-      return self.created_at
+    case aasm_state
+    when 'processing'
+      processed_at
+    when 'successful'
+      completed_at
+    else
+      created_at
     end
   end
 
   def process
     self.processed_at = DateTime.now
-    self.process!
+    process!
   end
 
   def complete
     self.completed_at = DateTime.now
-    self.complete!
+    complete!
   end
 
   # def failure
@@ -75,12 +76,12 @@ class Event
 
   def morph
     html = ApplicationController.render(
-      partial: "events/event_row",
+      partial: 'events/event_row',
       locals: { event: self }
     )
     puts("Beginning row morph for event #{id}")
 
-    cable_ready["events"].morph(
+    cable_ready['events'].morph(
       selector: "#event-#{id}",
       html: html
     )

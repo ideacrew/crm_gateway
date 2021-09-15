@@ -105,10 +105,9 @@ RSpec.describe SugarCRM::Services::Connection do
       end
     end
 
-    it "updates the account" do
+    it 'updates the account' do
       expect(response['name']).to eql('Tim Robinson')
     end
-
   end
 
   describe '#update_contact' do
@@ -144,8 +143,7 @@ RSpec.describe SugarCRM::Services::Connection do
     end
   end
 
-  describe '#find_contact_by_hbx_id' do 
-
+  describe '#find_contact_by_hbx_id' do
     let(:response) do
       VCR.use_cassette('find_contact_by_hbx_id') do
         account = subject.create_account(payload: account_params)
@@ -161,9 +159,9 @@ RSpec.describe SugarCRM::Services::Connection do
     end
   end
 
-  describe "::refresh_token" do
-    it "refreshes the access token" do
-      VCR.use_cassette("refresh_token") do
+  describe '::refresh_token' do
+    it 'refreshes the access token' do
+      VCR.use_cassette('refresh_token') do
         expect(described_class.refresh_token).to be_an_instance_of(OAuth2::AccessToken)
       end
     end

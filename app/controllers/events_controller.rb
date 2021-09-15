@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+#Methods for @events
 class EventsController < ApplicationController
   def index
     @events = Event.all.to_a

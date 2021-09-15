@@ -121,21 +121,21 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
   end
 
   describe '#call' do
-    context "with an existing account and contact" do
+    context 'with an existing account and contact' do
       let(:account_id) do
         account = SugarCRM::Services::Connection.new.create_account(
           payload: described_class.new.payload_to_account_params(payload)
         )
         account['id']
       end
-  
+
       let(:contact) do
         SugarCRM::Services::Connection.new.create_contact_for_account(
           payload: described_class.new.payload_to_contact_params(payload).merge('account.id': account_id)
         )
       end
-  
-      let(:result) do 
+
+      let(:result) do
         VCR.use_cassette('primary_upsert_call_with_existing_account_and_contact') do
           contact
           payload[:person_name].merge!(first_name: "Johnathan")
@@ -144,18 +144,18 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
           )
         end
       end
-  
+
       it 'is a success' do
           expect(result.success?).to be_truthy
       end
-  
-      it "the value is a hash" do
+
+      it 'the value is a hash' do
         expect(result.value!).to be_an_instance_of(Hash)
       end
     end
 
-    context "without an existing account and contact" do
-      let(:result) do 
+    context 'without an existing account and contact' do
+      let(:result) do
         VCR.use_cassette('primary_upsert_call') do
           described_class.new.call(
             payload: payload
@@ -167,7 +167,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
         expect(result.success?).to be_truthy
       end
 
-      it "the value is a hash" do
+      it 'the value is a hash' do
         expect(result.value!).to be_an_instance_of(Hash)
       end
     end
@@ -212,12 +212,12 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
     end
   end
 
-  describe "#create_account_and_contact" do
+  describe '#create_account_and_contact' do
     subject do
       described_class.new
     end
 
-    let(:result) do 
+    let(:result) do
       VCR.use_cassette('create_account_and_contact_for_primary_upsert') do
         subject.create_account_and_contact(payload)
       end
@@ -227,7 +227,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
       expect(result.success?).to be_truthy
     end
 
-    it "the value is a hash" do
+    it 'the value is a hash' do
       expect(result.value!).to be_an_instance_of(Hash)
     end
   end
@@ -245,7 +245,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
       )
     end
 
-    let(:result) do 
+    let(:result) do
       VCR.use_cassette('update_account_for_primary_upsert') do
         account
         subject.update_account(subject.payload_to_account_params(payload))
@@ -256,7 +256,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
       expect(result.success?).to be_truthy
     end
 
-    it "the value is a hash" do
+    it 'the value is a hash' do
       expect(result.value!).to be_an_instance_of(Hash)
     end
   end
@@ -283,7 +283,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
       )
     end
 
-    let(:result) do 
+    let(:result) do
       VCR.use_cassette('update_contact_for_primary_upsert') do
         contact
         subject.update_contact(payload)
@@ -294,7 +294,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
       expect(result.success?).to be_truthy
     end
 
-    it "the value is a hash" do
+    it 'the value is a hash' do
       expect(result.value!).to be_an_instance_of(Hash)
     end
   end
