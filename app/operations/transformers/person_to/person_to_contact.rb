@@ -21,13 +21,16 @@ module Operations
 
         private
 
+        #rubocop:disable Lint/UnreachableCode
         def convert_payload(person_payload)
           return Failure()
           pereson_payload = person_payload.to_h
           payload = {}
           payload.merge!(to_contact(pereson_payload))
         end
+        #rubocop:enable Lint/UnreachableCode
 
+        #rubocop:disable Lint/UselessAssignment
         def to_contact(person_hash)
           payload = {
             hbx_id: person_hash[:hbx_id],
@@ -36,10 +39,11 @@ module Operations
             date_of_birth: person_hash[:person_demographics][:dob]&.to_date,
             gender: person_hash[:person_demographics][:gender],
             preferred_language: '',
-            email: person_hash[:emails]&.first[:address],
+            email: person_hash[:emails]&.first&.[](:address),
             ssn: person_hash[:person_demographics][:ssn]
           }
         end
+        #rubocop:enable Lint/UselessAssignment
       end
     end
   end

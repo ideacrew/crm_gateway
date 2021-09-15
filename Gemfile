@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -8,11 +10,12 @@ gem 'rails', '~> 6.1.3'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
+gem 'aasm', '~> 4.8'
 gem 'sass-rails', '>= 6'
-gem 'aasm',                     '~> 4.8'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'aca_entities',  git:  'https://github.com/ideacrew/aca_entities.git', branch: 'release_0.6.0'
+gem 'aca_entities', git: 'https://github.com/ideacrew/aca_entities.git',
+                    branch: 'fix_account_contact_contracts_classes_for_crm_gateway'
 # Enroll branch enroll_ridp_1.0 has some activity around this
 # https://github.com/ideacrew/enroll/tree/enroll_ridp_1.0/app/event_source
 gem 'event_source', git: 'https://github.com/ideacrew/event_source.git', branch: 'trunk'
@@ -26,13 +29,13 @@ gem 'dry-validation',       '~> 1.6'
 gem 'mongoid',              '~> 7.2.1'
 gem 'oauth2'
 gem 'overcommit'
-gem 'stimulus_reflex',      '~> 3.4'
+gem 'stimulus_reflex', '~> 3.4'
 gem 'webpacker'
 
 group :development, :test do
   gem 'brakeman'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'database_cleaner', '~> 1.7'
   gem 'factory_bot_rails'
   gem 'pry-byebug'
@@ -47,10 +50,9 @@ end
 group :development do
   gem 'listen', '~> 3.3'
   gem 'rubocop', require: false
-  gem 'rubocop-rspec'
   gem 'rubocop-git'
+  gem 'rubocop-rspec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

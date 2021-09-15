@@ -12,17 +12,16 @@ module SugarCRM
         host, username, password = Rails.application.config.sugar_crm.values_at(:host, :username, :password)
         @client ||= OAuth2::Client.new('sugar', '', site: "https://#{host}", token_url: '/rest/v11_8/oauth2/token')
         @connection ||= @client.password.get_token(username, password,
-          params: {
-            username: username,
-            password: password,
-            grant_type: 'password',
-            platform: 'mobile'
-          }
-        )
+                                                   params: {
+                                                     username: username,
+                                                     password: password,
+                                                     grant_type: 'password',
+                                                     platform: 'mobile'
+                                                   })
       end
-      
+
       def self.refresh_token
-        @connection = connection.refresh! #should be truthy
+        @connection = connection.refresh! # should be truthy
       end
 
       delegate :get, :post, :put, :delete, to: 'self.class.connection'
@@ -38,7 +37,7 @@ module SugarCRM
         response = get('/rest/v11_8/Accounts', params: { filter: [{ hbxid_c: hbx_id }] })
         if response.parsed['records'].empty?
           false
-        else 
+        else
           response.parsed['records'].first['id']
         end
       end
@@ -53,14 +52,13 @@ module SugarCRM
       end
 
       def find_contacts_by_account(account_id)
-        response = get('/rest/v11_8/Contacts', params: { filter: [{'accounts.id': account_id}] })
+        response = get('/rest/v11_8/Contacts', params: { filter: [{ 'accounts.id': account_id }] })
         response.parsed
       end
 
       def create_account(payload:)
         response = post('/rest/v11_8/Accounts',
-          params: payload
-        )
+                        params: payload)
         response.parsed
       end
 
@@ -71,7 +69,7 @@ module SugarCRM
         )
         response.parsed
       end
-      
+
       # pass name
       def update_account(hbx_id:, payload:)
         account = find_account_by_hbx_id(hbx_id)
@@ -82,7 +80,8 @@ module SugarCRM
         response.parsed
       end
 
-      def update_contact_by_hbx_id(hbx_id:, payload:) #change spec
+#change spec
+      def update_contact_by_hbx_id(hbx_id:, payload:)
         contact = find_contact_by_hbx_id(hbx_id)
         response = put(
           "/rest/v11_8/Contacts/#{contact}",

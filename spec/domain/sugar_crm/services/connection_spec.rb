@@ -7,28 +7,28 @@ RSpec.describe SugarCRM::Services::Connection do
 
   let(:account_params) do
     {
-      :hbxid_c=>"aa918614ae014d42bb8547a1ae5734e1",
-      :name=>"John Jacob",
-      :email1=>"example1@example.com",
-      :dob_c=>"1981-09-14",
-      :billing_address_street=>"1111 Awesome Street NE",
-      :billing_address_street_2=>"#111",
-      :billing_address_street_3=>"",
-      :billing_address_street_4=>nil,
-      :billing_address_city=>"Washington",
-      :billing_address_postalcode=>"01001",
-      :billing_address_state=>"DC",
-      :phone_office=>"2021030404"
+      :hbxid_c => "aa918614ae014d42bb8547a1ae5734e1",
+      :name => "John Jacob",
+      :email1 => "example1@example.com",
+      :dob_c => "1981-09-14",
+      :billing_address_street => "1111 Awesome Street NE",
+      :billing_address_street_2 => "#111",
+      :billing_address_street_3 => "",
+      :billing_address_street_4 => nil,
+      :billing_address_city => "Washington",
+      :billing_address_postalcode => "01001",
+      :billing_address_state => "DC",
+      :phone_office => "2021030404"
     }
   end
 
   let(:contact_params) do
     {
-      :hbxid_c=>"aa918614ae014d42bb8547a1ae5734e1",
-      :first_name=>"John",
-      :last_name=>"Jacob",
-      :phone_mobile=>"2021030404",
-      :email1=>"example1@example.com"
+      :hbxid_c => "aa918614ae014d42bb8547a1ae5734e1",
+      :first_name => "John",
+      :last_name => "Jacob",
+      :phone_mobile => "2021030404",
+      :email1 => "example1@example.com"
     }
   end
 
@@ -100,15 +100,14 @@ RSpec.describe SugarCRM::Services::Connection do
   describe '#update_account' do
     let(:response) do
       VCR.use_cassette('update_account') do
-        account = subject.create_account(payload: account_params)
+        subject.create_account(payload: account_params)
         subject.update_account(hbx_id: hbx_id, payload: account_params.merge('name': 'Tim Robinson'))
       end
     end
 
-    it "updates the account" do
+    it 'updates the account' do
       expect(response['name']).to eql('Tim Robinson')
     end
-
   end
 
   describe '#update_contact' do
@@ -124,7 +123,7 @@ RSpec.describe SugarCRM::Services::Connection do
       end
     end
 
-    it "should update contact" do 
+    it "should update contact" do
       expect(response['first_name']).to eql('Tim')
     end
   end
@@ -133,25 +132,24 @@ RSpec.describe SugarCRM::Services::Connection do
     let(:response) do
       VCR.use_cassette('update_contact_by_hbx_id') do
         account = subject.create_account(payload: account_params)
-         
+
         subject.create_contact_for_account(payload: contact_params.merge('account_id': account['id']))
         subject.update_contact_by_hbx_id(hbx_id: hbx_id, payload: contact_params.merge('first_name': 'Tim'))
       end
     end
 
-    it "should update contact" do 
+    it "should update contact" do
       expect(response['first_name']).to eql('Tim')
     end
   end
 
-  describe '#find_contact_by_hbx_id' do 
-
+  describe '#find_contact_by_hbx_id' do
     let(:response) do
       VCR.use_cassette('find_contact_by_hbx_id') do
         account = subject.create_account(payload: account_params)
-         
+
         subject.create_contact_for_account(payload: contact_params.merge('account.id': account['id']))
-          
+
         subject.find_contact_by_hbx_id(hbx_id)
       end
     end
@@ -161,9 +159,9 @@ RSpec.describe SugarCRM::Services::Connection do
     end
   end
 
-  describe "::refresh_token" do
-    it "refreshes the access token" do
-      VCR.use_cassette("refresh_token") do
+  describe '::refresh_token' do
+    it 'refreshes the access token' do
+      VCR.use_cassette('refresh_token') do
         expect(described_class.refresh_token).to be_an_instance_of(OAuth2::AccessToken)
       end
     end
