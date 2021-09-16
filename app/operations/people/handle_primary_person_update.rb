@@ -13,32 +13,39 @@ module People
     require 'aca_entities/crms/contacts/contact'
     require_relative "../../domain/sugar_crm/operations/primary_upsert"
 
-    attr_reader :event
+    attr_reader :event_log
 
     # @return [Dry::Monads::Result]
-    def call(person_payload)
+    def call(person_payload, event_retry=nil)
       # TODO: Coming through as a string on enroll for some reason
       if person_payload.class == String
         person_payload = JSON.parse(person_payload).with_indifferent_access
       end
-      @event = Event.create(
+      @event_log = event_retry || Event.create(
         event_name_identifier: 'Primary Subscriber Update',
         data: person_payload
       )
-      validated_payload = event_step(validate_contact(build_contact(person_payload)), 'process')
-      event_step(publish_to_crm(person_payload), 'complete')
-    end
-
-    def event_step(result, state = nil)
-      if result.failure?
-        @event.error_message = result.failure
-        @event.fail!
-      elsif state
-        @event.send(state)
+      @event_log.process!
+      result = publish_to_crm(person_payload)
+      if result.success?
+        @event_log.complete!
+        Success("Update the family")
+      else
+        @event_log.fail!
       end
-      @event.save!
       result
     end
+
+    # def event_step(result, state = nil)
+    #   if result.failure?
+    #     @event.error_message = result.failure
+    #     @event.fail!
+    #   elsif state
+    #     @event.send(state)
+    #   end
+    #   @event.save!
+    #   result
+    # end
 
     protected
 

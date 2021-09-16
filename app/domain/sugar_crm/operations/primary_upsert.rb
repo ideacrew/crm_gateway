@@ -59,7 +59,8 @@ module SugarCRM
           billing_address_city: payload[:addresses].first[:city],
           billing_address_postalcode: payload[:addresses].first[:zip],
           billing_address_state: payload[:addresses].first[:state],
-          phone_office: mobile_phone_finder(payload[:phones])
+          phone_office: mobile_phone_finder(payload[:phones]),
+          raw_ssn_c: payload[:person_demographics][:ssn]
         }
       end
 

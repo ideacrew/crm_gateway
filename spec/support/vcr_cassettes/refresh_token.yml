@@ -5,7 +5,7 @@ http_interactions:
     uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
     body:
       encoding: UTF-8
-      string: client_id=sugar&client_secret=&grant_type=refresh_token&refresh_token=01e7b6b0-3b5d-4dbc-8f56-60149fcc668a
+      string: client_id=sugar&client_secret=&grant_type=refresh_token&refresh_token=1ad4d49a-ee9a-47ac-81f1-f3232436a6c1
     headers:
       User-Agent:
       - Faraday v1.4.3
@@ -19,7 +19,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Wed, 15 Sep 2021 22:47:37 GMT
+      - Thu, 16 Sep 2021 16:39:47 GMT
       content-type:
       - application/json
       content-length:
@@ -27,8 +27,8 @@ http_interactions:
       connection:
       - keep-alive
       set-cookie:
-      - PHPSESSID=a39cb072-025f-4e98-be62-a33ad462c483; path=/, download_token_base=bac495f1-0442-488b-b89b-408bb0c5b4ff;
-        expires=Wed, 29-Sep-2021 22:47:37 GMT; Max-Age=1209600; path=/; HttpOnly
+      - PHPSESSID=56f04c39-9625-44ce-b051-3b242f1677d9; path=/, download_token_base=ccfc7d9f-cbc0-4b50-a5e8-da79ecd275b6;
+        expires=Thu, 30-Sep-2021 16:39:47 GMT; Max-Age=1209600; path=/; HttpOnly
       expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       cache-control:
@@ -37,6 +37,6 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"access_token":"a39cb072-025f-4e98-be62-a33ad462c483","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"4d98e02d-7c65-4760-96f1-6645ec780581","refresh_expires_in":1209600,"download_token":"bac495f1-0442-488b-b89b-408bb0c5b4ff"}'
-  recorded_at: Wed, 15 Sep 2021 22:47:37 GMT
+      string: '{"access_token":"56f04c39-9625-44ce-b051-3b242f1677d9","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"05094e1f-93fa-4d10-95e3-d71e081aa914","refresh_expires_in":1209600,"download_token":"ccfc7d9f-cbc0-4b50-a5e8-da79ecd275b6"}'
+  recorded_at: Thu, 16 Sep 2021 16:39:47 GMT
 recorded_with: VCR 6.0.0

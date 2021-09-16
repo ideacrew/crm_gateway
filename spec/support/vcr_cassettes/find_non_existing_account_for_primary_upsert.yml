@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v1.4.3
       Authorization:
-      - Bearer 97e22c47-fda3-48f9-8810-1dcd55f8faf6
+      - Bearer c38daabb-9af1-4b85-9dae-13eb3a3d78be
   response:
     status:
       code: 200
@@ -19,7 +19,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Wed, 15 Sep 2021 22:44:25 GMT
+      - Thu, 16 Sep 2021 15:55:20 GMT
       content-type:
       - application/json
       content-length:
@@ -37,5 +37,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"records":[],"next_offset":-1}'
-  recorded_at: Wed, 15 Sep 2021 22:44:25 GMT
+  recorded_at: Thu, 16 Sep 2021 15:55:20 GMT
 recorded_with: VCR 6.0.0

@@ -25,14 +25,14 @@ module SugarCRM
         @connection = connection.refresh! #should be truthy
       end
 
-      delegate :get, :post, :put, :delete, to: 'self.class.connection'
-      # [:get, :post, :put, :delete].each do |verb|
-      #   define_method(verb) do |path, params|
-      #     self.class.connection.send(verb, path, params)
-      #   rescue => ExpiredToken #Oath Exception
-      #     retry if self.class.refresh_token
-      #   end
-      # end
+      #delegate :get, :post, :put, :delete, to: 'self.class.connection'
+      [:get, :post, :put, :delete].each do |verb|
+        define_method(verb) do |path, params|
+          self.class.connection.send(verb, path, params)
+        rescue => ExpiredToken #Oath Exception
+          retry if self.class.refresh_token
+        end
+      end
 
       def find_account_by_hbx_id(hbx_id)
         response = get('/rest/v11_8/Accounts', params: { filter: [{ hbxid_c: hbx_id }] })

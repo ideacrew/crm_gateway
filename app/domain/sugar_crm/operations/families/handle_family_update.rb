@@ -15,26 +15,21 @@ module SugarCRM::Operations::Families
     attr_reader :event_log
 
     # @return [Dry::Monads::Result]
-    def call(family_payload)
+    def call(family_payload, event_retry=nil)
       if family_payload.class == String
         family_payload = JSON.parse(family_payload).with_indifferent_access
       end
-      @event_log = Event.create(
+      @event_log = event_retry || Event.create(
         event_name_identifier: 'Family Update',
         data: family_payload
       )
-      initialized_contacts_and_accounts = build_accounts_and_contacts(family_payload)
-      @event_log.process
-      @event_log.save!
-      validated_payload = yield validate_contacts_and_accounts(initialized_contacts_and_accounts)
+      event_log.process!
       result = publish_to_crm(family_payload)
       if result.success?
-        @event_log.complete
-        @event_log.save!
+        event_log.complete!
         Success("Update the family")
       else
-        @event_log.fail
-        @event_log.save!
+        event_log.fail!
       end
       result
     end

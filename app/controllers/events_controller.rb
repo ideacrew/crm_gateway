@@ -3,15 +3,13 @@ class EventsController < ApplicationController
     @events = Event.all.to_a
   end
 
-  def update
-    @events = Event.find_by(id: params[:id])
-  end
+  def retry
+    @event = Event.find(params[:id])
+    if @event.event_name_identifier == 'Family Update'
+      SugarCRM::Operations::Families:HandleFamilyUpdate.new.call(@event.data, @event)
 
-  def create
-    @events = Event.new(
-      event_name_identifier: event_name_identifier,
-      aasm_state: 'received'
-    )
-    @events.save
+    elsif @event.event_name_identifier == 'Primary Subscriber Update'
+      SugarCRM::Operations::Families:HandlePrimaryPersonUpdate.new.call(@event.data, @event)
+    end
   end
 end
