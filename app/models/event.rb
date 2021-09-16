@@ -16,6 +16,7 @@ class Event
   field :account_id, type: String
   field :contact_id, type: String
   field :error_message, type: String
+  field :error, type: String
 
   aasm do
     state :received, initial: true
@@ -37,6 +38,10 @@ class Event
 
     event :fail do
       transitions from: [:processing, :received], to: :failure
+    end
+
+    event :retry do
+      transitions from: :failure, to: :received
     end
   end
 
@@ -74,15 +79,27 @@ class Event
   end
 
   def morph
-    html = ApplicationController.render(
+    row_html = ApplicationController.render(
       partial: "events/event_row",
       locals: { event: self }
     )
     puts("Beginning row morph for event #{id}")
 
     cable_ready["events"].morph(
+      selector: "#event-row-#{id}",
+      html: row_html
+    )
+
+    cable_ready.broadcast
+
+    show_html = ApplicationController.render(
+      partial: "events/event",
+      locals: { event: self }
+    )
+
+    cable_ready["events"].morph(
       selector: "#event-#{id}",
-      html: html
+      html: show_html
     )
 
     cable_ready.broadcast

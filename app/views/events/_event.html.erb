@@ -1,0 +1,6 @@
+<div id="event-<%= event.id %>">
+  <% if event.error.present? %>
+    Error: <%= show(event.error_message).html_safe %>
+  <% end %> 
+  <%= show(event.data).html_safe %>
+</div>
