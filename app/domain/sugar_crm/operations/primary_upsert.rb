@@ -27,6 +27,8 @@ module SugarCRM
           )
         end
         Success(result)
+      rescue StandardError => e 
+        Failure(e.message)
       end
 
       def payload_to_contact_params(payload)
@@ -35,8 +37,14 @@ module SugarCRM
           first_name: payload[:person_name][:first_name],
           last_name: payload[:person_name][:last_name],
           phone_mobile: mobile_phone_finder(payload[:phones]), #spec
-          email1: payload[:emails].first[:address]
+          email1: payload[:emails].first[:address],
+          dob: convert_dob_to_string(payload[:person_demographics][:dob])
         }
+      end
+
+      def convert_dob_to_string(dob)
+        date = Date.parse(dob.to_s)
+        date.strftime("%a, %d %b %Y")
       end
 
       def mobile_phone_finder(payload)
@@ -51,7 +59,6 @@ module SugarCRM
           hbxid_c: payload[:hbx_id],
           name: "#{payload[:person_name][:first_name]} #{payload[:person_name][:last_name]}",
           email1: payload[:emails].first[:address],
-          dob_c: payload[:person_demographics][:dob],
           billing_address_street: payload[:addresses].first[:address_1],
           billing_address_street_2: payload[:addresses].first[:address_2],
           billing_address_street_3: payload[:addresses].first[:address_3],

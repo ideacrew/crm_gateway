@@ -31,21 +31,11 @@ module People
         @event_log.complete!
         Success("Update the family")
       else
+        @event_log.error_message = result.failure
         @event_log.fail!
       end
       result
     end
-
-    # def event_step(result, state = nil)
-    #   if result.failure?
-    #     @event.error_message = result.failure
-    #     @event.fail!
-    #   elsif state
-    #     @event.send(state)
-    #   end
-    #   @event.save!
-    #   result
-    # end
 
     protected
 

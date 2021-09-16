@@ -23,13 +23,14 @@ module SugarCRM::Operations::Families
         event_name_identifier: 'Family Update',
         data: family_payload
       )
-      event_log.process!
+      @event_log.process!
       result = publish_to_crm(family_payload)
       if result.success?
-        event_log.complete!
+        @event_log.complete!
         Success("Update the family")
       else
-        event_log.fail!
+        @event_log.error_message = result.failure
+        @event_log.fail!
       end
       result
     end

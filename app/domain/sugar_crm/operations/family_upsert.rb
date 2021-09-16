@@ -1,6 +1,7 @@
 require 'dry/monads'
 require 'dry/monads/do'
 require_relative "../../sugar_crm/services/connection"
+require 'date'
 
 module SugarCRM
   module Operations
@@ -11,10 +12,11 @@ module SugarCRM
 
       def call(payload:)
         payload = payload.deep_symbolize_keys
-        existing_account = yield find_existing_account(
+        existing_account = find_existing_account(
           hbx_id: payload[:hbx_id]
         )
-        contacts = yield find_contacts_by_account(existing_account)
+        return Failure(existing_account.failure) if existing_account.failure?
+        contacts = yield find_contacts_by_account(existing_account.value!)
         results = payload[:family_members].map do |family_member|
           matched_contact = match_family_member_to_contact(family_member: family_member, contacts: contacts)
           if matched_contact.success?
@@ -29,6 +31,8 @@ module SugarCRM
         else
           Success("Successful family update")
         end
+      rescue StandardError => e 
+        Failure(e.message)
       end
 
       def mobile_phone_finder(payload)
@@ -44,7 +48,6 @@ module SugarCRM
           hbxid_c: payload[:hbx_id],
           name: "#{payload[:person][:person_name][:first_name]} #{payload[:person][:person_name][:last_name]}",
           email1: payload[:emails].first[:address],
-          dob_c: payload[:person_demographics][:dob],
           billing_address_street: payload[:addresses].first[:address_1],
           billing_address_street_2: payload[:addresses].first[:address_2],
           billing_address_street_3: payload[:addresses].first[:address_3],
@@ -64,13 +67,19 @@ module SugarCRM
           last_name: payload[:person][:person_name][:last_name],
           phone_mobile: mobile_phone_finder(payload[:person][:phones]), 
           email1: payload[:person][:emails].first[:address],
-          # relationship_to_primary: person_relationship_finder(payload)
+          dob_c: convert_dob_to_string(payload[:person][:person_demographics][:dob]),
+          # relationship_c: person_relationship_finder(payload)
         }
+      end
+
+      def convert_dob_to_string(dob)
+        date = Date.parse(dob.to_s)
+        date.strftime("%a, %d %b %Y") 
       end
 
       def person_relationship_finder(relative_id, family_payload)
         @primary_family_member = family_payload[:family_members].detect { |fm| fm[:is_primary_applicant] == true }
-        relationship_to_primary = if family_member_hash[:is_primary_applicant] == true
+        relationship_to_primary = if family_payload[:is_primary_applicant] == true
           "self"
         else
           @primary_family_member[:person][:person_relationships].detect { |relative_hash| relative_hash[:relative][:hbx_id] == family_member_hash[:person][:hbx_id] }[:kind]
@@ -81,7 +90,7 @@ module SugarCRM
         if existing_account = service.find_account_by_hbx_id(hbx_id)
           Success(existing_account)
         else
-          Failure("No account found")
+          Failure("error": "no account found", "error_message": "No account found")
         end
       end
 
