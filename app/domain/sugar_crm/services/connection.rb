@@ -10,10 +10,10 @@ module SugarCRM
     class Connection
       def self.connection(force=false)
         host, username, password = Rails.application.config.sugar_crm.values_at(:host, :username, :password)
-        @client ||= OAuth2::Client.new('sugar', '', site: "https://#{host}", token_url: '/rest/v11_8/oauth2/token')
+        @client ||= OAuth2::Client.new('sugar', '', site: "#{Rails.env.production? ? 'http' : 'https'}://#{host}", token_url: '/rest/v11_8/oauth2/token')
         if @connection || !force
           @connection
-        else  
+        else
           @connection = @client.password.get_token(username, password,
             params: {
               username: username,
@@ -25,7 +25,7 @@ module SugarCRM
         end
         @connection
       end
-      
+
       #delegate :get, :post, :put, :delete, to: 'self.class.connection'
       [:get, :post, :put, :delete].each do |verb|
         define_method(verb) do |path, params|
