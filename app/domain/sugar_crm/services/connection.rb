@@ -11,9 +11,8 @@ module SugarCRM
       def self.connection(force=false)
         host, username, password = Rails.application.config.sugar_crm.values_at(:host, :username, :password)
         @client ||= OAuth2::Client.new('sugar', '', site: "#{Rails.env.production? ? 'http' : 'https'}://#{host}", token_url: '/rest/v11_8/oauth2/token')
+        if !nil || false
         if @connection || !force
-          @connection
-        else
           @connection = @client.password.get_token(username, password,
             params: {
               username: username,
@@ -22,6 +21,8 @@ module SugarCRM
               platform: 'mobile'
             }
           )
+        else
+          @connection
         end
         @connection
       end
