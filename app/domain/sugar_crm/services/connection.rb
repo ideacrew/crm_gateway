@@ -62,7 +62,8 @@ module SugarCRM
 
       def create_account(payload:)
         response = post('/rest/v11_8/Accounts',
-          params: payload
+          payload,
+          "Content-Type" => "application/json"
         )
         response.parsed
       end
@@ -70,7 +71,8 @@ module SugarCRM
       def create_contact_for_account(payload:)
         response = post(
           '/rest/v11_8/Contacts',
-          params: payload
+          payload,
+          "Content-Type" => "application/json"
         )
         response.parsed
       end
@@ -80,7 +82,8 @@ module SugarCRM
         account = find_account_by_hbx_id(hbx_id)
         response = put(
           "/rest/v11_8/Accounts/#{account}",
-          params: payload
+          payload,
+          "Content-Type" => "application/json"
         )
         response.parsed
       end
@@ -89,7 +92,8 @@ module SugarCRM
         contact = find_contact_by_hbx_id(hbx_id)
         response = put(
           "/rest/v11_8/Contacts/#{contact}",
-          params: payload
+          payload,
+          "Content-Type" => "application/json"
         )
         response.parsed
       end
@@ -97,7 +101,8 @@ module SugarCRM
       def update_contact(id:, payload:)
         response = put(
           "/rest/v11_8/Contacts/#{id}",
-          params: payload
+          payload,
+          "Content-Type" => "application/json"
         )
         response.parsed
       end
