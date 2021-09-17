@@ -8,29 +8,30 @@ module SugarCRM
 
     # Service class to create, maintain and utiltize a connection to SugarCRM
     class Connection
-      def self.connection
+      def self.connection(force=false)
         host, username, password = Rails.application.config.sugar_crm.values_at(:host, :username, :password)
         @client ||= OAuth2::Client.new('sugar', '', site: "https://#{host}", token_url: '/rest/v11_8/oauth2/token')
-        @connection ||= @client.password.get_token(username, password,
-          params: {
-            username: username,
-            password: password,
-            grant_type: 'password',
-            platform: 'mobile'
-          }
-        )
+        if @connection || !force
+          @connection
+        else  
+          @connection = @client.password.get_token(username, password,
+            params: {
+              username: username,
+              password: password,
+              grant_type: 'password',
+              platform: 'mobile'
+            }
+          )
+        end
+        @connection
       end
       
-      def self.refresh_token
-        @connection = connection.refresh! #should be truthy
-      end
-
       #delegate :get, :post, :put, :delete, to: 'self.class.connection'
       [:get, :post, :put, :delete].each do |verb|
         define_method(verb) do |path, params|
           self.class.connection.send(verb, path, params)
-        rescue => ExpiredToken #Oath Exception
-          retry if self.class.refresh_token
+        rescue StandardError => e
+          retry if self.class.connection(true)
         end
       end
 

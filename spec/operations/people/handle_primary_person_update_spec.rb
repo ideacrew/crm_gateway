@@ -43,7 +43,25 @@ RSpec.describe People::HandlePrimaryPersonUpdate, dbclean: :after_each do
 
       it "event shound have an error" do
         result
-        expect(subject.event_log.error_message).to_not be_nil
+        expect(subject.event_log.error).to eql("Unknown error")
+      end
+    end
+
+    context "with bad host" do
+      before do
+        host, username, password = Rails.application.config.sugar_crm.values_at(:host, :username, :password)
+        allow(Rails.application.config.sugar_crm).to receive(:values_at).and_return(
+          [ 
+            'bad_host',
+            Rails.application.config.sugar_crm[:username],
+            Rails.application.config.sugar_crm[:password]
+          ]
+        )
+      end
+
+      it "event shound have an error" do
+        result
+        expect(subject.event_log.error).to include("couldn't connect to host")
       end
     end
   end

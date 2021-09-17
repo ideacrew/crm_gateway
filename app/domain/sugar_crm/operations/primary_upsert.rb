@@ -27,8 +27,10 @@ module SugarCRM
           )
         end
         Success(result)
+      rescue Faraday::ConnectionFailed => e
+        Failure(error: "couldn't connect to host", error_message: e.message)
       rescue StandardError => e 
-        Failure(e.message)
+        Failure(error: 'Unknown error', error_message: e.message)
       end
 
       def payload_to_contact_params(payload)
@@ -38,13 +40,14 @@ module SugarCRM
           last_name: payload[:person_name][:last_name],
           phone_mobile: mobile_phone_finder(payload[:phones]), #spec
           email1: payload[:emails].first[:address],
-          dob: convert_dob_to_string(payload[:person_demographics][:dob])
+          birthdate: convert_dob_to_string(payload[:person_demographics][:dob]),
+          # relationship_c: 
         }
       end
 
       def convert_dob_to_string(dob)
         date = Date.parse(dob.to_s)
-        date.strftime("%a, %d %b %Y")
+        p date.strftime("%Y-%m-%d")
       end
 
       def mobile_phone_finder(payload)

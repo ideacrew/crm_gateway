@@ -31,7 +31,8 @@ module People
         @event_log.complete!
         Success("Update the family")
       else
-        @event_log.error_message = result.failure
+        @event_log.error = result.failure[:error]
+        @event_log.error_message = result.failure[:error_message]
         @event_log.fail!
       end
       result
@@ -40,7 +41,7 @@ module People
     protected
 
     def publish_to_crm(validated_payload)
-      pp validated_payload
+      validated_payload
       SugarCRM::Operations::PrimaryUpsert.new.call(payload: validated_payload)
     end
 
