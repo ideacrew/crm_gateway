@@ -1,6 +1,10 @@
 <div id="event-<%= event.id %>">
   <% if event.error.present? %>
     Error: <%= show(event.error_message).html_safe %>
+    </br>
+    <%= link_to archive_event_path, remote: true do %>
+      <button type="button">Archive Errors</button>
+    <% end %>
   <% end %> 
   <%= show(event.data).html_safe %>
 </div>

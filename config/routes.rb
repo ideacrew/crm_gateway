@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   resources :events, only: [ :show ] do
     get :retry, on: :member
+    get :archive, on: :member
   end
 end

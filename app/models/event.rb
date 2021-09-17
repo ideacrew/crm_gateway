@@ -8,7 +8,7 @@ class Event
   include CableReady::Broadcaster
 
   field :processed_at, type: DateTime, default: nil
-  # field :failed_at, type: DateTime, default: nil
+  field :failed_at, type: DateTime, default: nil
   field :completed_at, type: DateTime, default: nil
   field :event_name_identifier, type: String, default: ""
   field :data, type: Hash
@@ -17,6 +17,7 @@ class Event
   field :contact_id, type: String
   field :error_message, type: String
   field :error, type: String
+  field :archived, type: Boolean, default: false
 
   aasm do
     state :received, initial: true
@@ -43,6 +44,12 @@ class Event
     event :retry do
       transitions from: :failure, to: :received
     end
+  end
+
+  def archive
+    self.error = ''
+    self.error_message = ''
+    self.save!
   end
 
   def processed?

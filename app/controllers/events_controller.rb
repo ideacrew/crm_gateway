@@ -15,6 +15,12 @@ class EventsController < ApplicationController
     head :ok
   end
 
+  def archive 
+    @event = Event.find(params[:id])
+    @event.archive
+    head :ok
+  end
+  
   def show
     @event = Event.find(params[:id])
   end
