@@ -11,9 +11,8 @@
     </tr>
   </thead>
   <tbody>
-    <% events = @events.sort_by { |event| check_time(event) }.reverse! %>
-    <% events.each do |event| %>
-      <%= render partial: "event_row", locals: {event: event} %>
-    <% end %>    
+    <% @events.each do |event| %>
+      <%= render partial: "event_row", locals: { event: event } %>
+    <% end %>
   </tbody>
 </table>

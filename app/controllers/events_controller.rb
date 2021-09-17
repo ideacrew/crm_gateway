@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   def index
-    @events = Event.all.to_a
+    @events = Event.order_by(updated_at: :desc)
   end
 
   def retry

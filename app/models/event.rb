@@ -10,8 +10,8 @@ class Event
   field :processed_at, type: DateTime, default: nil
   field :failed_at, type: DateTime, default: nil
   field :completed_at, type: DateTime, default: nil
-  field :event_name_identifier, type: String, default: ""
-  field :data, type: Hash
+  field :event_name_identifier, type: String, default: ''
+  field :data, type: Hash, default: {}
   field :aasm_state, type: String
   field :account_id, type: String
   field :contact_id, type: String
@@ -81,11 +81,11 @@ class Event
   #   self.failure!
   # end
 
-  after_save do
-    morph
+  after_update do
+    update_morph
   end
 
-  def morph
+  def update_morph
     row_html = ApplicationController.render(
       partial: "events/event_row",
       locals: { event: self }
@@ -107,6 +107,24 @@ class Event
     cable_ready["events"].morph(
       selector: "#event-#{id}",
       html: show_html
+    )
+
+    cable_ready.broadcast
+  end
+
+  after_create do
+    create_morph
+  end
+
+  def create_morph
+    row_html = ApplicationController.render(
+      partial: "events/event_row",
+      locals: { event: self }
+    )
+
+    cable_ready['events'].prepend(
+      selector: 'table tbody',
+      html: row_html
     )
 
     cable_ready.broadcast

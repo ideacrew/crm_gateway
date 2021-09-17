@@ -1,34 +1,29 @@
-<% event ||= @event %>
-<tr 
+<tr
   id="<%= "event-row-#{event.id}" %>"
   scope="row"
   class="<%= 'table-danger' if event.failure? %>">
-  <% if event.data.present? %>
+  <td><%= event.data[:hbx_id] %></td>
+  <td>
     <% if event.event_name_identifier == "Primary Subscriber Update" %>
-      <td><%= event.data[:hbx_id] %></td>
-      <td><%= event.data.dig(:person_name, :first_name) %>
+        <%= event.data.dig(:person_name, :first_name) %>
         <%= event.data.dig(:person_name, :last_name) %>
-      </td>
     <% end %>
     <% if event.event_name_identifier == "Family Update" %>
-      <td><%= event.data[:hbx_id] %></td>
-      <td>
         <%= event_row(event) %>
-      </td>
     <% end %>
-    <td><%= event.event_name_identifier %></td>
-    <td><%= event.aasm_state %></td>
-    <td><%= event.error unless event.error_message.nil? %></td>
-    <td><%= event.latest_timestamp %></td>
-    <td>
-      <%= link_to event do %>
-        <i class="fas fa-info-circle"></i>
+  </td>
+  <td><%= event.event_name_identifier %></td>
+  <td><%= event.aasm_state %></td>
+  <td><%= event.error unless event.error_message.nil? %></td>
+  <td><%= time_ago_in_words event.latest_timestamp if event.latest_timestamp %></td>
+  <td>
+    <%= link_to event do %>
+      <i class="fas fa-info-circle"></i>
+    <% end %>
+    <% if event.failure? %>
+      <%= link_to retry_event_path(event), remote: true do %>
+        <i class="fas fa-redo"></i>
       <% end %>
-      <% if event.failure? %>
-        <%= link_to retry_event_path(event), remote: true do %>
-          <i class="fas fa-redo"></i>
-        <% end %>
-      <% end %>
-    </td>
-  <% end %>
+    <% end %>
+  </td>
 </tr>
