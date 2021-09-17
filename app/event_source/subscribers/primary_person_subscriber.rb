@@ -13,19 +13,19 @@ module Subscribers
 
       if family_update_result.success?
         logger.info(
-          'OK: :family_update successful and acked'
+          'OK: :primary subscriber update successful and acked'
         )
         ack(delivery_info.delivery_tag)
       else
         logger.error(
-          "Error: :family_update; nacked due to:#{family_update_result.inspect}"
+          "Error: :primary subscriber update; nacked due to:#{family_update_result.inspect}"
         )
         nack(delivery_info.delivery_tag)
       end
 
     rescue Exception => e
       logger.error(
-        "Exception: :family_update\n Exception: #{e.inspect}" +
+        "Exception: :primary subscriber update \n Exception: #{e.inspect}" +
         "\n Backtrace:\n" + e.backtrace.join("\n")
       )
       nack(delivery_info.delivery_tag)

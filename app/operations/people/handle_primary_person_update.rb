@@ -17,6 +17,7 @@ module People
 
     # @return [Dry::Monads::Result]
     def call(person_payload, event_retry=nil)
+      puts "event log #{@event_log}"
       # TODO: Coming through as a string on enroll for some reason
       if person_payload.class == String
         person_payload = JSON.parse(person_payload).with_indifferent_access
@@ -33,6 +34,7 @@ module People
       else
         @event_log.error = result.failure[:error]
         @event_log.error_message = result.failure[:error_message]
+        @event_log.error_backtrace = result.failure[:error_backtrace]
         @event_log.fail!
       end
       result

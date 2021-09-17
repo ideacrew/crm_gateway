@@ -160,12 +160,4 @@ RSpec.describe SugarCRM::Services::Connection do
       expect(response).to be_an_instance_of(String)
     end
   end
-
-  describe "::refresh_token" do
-    it "refreshes the access token" do
-      VCR.use_cassette("refresh_token") do
-        expect(described_class.refresh_token).to be_an_instance_of(OAuth2::AccessToken)
-      end
-    end
-  end
 end

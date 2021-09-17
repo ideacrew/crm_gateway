@@ -11,7 +11,6 @@ module SugarCRM
       def self.connection(force=false)
         host, username, password = Rails.application.config.sugar_crm.values_at(:host, :username, :password)
         @client ||= OAuth2::Client.new('sugar', '', site: "#{Rails.env.production? ? 'http' : 'https'}://#{host}", token_url: '/rest/v11_8/oauth2/token')
-        if !nil || false
         if @connection || !force
           @connection = @client.password.get_token(username, password,
             params: {
@@ -30,9 +29,11 @@ module SugarCRM
       #delegate :get, :post, :put, :delete, to: 'self.class.connection'
       [:get, :post, :put, :delete].each do |verb|
         define_method(verb) do |path, params|
+          tries ||= 1
           self.class.connection.send(verb, path, params)
-        rescue StandardError => e
-          retry if self.class.connection(true)
+        rescue Faraday::Error => e
+          tries += 1
+          retry if tries < 3 && self.class.connection(true)
         end
       end
 
@@ -41,7 +42,7 @@ module SugarCRM
         if response.parsed['records'].empty?
           false
         else 
-          response.parsed['records'].first['id']
+          response.parsed['records'].try(:first).try(:[], 'id')
         end
       end
 
@@ -50,7 +51,7 @@ module SugarCRM
         if response.parsed['records'].empty?
           false
         else
-          response.parsed['records'].first['id']
+          response.parsed['records'].try(:first).try(:[], 'id')
         end
       end
 
@@ -73,7 +74,7 @@ module SugarCRM
         )
         response.parsed
       end
-      
+
       # pass name
       def update_account(hbx_id:, payload:)
         account = find_account_by_hbx_id(hbx_id)

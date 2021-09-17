@@ -2,9 +2,7 @@
   <% if event.error.present? %>
     Error: <%= show(event.error_message).html_safe %>
     </br>
-    <%= link_to archive_event_path, remote: true do %>
-      <button type="button">Archive Errors</button>
-    <% end %>
+    Backtrace: <%= event.error_backtrace.join("</br>").html_safe %>
   <% end %> 
   <%= show(event.data).html_safe %>
 </div>

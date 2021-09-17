@@ -16,6 +16,7 @@ class Event
   field :account_id, type: String
   field :contact_id, type: String
   field :error_message, type: String
+  field :error_backtrace, type: Array, default: []
   field :error, type: String
   field :archived, type: Boolean, default: false
 

@@ -9,7 +9,9 @@ RSpec.describe SugarCRM::Operations::FamilyUpsert do
     {
       "hbx_id"=>"a95878c60b424759935bca542832d5b7",
       "family_members"=>
-       [{"hbx_id"=>"a95878c60b424759935bca542832d5b7",
+       [
+        {
+           "hbx_id"=>"a95878c60b424759935bca542832d5b7",
          "is_primary_applicant"=>true,
          "is_consent_applicant"=>false,
          "is_coverage_applicant"=>true,
@@ -25,8 +27,8 @@ RSpec.describe SugarCRM::Operations::FamilyUpsert do
              "full_name"=>"Doe John",
              "alternate_name"=>nil},
            "person_demographics"=>
-            {"ssn"=>nil,
-             "no_ssn"=>true,
+            {"ssn"=>"775481172",
+             "no_ssn"=>false,
              "gender"=>"male",
              "dob"=>"1972-04-04",
              "date_of_death"=>nil,
@@ -52,8 +54,8 @@ RSpec.describe SugarCRM::Operations::FamilyUpsert do
                 "first_name"=>"Doe",
                 "middle_name"=>nil,
                 "last_name"=>"John",
-                "ssn"=>nil,
-                "no_ssn"=>true,
+                "ssn"=>"768252862",
+                "no_ssn"=>false,
                 "dob"=>"1972-04-04",
                 "gender"=>"male"},
               "kind"=>"self"},
@@ -275,7 +277,8 @@ RSpec.describe SugarCRM::Operations::FamilyUpsert do
       :billing_address_city=>"Washington",
       :billing_address_postalcode=>"01001",
       :billing_address_state=>"DC",
-      :phone_office=>"2021030404"
+      :phone_office=>"2021030404",
+      :ssn=>"768252862"
     }
   end
 
@@ -510,7 +513,9 @@ RSpec.describe SugarCRM::Operations::FamilyUpsert do
 
     let(:result) do
       VCR.use_cassette('create_contact_family_upsert') do
-        described_class.new.create_contact(
+        instance = described_class.new
+        instance.instance_variable_set(:@payload, payload.deep_symbolize_keys)
+        instance.create_contact(
           account_id: account_id,
           params: family_member
         )

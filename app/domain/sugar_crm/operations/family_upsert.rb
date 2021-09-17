@@ -15,6 +15,7 @@ module SugarCRM
         existing_account = find_existing_account(
           hbx_id: payload[:hbx_id]
         )
+        @payload = payload
         return Failure(existing_account.failure) if existing_account.failure?
         contacts = yield find_contacts_by_account(existing_account.value!)
         results = payload[:family_members].map do |family_member|
@@ -22,8 +23,7 @@ module SugarCRM
           if matched_contact.success?
             update_existing_contact(id: matched_contact.value!['id'], params: family_member)
           else
-            @account ||= find_existing_account(hbx_id: payload['hbx_id'])
-            create_contact(account_id: @account, params: family_member)
+            create_contact(account_id: existing_account.value!, params: family_member)
           end
         end
         if failing_result = results.detect(&:failure?)
@@ -32,7 +32,7 @@ module SugarCRM
           Success("Successful family update")
         end
       rescue StandardError => e 
-        Failure(e.message)
+        Failure(e)
       end
 
       def mobile_phone_finder(payload)
@@ -43,7 +43,6 @@ module SugarCRM
       end
 
       def payload_to_account_params(payload)
-        pp payload
         {
           hbxid_c: payload[:hbx_id],
           name: "#{payload[:person][:person_name][:first_name]} #{payload[:person][:person_name][:last_name]}",
@@ -67,23 +66,25 @@ module SugarCRM
           last_name: payload[:person][:person_name][:last_name],
           phone_mobile: mobile_phone_finder(payload[:person][:phones]), 
           email1: payload[:person][:emails].first[:address],
-          dob_c: convert_dob_to_string(payload[:person][:person_demographics][:dob]),
-          # relationship_c: person_relationship_finder(payload)
+          birthdate: convert_dob_to_string(payload[:person][:person_demographics][:dob]),
+          relationship_c: person_relationship_finder(payload[:hbx_id])
         }
       end
 
       def convert_dob_to_string(dob)
         date = Date.parse(dob.to_s)
-        date.strftime("%a, %d %b %Y") 
+        date.strftime("%Y-%m-%d")
       end
 
-      def person_relationship_finder(relative_id, family_payload)
-        @primary_family_member = family_payload[:family_members].detect { |fm| fm[:is_primary_applicant] == true }
-        relationship_to_primary = if family_payload[:is_primary_applicant] == true
-          "self"
-        else
-          @primary_family_member[:person][:person_relationships].detect { |relative_hash| relative_hash[:relative][:hbx_id] == family_member_hash[:person][:hbx_id] }[:kind]
+      def person_relationship_finder(hbx_id_to_match)
+        @primary_family_member ||= @payload[:family_members].detect { |fm| fm[:is_primary_applicant] == true }
+        return "self" if hbx_id_to_match == @primary_family_member[:hbx_id]
+        
+        matched_relative = @primary_family_member[:person][:person_relationships].detect do |relative_hash| 
+          relative_hash[:relative][:hbx_id] == hbx_id_to_match
         end
+        pp "matched relative #{matched_relative}"
+        matched_relative[:kind].titleize
       end
 
       def find_existing_account(hbx_id:)
@@ -123,7 +124,7 @@ module SugarCRM
 
       def create_contact(account_id:, params:)
         contact = service.create_contact_for_account(
-          payload: { **payload_to_contact_params(params), 'account.id': account_id }
+          payload: payload_to_contact_params(params).merge('account.id': account_id)
         )
         Failure("Couldn't create contact") unless contact
         Success(contact)
@@ -132,8 +133,6 @@ module SugarCRM
       def service
         @service ||= SugarCRM::Services::Connection.new
       end
-
-
     end
   end
 end
