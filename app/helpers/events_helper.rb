@@ -6,4 +6,13 @@ module EventsHelper
     def show(event)
         ap event
     end
+
+    def check_time(event)
+        if event.latest_timestamp.present?
+            return event.latest_timestamp
+        else
+            event.latest_timestamp
+            return DateTime.new(0)
+        end
+    end
 end
