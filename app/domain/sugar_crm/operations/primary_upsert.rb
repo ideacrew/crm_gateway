@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'dry/monads'
 require 'dry/monads/do'
 require_relative "../../sugar_crm/services/connection"
 
 module SugarCRM
   module Operations
+    # class for creating or updating a primary account and contact
     class PrimaryUpsert
       include Dry::Monads[:result, :do, :try]
 
@@ -15,17 +18,17 @@ module SugarCRM
           hbx_id: @hbx_id
         )
         result = if existing_account.success?
-          yield update_account(
-            payload_to_account_params(payload)
-          )
-          yield update_contact(
-            payload_to_contact_params(payload)
-          )
-        else
-          yield create_account_and_contact(
-            payload
-          )
-        end
+                   yield update_account(
+                     payload_to_account_params(payload)
+                   )
+                   yield update_contact(
+                     payload_to_contact_params(payload)
+                   )
+                 else
+                   yield create_account_and_contact(
+                     payload
+                   )
+                 end
         Success(result)
       rescue Faraday::ConnectionFailed => e
         Failure(error: "couldn't connect to host", error_message: e.message, error_backtrace: e.backtrace)
@@ -51,9 +54,9 @@ module SugarCRM
       end
 
       def mobile_phone_finder(payload)
-        phone_number = payload.detect { |number| number[:kind] == 'mobile' } || 
-          payload.detect { |number| number[:kind] == 'home' } ||
-          payload.first
+        phone_number = payload.detect { |number| number[:kind] == 'mobile' } ||
+                       payload.detect { |number| number[:kind] == 'home' } ||
+                       payload.first
         phone_number&.dig(:full_phone_number)
       end
 
@@ -106,7 +109,7 @@ module SugarCRM
       end
 
       def update_contact(payload)
-        contact = service.update_contact_by_hbx_id( 
+        contact = service.update_contact_by_hbx_id(
           hbx_id: @hbx_id,
           payload: payload
         )

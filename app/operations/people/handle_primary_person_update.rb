@@ -16,12 +16,10 @@ module People
     attr_reader :event_log
 
     # @return [Dry::Monads::Result]
-    def call(person_payload, event_retry=nil)
-      puts "event log #{@event_log}"
+    def call(person_payload, event_retry = nil)
+      Rails.logger.debug { "event log #{@event_log}" }
       # TODO: Coming through as a string on enroll for some reason
-      if person_payload.class == String
-        person_payload = JSON.parse(person_payload).with_indifferent_access
-      end
+      person_payload = JSON.parse(person_payload).with_indifferent_access if person_payload.instance_of?(String)
       @event_log = event_retry || Event.create(
         event_name_identifier: 'Primary Subscriber Update',
         data: person_payload
@@ -43,7 +41,6 @@ module People
     protected
 
     def publish_to_crm(validated_payload)
-      validated_payload
       SugarCRM::Operations::PrimaryUpsert.new.call(payload: validated_payload)
     end
 
@@ -63,7 +60,7 @@ module People
       result = AcaEntities::Crms::Contacts::ContactContract.new.call(contact_payload)
       if result.success?
         Success(result.to_h)
-      else 
+      else
         Failure(result.errors.to_h)
       end
     end

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# class for Events Rails controller for managing events
 class EventsController < ApplicationController
   def index
     @events = Event.not.archived.order_by(updated_at: :desc).limit(200)
@@ -17,9 +20,10 @@ class EventsController < ApplicationController
   def retry
     @event = Event.find(params[:id])
     @event.retry!
-    if @event.event_name_identifier == 'Family Update'
+    case @event.event_name_identifier
+    when 'Family Update'
       SugarCRM::Operations::Families::HandleFamilyUpdate.new.call(@event.data, @event)
-    elsif @event.event_name_identifier == 'Primary Subscriber Update'
+    when 'Primary Subscriber Update'
       People::HandlePrimaryPersonUpdate.new.call(@event.data, @event)
     end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe "Events", type: :request do
@@ -5,7 +7,7 @@ RSpec.describe "Events", type: :request do
     pending "add some examples (or delete) #{__FILE__}"
   end
 
-  describe 'GET /:id/retry' do 
+  describe 'GET /:id/retry' do
     let(:event) do
       Event.create(
         event_name_identifier: 'Family Update',
@@ -25,10 +27,10 @@ RSpec.describe "Events", type: :request do
         get 'retry', params: {id: event.id}
         expect(event_handler).to have_received(:call)
       end
- 
+
     end
-    
-    context "retry of a primary" do 
+
+    context "retry of a primary" do
       let(:event_name_identifier) {"Primary Update"}
     end
   end

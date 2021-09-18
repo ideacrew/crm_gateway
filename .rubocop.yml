@@ -76,6 +76,9 @@ Layout/IndentationStyle:
 Layout/TrailingWhitespace:
   Enabled: true
 
+Lint/AssignmentInCondition:
+  Enabled: false
+
 Metrics/AbcSize:
   Max: 50
 

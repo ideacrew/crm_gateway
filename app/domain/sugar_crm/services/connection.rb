@@ -8,18 +8,17 @@ module SugarCRM
 
     # Service class to create, maintain and utiltize a connection to SugarCRM
     class Connection
-      def self.connection(force=false)
+      def self.connection(force: false)
         host, username, password = Rails.application.config.sugar_crm.values_at(:host, :username, :password)
         @client ||= OAuth2::Client.new('sugar', '', site: "#{Rails.env.production? ? 'http' : 'https'}://#{host}", token_url: '/rest/v11_8/oauth2/token')
         if @connection || !force
           @connection = @client.password.get_token(username, password,
-            params: {
-              username: username,
-              password: password,
-              grant_type: 'password',
-              platform: 'mobile'
-            }
-          )
+                                                   params: {
+                                                     username: username,
+                                                     password: password,
+                                                     grant_type: 'password',
+                                                     platform: 'mobile'
+                                                   })
         else
           @connection
         end
@@ -31,9 +30,9 @@ module SugarCRM
         define_method(verb) do |path, params|
           tries ||= 1
           self.class.connection.send(verb, path, params)
-        rescue Faraday::Error => e
-          tries += 1
-          retry if tries < 3 && self.class.connection(true)
+        rescue Faraday::Error =>
+          tries += 1 # rubocop:disable Lint/Syntax
+          retry if tries < 3 && self.class.connection(force: true)
         end
       end
 
@@ -41,7 +40,7 @@ module SugarCRM
         response = get('/rest/v11_8/Accounts', params: { filter: [{ hbxid_c: hbx_id }] })
         if response.parsed['records'].empty?
           false
-        else 
+        else
           response.parsed['records'].try(:first).try(:[], 'id')
         end
       end
@@ -89,7 +88,8 @@ module SugarCRM
         response.parsed
       end
 
-      def update_contact_by_hbx_id(hbx_id:, payload:) #change spec
+      # change spec
+      def update_contact_by_hbx_id(hbx_id:, payload:)
         contact = find_contact_by_hbx_id(hbx_id)
         response = put(
           "/rest/v11_8/Contacts/#{contact}",
