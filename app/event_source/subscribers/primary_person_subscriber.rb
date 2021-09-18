@@ -9,16 +9,16 @@ module Subscribers
     # rubocop:disable Style/LineEndConcatenation
     # rubocop:disable Style/StringConcatenation
     subscribe(:on_primary_subscriber_update) do |delivery_info, _properties, payload|
-      family_update_result = ::People::HandlePrimaryPersonUpdate.new.call(payload)
+      person_update_result = ::People::HandlePrimaryPersonUpdate.new.call(payload)
 
-      if family_update_result.success?
+      if person_update_result.success?
         logger.info(
           'OK: :primary subscriber update successful and acked'
         )
         ack(delivery_info.delivery_tag)
       else
         logger.error(
-          "Error: :primary subscriber update; nacked due to:#{family_update_result.inspect}"
+          "Error: :primary subscriber update; nacked due to:#{person_update_result.inspect}"
         )
         nack(delivery_info.delivery_tag)
       end
@@ -26,7 +26,7 @@ module Subscribers
     rescue Exception => e
       logger.error(
         "Exception: :primary subscriber update \n Exception: #{e.inspect}" +
-        "\n Backtrace:\n" + e.backtrace.join("\n")
+        "\nBacktrace:\n" + e.backtrace.join("\n")
       )
       nack(delivery_info.delivery_tag)
     end

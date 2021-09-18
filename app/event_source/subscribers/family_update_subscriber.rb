@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Subscribers
   # Receive family updates published from Enroll
   class FamilyUpdateSubscriber
@@ -27,7 +26,7 @@ module Subscribers
     rescue Exception => e
       logger.error(
         "Exception: :family_update\n Exception: #{e.inspect}" +
-        "\n Backtrace:\n" + e.backtrace.join("\n")
+        "\nBacktrace:\n" + e.backtrace.join("\n")
       )
       nack(delivery_info.delivery_tag)
     end
