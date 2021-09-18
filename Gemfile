@@ -17,16 +17,17 @@ gem 'aca_entities',  git:  'https://github.com/ideacrew/aca_entities.git', branc
 # https://github.com/ideacrew/enroll/tree/enroll_ridp_1.0/app/event_source
 gem 'event_source', git: 'https://github.com/ideacrew/event_source.git', branch: 'trunk'
 
-gem 'dry-matcher',          '~> 0.8'
-gem 'dry-monads',           '~> 1.3'
-gem 'dry-struct',           '~> 1.3'
+gem 'awesome_print'
+gem 'dry-matcher',     '~> 0.8'
+gem 'dry-monads',      '~> 1.3'
+gem 'dry-struct',      '~> 1.3'
 gem 'dry-transaction'
-gem 'dry-types',            '~> 1.4'
-gem 'dry-validation',       '~> 1.6'
-gem 'mongoid',              '~> 7.2.1'
+gem 'dry-types',       '~> 1.4'
+gem 'dry-validation',  '~> 1.6'
+gem 'mongoid',         '~> 7.2.1'
 gem 'oauth2'
 gem 'overcommit'
-gem 'stimulus_reflex',      '~> 3.4'
+gem 'stimulus_reflex', '~> 3.4'
 gem 'webpacker'
 
 group :development, :test do
@@ -38,21 +39,19 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'pry-stack_explorer'
-  gem 'rspec-rails',            '~> 4.0'
-  gem 'shoulda-matchers',       '~> 3'
+  gem 'rspec-rails',      '~> 4.0'
+  gem 'shoulda-matchers', '~> 3'
   gem 'vcr'
   gem 'yard'
 end
 
 group :development do
   gem 'listen', '~> 3.3'
-  gem 'rubocop', require: false
-  gem 'rubocop-rspec'
-  gem 'rubocop-git'
+  gem 'rubocop',       require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-git',   require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-
-gem "awesome_print", "~> 1.9"
