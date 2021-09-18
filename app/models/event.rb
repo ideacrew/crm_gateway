@@ -8,7 +8,7 @@ class Event
   include CableReady::Broadcaster
 
   field :processed_at, type: DateTime, default: nil
-  field :failed_at, type: DateTime, default: nil
+  field :failure_at, type: DateTime, default: nil
   field :completed_at, type: DateTime, default: nil
   field :event_name_identifier, type: String, default: ''
   field :data, type: Hash, default: {}
@@ -20,7 +20,9 @@ class Event
   field :error, type: String
   field :archived, type: Boolean, default: false
 
-  aasm do
+  scope :archived, ->{ where(archived: true) }
+
+  aasm timestamps: true do
     state :received, initial: true
     state :processing
     state :successful
@@ -43,14 +45,18 @@ class Event
     end
 
     event :retry do
+      before do
+        self.error = nil
+        self.error_message = nil
+        self.error_backtrace = []
+      end
+
       transitions from: :failure, to: :received
     end
   end
 
-  def archive
-    self.error = ''
-    self.error_message = ''
-    self.save!
+  def archive!
+    update!(archived: true)
   end
 
   def processed?
@@ -58,40 +64,41 @@ class Event
   end
 
   def latest_timestamp
-    if self.aasm_state == 'processing'
-      return self.processed_at
-    elsif self.aasm_state == 'successful'
-      return self.completed_at
-    else self.aasm_state == 'received'
-      return self.created_at
+    case aasm_state
+    when 'received'
+      created_at
+    when 'processing'
+      processed_at
+    when 'successful'
+      completed_at
+    when 'failure'
+      failure_at
+    else
+      updated_at
     end
   end
 
-  def process
-    self.processed_at = DateTime.now
-    self.process!
-  end
-
-  def complete
-    self.completed_at = DateTime.now
-    self.complete!
-  end
-
-  # def failure
-  #   self.failed_at = DateTime.now
-  #   self.failure!
-  # end
-
   after_update do
-    update_morph
+    archived? ? archive_morph : row_morph
+    show_morph
+  end
+
+  def archive_morph
+    cable_ready['events'].remove(
+      selector: "#event-row-#{id}"
+    )
+    cable_ready.broadcast
   end
 
   def update_morph
+    show_morph
+  end
+
+  def row_morph
     row_html = ApplicationController.render(
-      partial: "events/event_row",
+      partial: "events/row",
       locals: { event: self }
     )
-    puts("Beginning row morph for event #{id}")
 
     cable_ready["events"].morph(
       selector: "#event-row-#{id}",
@@ -99,7 +106,9 @@ class Event
     )
 
     cable_ready.broadcast
+  end
 
+  def show_morph
     show_html = ApplicationController.render(
       partial: "events/event",
       locals: { event: self }
@@ -119,7 +128,7 @@ class Event
 
   def create_morph
     row_html = ApplicationController.render(
-      partial: "events/event_row",
+      partial: "events/row",
       locals: { event: self }
     )
 

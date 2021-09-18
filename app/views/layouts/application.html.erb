@@ -12,8 +12,19 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-dark bg-dark mb-3">
-      <a class="navbar-brand" href="#">CRM Gateway</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+      <%= link_to 'CRM Gateway', root_url, class: 'navbar-brand' %>
+
+      <ul class="navbar-nav mr-auto">
+          <li class="<%= class_names('nav-item', active: current_page?(controller: 'events', action: 'index')) %>">
+            <%= link_to 'Home', root_url, class: 'nav-link' %>
+          </li>
+          <li class="<%= class_names('nav-item', active: current_page?(controller: 'events', action: 'archived')) %>">
+            <%= link_to 'Archived', archived_events_path, class: 'nav-link' %>
+          </li>
+        </ul>
+      </div>
+
       <div class="text-white">
         Host: <%= Rails.application.config.sugar_crm[:host] %> &nbsp; &nbsp;
         User: <%= Rails.application.config.sugar_crm[:username] %>

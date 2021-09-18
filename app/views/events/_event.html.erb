@@ -1,8 +1,46 @@
 <div id="event-<%= event.id %>">
+  <div class='row'>
+    <div class='col-2 text-right font-weight-bolder'>
+      Status
+    </div>
+    <div class='col-8'>
+      <%= event.aasm_state.titleize %>
+    </div>
+    <div class='col-2'>
+      <%= form_with model: event, local: false do |form| %>
+        <%= form.hidden_field :archived, value: !event.archived %>
+        <%= form.button class: 'btn btn-primary' do %>
+          <i class="fas fa-archive"></i>&nbsp; <%= event.archived? ? 'Un-archive' : 'Archive' %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
   <% if event.error.present? %>
-    Error: <%= show(event.error_message).html_safe %>
-    </br>
-    Backtrace: <%= event.error_backtrace.join("</br>").html_safe %>
-  <% end %> 
-  <%= show(event.data).html_safe %>
+    <div class='row'>
+      <div class='col-2 text-right font-weight-bolder'>
+        Error
+      </div>
+      <div class='col-10'>
+        <pre><%= event.error_message %></pre>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-2 text-right font-weight-bolder'>
+        Backtrace
+      </div>
+      <div class='col-10'>
+        <pre class='debug-dump'>
+          <%= event.error_backtrace.join("</br>").html_safe %>
+        </pre>
+      </div>
+    </div>
+  <% end %>
+  <div class='row'>
+    <div class='col-2 text-right font-weight-bolder'>
+      Payload
+    </div>
+    <div class='col-10'>
+      <%= ap(event.data).html_safe %>
+    </div>
+  </div>
 </div>
