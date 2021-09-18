@@ -53,6 +53,7 @@ group :development do
   gem 'rubocop-rspec', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-git',   require: false
+  gem 'prettier',      require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -30,7 +30,7 @@ module SugarCRM
         define_method(verb) do |path, params|
           tries ||= 1
           self.class.connection.send(verb, path, params)
-        rescue Faraday::Error =>
+        rescue Faraday::Error
           tries += 1 # rubocop:disable Lint/Syntax
           retry if tries < 3 && self.class.connection(force: true)
         end
