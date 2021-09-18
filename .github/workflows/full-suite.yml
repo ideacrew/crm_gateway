@@ -2,11 +2,11 @@ name: full check suite
 on:
   push:
   schedule:
-    - cron: '0 6 * * *'
+    - cron: "0 6 * * *"
 
 env:
-  REPORT_PATH: 'ci/cuke-report.json'
-  CUCUMBER_SPLIT_CONFIGURATION_PATH: 'ci/cucumber-split-config.json'
+  REPORT_PATH: "ci/cuke-report.json"
+  CUCUMBER_SPLIT_CONFIGURATION_PATH: "ci/cucumber-split-config.json"
 
 jobs:
   rubocop:
@@ -28,9 +28,7 @@ jobs:
           bundle install
       - name: Run rubocop
         run: |
-          git config diff.renameLimit 800
-          git fetch --no-tags --depth=1 origin trunk
-          bundle exec rubocop-git origin/trunk | grep "no offenses detected"
+          rubocop
   brakeman:
     needs: [rubocop]
     runs-on: ubuntu-latest
@@ -67,7 +65,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
       - uses: actions/setup-node@v2
         with:
-          node-version: '12'
+          node-version: "12"
       - uses: getong/rabbitmq-action@v1.2
         with:
           rabbitmq version: "3.8.2-management-alpine"
@@ -77,7 +75,7 @@ jobs:
           rabbitmq vhost: "/"
       - uses: wbari/start-mongoDB@v0.2
         with:
-          mongoDBVersion: '3.6'
+          mongoDBVersion: "3.6"
       - name: Restore project gems
         uses: actions/cache@v2
         with:
@@ -104,6 +102,6 @@ jobs:
         run: yarn install
       - name: Run tests
         env:
-          RSPEC_SPLIT_CONFIGURATION_PATH: 'ci/rspec-split-config.json'
-          TEST_BOOSTERS_RSPEC_TEST_FILE_PATTERN: '{spec,components/benefit_markets,components/benefit_sponsors,components/notifier,components/sponsored_benefits,components/transport_gateway,components/transport_profiles}/**/*_spec.rb'
+          RSPEC_SPLIT_CONFIGURATION_PATH: "ci/rspec-split-config.json"
+          TEST_BOOSTERS_RSPEC_TEST_FILE_PATTERN: "{spec,components/benefit_markets,components/benefit_sponsors,components/notifier,components/sponsored_benefits,components/transport_gateway,components/transport_profiles}/**/*_spec.rb"
         run: rspec_booster --job ${{ matrix.group }}/${{ strategy.job-total }}
