@@ -2,15 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts?billing_address_city=Washington&billing_address_postalcode=01001&billing_address_state=DC&billing_address_street=1111+Awesome+Street+NE&billing_address_street_2=%23111&billing_address_street_3=&billing_address_street_4&dob_c=1981-09-14&email1=example1%40example.com&hbxid_c=aa918614ae014d42bb8547a1ae5734e1&name=John+Jacob&phone_office=2021030404
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: client_id=sugar&client_secret=&grant_type=password&params%5Bgrant_type%5D=password&params%5Bpassword%5D=SUGAR_CRM_ENCODED_PASSWORD>&params%5Bplatform%5D=mobile&params%5Busername%5D=<SUGAR_CRM_USERNAME>&password=SUGAR_CRM_ENCODED_PASSWORD>&username=<SUGAR_CRM_USERNAME>
     headers:
       User-Agent:
       - Faraday v1.4.3
-      Authorization:
-      - Bearer bbef286c-89b1-4754-81d9-5da37e301779
+      Content-Type:
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
@@ -19,7 +19,50 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Thu, 16 Sep 2021 16:39:35 GMT
+      - Sun, 19 Sep 2021 00:14:32 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '248'
+      connection:
+      - keep-alive
+      set-cookie:
+      - PHPSESSID=o1rsj0eicojhvl7d2h6bi0dnbr; path=/, PHPSESSID=85458a16-7ff2-4253-ac6f-a691c17e8925;
+        path=/, download_token_base=0439a2b1-880a-46a6-962d-4ddd1bfbca90; expires=Sun,
+        03-Oct-2021 00:14:32 GMT; Max-Age=1209600; path=/; HttpOnly
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate
+      pragma:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"85458a16-7ff2-4253-ac6f-a691c17e8925","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"4ae63ca2-1e46-456e-947a-4264638470ee","refresh_expires_in":1209600,"download_token":"0439a2b1-880a-46a6-962d-4ddd1bfbca90"}'
+  recorded_at: Sun, 19 Sep 2021 00:14:32 GMT
+- request:
+    method: post
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts
+    body:
+      encoding: UTF-8
+      string: '{"hbxid_c":"aa918614ae014d42bb8547a1ae5734e1","name":"John Jacob","email1":"example1@example.com","dob_c":"1981-09-14","billing_address_street":"1111
+        Awesome Street NE","billing_address_street_2":"#111","billing_address_street_3":"","billing_address_street_4":null,"billing_address_city":"Washington","billing_address_postalcode":"01001","billing_address_state":"DC","phone_office":"2021030404"}'
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer 85458a16-7ff2-4253-ac6f-a691c17e8925
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Sun, 19 Sep 2021 00:14:33 GMT
       content-type:
       - application/json
       content-length:
@@ -34,9 +77,9 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"id":"acc7deb4-170c-11ec-90c9-0241d1fb84dd","name":"John Jacob","date_entered":"2021-09-16T12:39:34-04:00","date_modified":"2021-09-16T12:39:34-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
+      string: '{"id":"9047fd22-18de-11ec-a03a-0241d1fb84dd","name":"John Jacob","date_entered":"2021-09-18T20:14:32-04:00","date_modified":"2021-09-18T20:14:32-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
         Transue","modified_user_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"created_by":"d09fe726-feb8-11eb-a595-0241d1fb84dd","created_by_name":"Bill
         Transue","created_by_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"description":"","deleted":false,"facebook":"","twitter":"","googleplus":"","account_type":"","industry":"","annual_revenue":"","phone_fax":"","billing_address_street":"1111
-        Awesome Street NE\n#111","billing_address_street_2":"","billing_address_street_3":"","billing_address_street_4":"","billing_address_city":"Washington","billing_address_state":"DC","billing_address_postalcode":"01001","billing_address_country":"","rating":"","phone_office":"2021030404","phone_alternate":"","website":"","ownership":"","employees":"","ticker_symbol":"","shipping_address_street":"","shipping_address_street_2":"","shipping_address_street_3":"","shipping_address_street_4":"","shipping_address_city":"","shipping_address_state":"","shipping_address_postalcode":"","shipping_address_country":"","service_level":"","parent_id":"","sic_code":"","duns_num":"","parent_name":"","member_of":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"campaign_id":"","campaign_name":"","campaign_accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"next_renewal_date":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd","primary_address":true,"reply_to_address":false}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","raw_ssn_c":"","last_ea_action_at_c":"","dob_c":"1981-09-14","broker_c":"","next_best_action_c":"","hbxid_c":"aa918614ae014d42bb8547a1ae5734e1","ssn_c":"XXX-XX-","last_ea_action_c":"","enroll_account_link_c":"","_acl":{"fields":{}},"_module":"Accounts"}'
-  recorded_at: Thu, 16 Sep 2021 16:39:35 GMT
+        Awesome Street NE\n#111","billing_address_street_2":"","billing_address_street_3":"","billing_address_street_4":"","billing_address_city":"Washington","billing_address_state":"DC","billing_address_postalcode":"01001","billing_address_country":"","rating":"","phone_office":"2021030404","phone_alternate":"","website":"","ownership":"","employees":"","ticker_symbol":"","shipping_address_street":"","shipping_address_street_2":"","shipping_address_street_3":"","shipping_address_street_4":"","shipping_address_city":"","shipping_address_state":"","shipping_address_postalcode":"","shipping_address_country":"","service_level":"","parent_id":"","sic_code":"","duns_num":"","parent_name":"","member_of":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"campaign_id":"","campaign_name":"","campaign_accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"next_renewal_date":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd","primary_address":true,"reply_to_address":false}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","raw_ssn_c":"","last_ea_action_at_c":"","dob_c":"1981-09-14","broker_c":"","next_best_action_c":"","hbxid_c":"aa918614ae014d42bb8547a1ae5734e1","last_ea_action_c":"","enroll_account_link_c":"","ssn_c":"XXX-XX-","_acl":{"fields":{}},"_module":"Accounts"}'
+  recorded_at: Sun, 19 Sep 2021 00:14:33 GMT
 recorded_with: VCR 6.0.0

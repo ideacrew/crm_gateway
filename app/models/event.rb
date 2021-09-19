@@ -7,9 +7,9 @@ class Event
   include AASM
   include CableReady::Broadcaster
 
-  field :processed_at, type: DateTime, default: nil
+  field :processing_at, type: DateTime, default: nil
   field :failure_at, type: DateTime, default: nil
-  field :completed_at, type: DateTime, default: nil
+  field :successful_at, type: DateTime, default: nil
   field :event_name_identifier, type: String, default: ''
   field :data, type: Hash, default: {}
   field :aasm_state, type: String
@@ -68,9 +68,9 @@ class Event
     when 'received'
       created_at
     when 'processing'
-      processed_at
+      processing_at
     when 'successful'
-      completed_at
+      successful_at
     when 'failure'
       failure_at
     else

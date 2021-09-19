@@ -19,7 +19,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Thu, 16 Sep 2021 16:33:42 GMT
+      - Sun, 19 Sep 2021 00:14:56 GMT
       content-type:
       - application/json
       content-length:
@@ -27,9 +27,9 @@ http_interactions:
       connection:
       - keep-alive
       set-cookie:
-      - PHPSESSID=nbidemc8c8hs8bnmbbpt87qqph; path=/, PHPSESSID=859a2874-b4d8-4e94-b687-4efb5ed01a38;
-        path=/, download_token_base=0be54419-86b6-493d-9d00-7ca4e08ba8ac; expires=Thu,
-        30-Sep-2021 16:33:42 GMT; Max-Age=1209600; path=/; HttpOnly
+      - PHPSESSID=l8po12s9uq7t5o771varunup8q; path=/, PHPSESSID=75508c58-45e7-430f-80c9-622056c62010;
+        path=/, download_token_base=f365978e-e80a-44f0-89f5-b24f8da3b9ea; expires=Sun,
+        03-Oct-2021 00:14:56 GMT; Max-Age=1209600; path=/; HttpOnly
       expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       cache-control:
@@ -38,8 +38,8 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"access_token":"859a2874-b4d8-4e94-b687-4efb5ed01a38","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"f4f42132-1a8d-4330-aaab-a4f48809167e","refresh_expires_in":1209600,"download_token":"0be54419-86b6-493d-9d00-7ca4e08ba8ac"}'
-  recorded_at: Thu, 16 Sep 2021 16:33:42 GMT
+      string: '{"access_token":"75508c58-45e7-430f-80c9-622056c62010","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"507b4c94-971a-4c83-b06a-0b0887456d6b","refresh_expires_in":1209600,"download_token":"f365978e-e80a-44f0-89f5-b24f8da3b9ea"}'
+  recorded_at: Sun, 19 Sep 2021 00:14:56 GMT
 - request:
     method: get
     uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts?filter%5B%5D%5Bhbxid_c%5D=73018c3b05824fc7abd40d3f41973765
@@ -50,7 +50,7 @@ http_interactions:
       User-Agent:
       - Faraday v1.4.3
       Authorization:
-      - Bearer 859a2874-b4d8-4e94-b687-4efb5ed01a38
+      - Bearer 75508c58-45e7-430f-80c9-622056c62010
   response:
     status:
       code: 200
@@ -59,7 +59,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Thu, 16 Sep 2021 16:33:42 GMT
+      - Sun, 19 Sep 2021 00:14:56 GMT
       content-type:
       - application/json
       content-length:
@@ -73,15 +73,55 @@ http_interactions:
       pragma:
       - ''
       etag:
-      - 4ecfe633cd192e56c5c435cfc4d82972
+      - 76bceebc3db3d1787e48018f5851aafa
     body:
       encoding: UTF-8
       string: '{"next_offset":-1,"records":[{"id":"9a1d3dbc-1654-11ec-b683-0241d1fb84dd","name":"Doe
-        John","date_entered":"2021-09-15T14:41:55-04:00","date_modified":"2021-09-16T12:31:52-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
+        John","date_entered":"2021-09-15T14:41:55-04:00","date_modified":"2021-09-17T15:35:20-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
         Transue","modified_user_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"created_by":"d09fe726-feb8-11eb-a595-0241d1fb84dd","created_by_name":"Bill
         Transue","created_by_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"description":"","deleted":false,"facebook":"","twitter":"","googleplus":"","account_type":"","industry":"","annual_revenue":"","phone_fax":"","billing_address_street":"1111
-        Awesome Street NE\n#111","billing_address_street_2":"","billing_address_street_3":"","billing_address_street_4":"","billing_address_city":"Washington","billing_address_state":"DC","billing_address_postalcode":"01001","billing_address_country":"","rating":"","phone_office":"20211111111","phone_alternate":"","website":"","ownership":"","employees":"","ticker_symbol":"","shipping_address_street":"","shipping_address_street_2":"","shipping_address_street_3":"","shipping_address_street_4":"","shipping_address_city":"","shipping_address_state":"","shipping_address_postalcode":"","shipping_address_country":"","service_level":"","parent_id":"","sic_code":"","duns_num":"","parent_name":"","member_of":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"campaign_id":"","campaign_name":"","campaign_accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"next_renewal_date":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","primary_address":true,"reply_to_address":false,"invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd"}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","raw_ssn_c":"779672992","last_ea_action_at_c":"","dob_c":"1972-04-04","broker_c":"","next_best_action_c":"","hbxid_c":"73018c3b05824fc7abd40d3f41973765","ssn_c":"XXX-XX-2992","last_ea_action_c":"","enroll_account_link_c":"","_acl":{"fields":{}},"_module":"Accounts"}]}'
-  recorded_at: Thu, 16 Sep 2021 16:33:42 GMT
+        Awesome Street NE\n#111","billing_address_street_2":"","billing_address_street_3":"","billing_address_street_4":"","billing_address_city":"Washington","billing_address_state":"DC","billing_address_postalcode":"01001","billing_address_country":"","rating":"","phone_office":"20211111111","phone_alternate":"","website":"","ownership":"","employees":"","ticker_symbol":"","shipping_address_street":"","shipping_address_street_2":"","shipping_address_street_3":"","shipping_address_street_4":"","shipping_address_city":"","shipping_address_state":"","shipping_address_postalcode":"","shipping_address_country":"","service_level":"","parent_id":"","sic_code":"","duns_num":"","parent_name":"","member_of":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"campaign_id":"","campaign_name":"","campaign_accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"next_renewal_date":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","primary_address":true,"reply_to_address":false,"invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd"}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","raw_ssn_c":"779672992","last_ea_action_at_c":"","dob_c":"1972-04-04","broker_c":"","next_best_action_c":"","hbxid_c":"73018c3b05824fc7abd40d3f41973765","last_ea_action_c":"","enroll_account_link_c":"","ssn_c":"XXX-XX-2992","_acl":{"fields":{}},"_module":"Accounts"}]}'
+  recorded_at: Sun, 19 Sep 2021 00:14:56 GMT
+- request:
+    method: post
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
+    body:
+      encoding: UTF-8
+      string: client_id=sugar&client_secret=&grant_type=password&params%5Bgrant_type%5D=password&params%5Bpassword%5D=SUGAR_CRM_ENCODED_PASSWORD>&params%5Bplatform%5D=mobile&params%5Busername%5D=<SUGAR_CRM_USERNAME>&password=SUGAR_CRM_ENCODED_PASSWORD>&username=<SUGAR_CRM_USERNAME>
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Sun, 19 Sep 2021 00:14:56 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '248'
+      connection:
+      - keep-alive
+      set-cookie:
+      - PHPSESSID=tm9mvml87uvtut5jqli0eqonc2; path=/, PHPSESSID=fe3a785f-01b7-4840-93e5-161dce5a878f;
+        path=/, download_token_base=8c2d47db-f7ac-4c34-b9d9-0a4ddcb3868e; expires=Sun,
+        03-Oct-2021 00:14:56 GMT; Max-Age=1209600; path=/; HttpOnly
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate
+      pragma:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"fe3a785f-01b7-4840-93e5-161dce5a878f","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"689e1e54-ffa4-4e88-a2d5-69abdd36d519","refresh_expires_in":1209600,"download_token":"8c2d47db-f7ac-4c34-b9d9-0a4ddcb3868e"}'
+  recorded_at: Sun, 19 Sep 2021 00:14:56 GMT
 - request:
     method: get
     uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts?filter%5B%5D%5Bhbxid_c%5D=73018c3b05824fc7abd40d3f41973765
@@ -92,7 +132,7 @@ http_interactions:
       User-Agent:
       - Faraday v1.4.3
       Authorization:
-      - Bearer 859a2874-b4d8-4e94-b687-4efb5ed01a38
+      - Bearer fe3a785f-01b7-4840-93e5-161dce5a878f
   response:
     status:
       code: 200
@@ -101,7 +141,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Thu, 16 Sep 2021 16:33:42 GMT
+      - Sun, 19 Sep 2021 00:14:56 GMT
       content-type:
       - application/json
       content-length:
@@ -115,26 +155,69 @@ http_interactions:
       pragma:
       - ''
       etag:
-      - 4ecfe633cd192e56c5c435cfc4d82972
+      - 76bceebc3db3d1787e48018f5851aafa
     body:
       encoding: UTF-8
       string: '{"next_offset":-1,"records":[{"id":"9a1d3dbc-1654-11ec-b683-0241d1fb84dd","name":"Doe
-        John","date_entered":"2021-09-15T14:41:55-04:00","date_modified":"2021-09-16T12:31:52-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
+        John","date_entered":"2021-09-15T14:41:55-04:00","date_modified":"2021-09-17T15:35:20-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
         Transue","modified_user_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"created_by":"d09fe726-feb8-11eb-a595-0241d1fb84dd","created_by_name":"Bill
         Transue","created_by_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"description":"","deleted":false,"facebook":"","twitter":"","googleplus":"","account_type":"","industry":"","annual_revenue":"","phone_fax":"","billing_address_street":"1111
-        Awesome Street NE\n#111","billing_address_street_2":"","billing_address_street_3":"","billing_address_street_4":"","billing_address_city":"Washington","billing_address_state":"DC","billing_address_postalcode":"01001","billing_address_country":"","rating":"","phone_office":"20211111111","phone_alternate":"","website":"","ownership":"","employees":"","ticker_symbol":"","shipping_address_street":"","shipping_address_street_2":"","shipping_address_street_3":"","shipping_address_street_4":"","shipping_address_city":"","shipping_address_state":"","shipping_address_postalcode":"","shipping_address_country":"","service_level":"","parent_id":"","sic_code":"","duns_num":"","parent_name":"","member_of":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"campaign_id":"","campaign_name":"","campaign_accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"next_renewal_date":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","primary_address":true,"reply_to_address":false,"invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd"}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","raw_ssn_c":"779672992","last_ea_action_at_c":"","dob_c":"1972-04-04","broker_c":"","next_best_action_c":"","hbxid_c":"73018c3b05824fc7abd40d3f41973765","ssn_c":"XXX-XX-2992","last_ea_action_c":"","enroll_account_link_c":"","_acl":{"fields":{}},"_module":"Accounts"}]}'
-  recorded_at: Thu, 16 Sep 2021 16:33:42 GMT
+        Awesome Street NE\n#111","billing_address_street_2":"","billing_address_street_3":"","billing_address_street_4":"","billing_address_city":"Washington","billing_address_state":"DC","billing_address_postalcode":"01001","billing_address_country":"","rating":"","phone_office":"20211111111","phone_alternate":"","website":"","ownership":"","employees":"","ticker_symbol":"","shipping_address_street":"","shipping_address_street_2":"","shipping_address_street_3":"","shipping_address_street_4":"","shipping_address_city":"","shipping_address_state":"","shipping_address_postalcode":"","shipping_address_country":"","service_level":"","parent_id":"","sic_code":"","duns_num":"","parent_name":"","member_of":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"campaign_id":"","campaign_name":"","campaign_accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"next_renewal_date":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","primary_address":true,"reply_to_address":false,"invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd"}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","raw_ssn_c":"779672992","last_ea_action_at_c":"","dob_c":"1972-04-04","broker_c":"","next_best_action_c":"","hbxid_c":"73018c3b05824fc7abd40d3f41973765","last_ea_action_c":"","enroll_account_link_c":"","ssn_c":"XXX-XX-2992","_acl":{"fields":{}},"_module":"Accounts"}]}'
+  recorded_at: Sun, 19 Sep 2021 00:14:56 GMT
+- request:
+    method: post
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
+    body:
+      encoding: UTF-8
+      string: client_id=sugar&client_secret=&grant_type=password&params%5Bgrant_type%5D=password&params%5Bpassword%5D=SUGAR_CRM_ENCODED_PASSWORD>&params%5Bplatform%5D=mobile&params%5Busername%5D=<SUGAR_CRM_USERNAME>&password=SUGAR_CRM_ENCODED_PASSWORD>&username=<SUGAR_CRM_USERNAME>
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Sun, 19 Sep 2021 00:14:57 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '248'
+      connection:
+      - keep-alive
+      set-cookie:
+      - PHPSESSID=c577pc7ou24b86n5uebn9aeiek; path=/, PHPSESSID=b46a8b41-6ae4-4bf3-af72-e5532bf1a253;
+        path=/, download_token_base=ed551411-2471-4b54-a893-d9ad99b32e45; expires=Sun,
+        03-Oct-2021 00:14:57 GMT; Max-Age=1209600; path=/; HttpOnly
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate
+      pragma:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"b46a8b41-6ae4-4bf3-af72-e5532bf1a253","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"0c1482de-6a97-4437-9ad8-306dc84c3b9c","refresh_expires_in":1209600,"download_token":"ed551411-2471-4b54-a893-d9ad99b32e45"}'
+  recorded_at: Sun, 19 Sep 2021 00:14:57 GMT
 - request:
     method: put
-    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts/9a1d3dbc-1654-11ec-b683-0241d1fb84dd?billing_address_city=Washington&billing_address_postalcode=01001&billing_address_state=DC&billing_address_street=1111+Awesome+Street+NE&billing_address_street_2=%23111&billing_address_street_3=&billing_address_street_4&dob_c=1972-04-04&email1=example1%40example.com&hbxid_c=73018c3b05824fc7abd40d3f41973765&name=Doe+John&phone_office=20211111111&raw_ssn_c=779672992
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts/9a1d3dbc-1654-11ec-b683-0241d1fb84dd
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: '{"hbxid_c":"73018c3b05824fc7abd40d3f41973765","name":"Doe John","email1":"example1@example.com","billing_address_street":"1111
+        Awesome Street NE","billing_address_street_2":"#111","billing_address_street_3":"","billing_address_street_4":null,"billing_address_city":"Washington","billing_address_postalcode":"01001","billing_address_state":"DC","phone_office":"20211111111","raw_ssn_c":"779672992","dob_c":"1972-04-04"}'
     headers:
       User-Agent:
       - Faraday v1.4.3
+      Content-Type:
+      - application/json
       Authorization:
-      - Bearer 859a2874-b4d8-4e94-b687-4efb5ed01a38
+      - Bearer b46a8b41-6ae4-4bf3-af72-e5532bf1a253
   response:
     status:
       code: 200
@@ -143,7 +226,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Thu, 16 Sep 2021 16:33:42 GMT
+      - Sun, 19 Sep 2021 00:14:57 GMT
       content-type:
       - application/json
       content-length:
@@ -158,11 +241,51 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"id":"9a1d3dbc-1654-11ec-b683-0241d1fb84dd","name":"Doe John","date_entered":"2021-09-15T14:41:55-04:00","date_modified":"2021-09-16T12:33:42-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
+      string: '{"id":"9a1d3dbc-1654-11ec-b683-0241d1fb84dd","name":"Doe John","date_entered":"2021-09-15T14:41:55-04:00","date_modified":"2021-09-18T20:14:57-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
         Transue","modified_user_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"created_by":"d09fe726-feb8-11eb-a595-0241d1fb84dd","created_by_name":"Bill
         Transue","created_by_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"description":"","deleted":false,"facebook":"","twitter":"","googleplus":"","account_type":"","industry":"","annual_revenue":"","phone_fax":"","billing_address_street":"1111
-        Awesome Street NE\n#111","billing_address_street_2":"","billing_address_street_3":"","billing_address_street_4":"","billing_address_city":"Washington","billing_address_state":"DC","billing_address_postalcode":"01001","billing_address_country":"","rating":"","phone_office":"20211111111","phone_alternate":"","website":"","ownership":"","employees":"","ticker_symbol":"","shipping_address_street":"","shipping_address_street_2":"","shipping_address_street_3":"","shipping_address_street_4":"","shipping_address_city":"","shipping_address_state":"","shipping_address_postalcode":"","shipping_address_country":"","service_level":"","parent_id":"","sic_code":"","duns_num":"","parent_name":"","member_of":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"campaign_id":"","campaign_name":"","campaign_accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"next_renewal_date":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd","primary_address":true,"reply_to_address":false}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","raw_ssn_c":"779672992","last_ea_action_at_c":"","dob_c":"1972-04-04","broker_c":"","next_best_action_c":"","hbxid_c":"73018c3b05824fc7abd40d3f41973765","ssn_c":"XXX-XX-2992","last_ea_action_c":"","enroll_account_link_c":"","_acl":{"fields":{}},"_module":"Accounts"}'
-  recorded_at: Thu, 16 Sep 2021 16:33:42 GMT
+        Awesome Street NE\n#111","billing_address_street_2":"","billing_address_street_3":"","billing_address_street_4":"","billing_address_city":"Washington","billing_address_state":"DC","billing_address_postalcode":"01001","billing_address_country":"","rating":"","phone_office":"20211111111","phone_alternate":"","website":"","ownership":"","employees":"","ticker_symbol":"","shipping_address_street":"","shipping_address_street_2":"","shipping_address_street_3":"","shipping_address_street_4":"","shipping_address_city":"","shipping_address_state":"","shipping_address_postalcode":"","shipping_address_country":"","service_level":"","parent_id":"","sic_code":"","duns_num":"","parent_name":"","member_of":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"campaign_id":"","campaign_name":"","campaign_accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"next_renewal_date":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd","primary_address":true,"reply_to_address":false}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","raw_ssn_c":"779672992","last_ea_action_at_c":"","dob_c":"1972-04-04","broker_c":"","next_best_action_c":"","hbxid_c":"73018c3b05824fc7abd40d3f41973765","last_ea_action_c":"","enroll_account_link_c":"","ssn_c":"XXX-XX-2992","_acl":{"fields":{}},"_module":"Accounts"}'
+  recorded_at: Sun, 19 Sep 2021 00:14:57 GMT
+- request:
+    method: post
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
+    body:
+      encoding: UTF-8
+      string: client_id=sugar&client_secret=&grant_type=password&params%5Bgrant_type%5D=password&params%5Bpassword%5D=SUGAR_CRM_ENCODED_PASSWORD>&params%5Bplatform%5D=mobile&params%5Busername%5D=<SUGAR_CRM_USERNAME>&password=SUGAR_CRM_ENCODED_PASSWORD>&username=<SUGAR_CRM_USERNAME>
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Sun, 19 Sep 2021 00:14:57 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '248'
+      connection:
+      - keep-alive
+      set-cookie:
+      - PHPSESSID=v7s6t6tfcmh8003ag3orl82d80; path=/, PHPSESSID=151b67c5-2d5a-468e-8dec-af7eade785e7;
+        path=/, download_token_base=7da98fc3-2e6a-4192-b4b7-6dba7d7f2c00; expires=Sun,
+        03-Oct-2021 00:14:57 GMT; Max-Age=1209600; path=/; HttpOnly
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate
+      pragma:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"151b67c5-2d5a-468e-8dec-af7eade785e7","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"ce2adbff-caaf-400e-acca-6e6ddd30ebe6","refresh_expires_in":1209600,"download_token":"7da98fc3-2e6a-4192-b4b7-6dba7d7f2c00"}'
+  recorded_at: Sun, 19 Sep 2021 00:14:57 GMT
 - request:
     method: get
     uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Contacts?filter%5B%5D%5Bhbxid_c%5D=73018c3b05824fc7abd40d3f41973765
@@ -173,7 +296,7 @@ http_interactions:
       User-Agent:
       - Faraday v1.4.3
       Authorization:
-      - Bearer 859a2874-b4d8-4e94-b687-4efb5ed01a38
+      - Bearer 151b67c5-2d5a-468e-8dec-af7eade785e7
   response:
     status:
       code: 200
@@ -182,11 +305,11 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Thu, 16 Sep 2021 16:33:43 GMT
+      - Sun, 19 Sep 2021 00:14:58 GMT
       content-type:
       - application/json
       content-length:
-      - '3879'
+      - '3893'
       connection:
       - keep-alive
       expires:
@@ -196,26 +319,26 @@ http_interactions:
       pragma:
       - ''
       etag:
-      - 2ad818c279176258c5551ada80fe23b3
+      - 1d742ec88643624ba983c807a3ac5c0c
     body:
       encoding: UTF-8
       string: '{"next_offset":-1,"records":[{"id":"9a98961a-1654-11ec-b13b-0241d1fb84dd","name":"Doe
-        John","date_entered":"2021-09-15T14:41:56-04:00","date_modified":"2021-09-16T12:31:52-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
+        John","date_entered":"2021-09-15T14:41:56-04:00","date_modified":"2021-09-17T15:35:21-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
         Transue","modified_user_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"created_by":"d09fe726-feb8-11eb-a595-0241d1fb84dd","created_by_name":"Bill
         Transue","created_by_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"description":"","deleted":false,"salutation":"","first_name":"Doe","last_name":"John","full_name":"Doe
-        John","title":"","facebook":"","twitter":"","googleplus":"","department":"","do_not_call":false,"phone_home":"","phone_mobile":"20211111111","phone_work":"","phone_other":"","phone_fax":"","primary_address_street":"","primary_address_street_2":"","primary_address_street_3":"","primary_address_city":"","primary_address_state":"","primary_address_postalcode":"","primary_address_country":"","alt_address_street":"","alt_address_street_2":"","alt_address_street_3":"","alt_address_city":"","alt_address_state":"","alt_address_postalcode":"","alt_address_country":"","assistant":"","assistant_phone":"","picture":"","email_and_name1":"","lead_source":"","account_name":"","accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"account_id":"","dnb_principal_id":"","opportunity_role_fields":"","opportunities":{"id":""},"opportunity_role_id":"","opportunity_role":"","reports_to_id":"","report_to_name":"","reports_to_link":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"birthdate":"","portal_name":"","portal_active":false,"portal_password":null,"portal_password1":null,"portal_app":"","portal_user_company_name":"","preferred_language":"","cookie_consent":false,"cookie_consent_received_on":"","business_center_name":"","business_centers":{"name":"","id":"","_acl":{"fields":[],"access":"no","view":"no","list":"no","edit":"no","delete":"no","import":"no","export":"no","massupdate":"no","_hash":"3fd204ac1b6d951752c529c51f978bc3"}},"business_center_id":"","dp_business_purpose":[],"dp_consent_last_updated":"2021-09-15","campaign_id":"","campaign_name":"","campaign_contacts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"c_accept_status_fields":"","calls":{"id":""},"m_accept_status_fields":"","meetings":{"id":""},"accept_status_id":"","accept_status_name":"","accept_status_calls":"","accept_status_meetings":"","sync_contact":false,"mkto_sync":false,"mkto_id":null,"mkto_lead_score":null,"entry_source":"internal","site_user_id":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","primary_address":true,"reply_to_address":false,"invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd"}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","gender_c":"male","relationship_c":"","hbxid_c":"73018c3b05824fc7abd40d3f41973765","_acl":{"fields":{}},"_module":"Contacts"}]}'
-  recorded_at: Thu, 16 Sep 2021 16:33:43 GMT
+        John","title":"","facebook":"","twitter":"","googleplus":"","department":"","do_not_call":false,"phone_home":"","phone_mobile":"20211111111","phone_work":"","phone_other":"","phone_fax":"","primary_address_street":"","primary_address_street_2":"","primary_address_street_3":"","primary_address_city":"","primary_address_state":"","primary_address_postalcode":"","primary_address_country":"","alt_address_street":"","alt_address_street_2":"","alt_address_street_3":"","alt_address_city":"","alt_address_state":"","alt_address_postalcode":"","alt_address_country":"","assistant":"","assistant_phone":"","picture":"","email_and_name1":"","lead_source":"","account_name":"","accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"account_id":"","dnb_principal_id":"","opportunity_role_fields":"","opportunities":{"id":""},"opportunity_role_id":"","opportunity_role":"","reports_to_id":"","report_to_name":"","reports_to_link":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"birthdate":"1972-04-04","portal_name":"","portal_active":false,"portal_password":null,"portal_password1":null,"portal_app":"","portal_user_company_name":"","preferred_language":"","cookie_consent":false,"cookie_consent_received_on":"","business_center_name":"","business_centers":{"name":"","id":"","_acl":{"fields":[],"access":"no","view":"no","list":"no","edit":"no","delete":"no","import":"no","export":"no","massupdate":"no","_hash":"3fd204ac1b6d951752c529c51f978bc3"}},"business_center_id":"","dp_business_purpose":[],"dp_consent_last_updated":"2021-09-15","campaign_id":"","campaign_name":"","campaign_contacts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"c_accept_status_fields":"","calls":{"id":""},"m_accept_status_fields":"","meetings":{"id":""},"accept_status_id":"","accept_status_name":"","accept_status_calls":"","accept_status_meetings":"","sync_contact":false,"mkto_sync":false,"mkto_id":null,"mkto_lead_score":null,"entry_source":"internal","site_user_id":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","primary_address":true,"reply_to_address":false,"invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd"}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","gender_c":"male","relationship_c":"self","hbxid_c":"73018c3b05824fc7abd40d3f41973765","_acl":{"fields":{}},"_module":"Contacts"}]}'
+  recorded_at: Sun, 19 Sep 2021 00:14:58 GMT
 - request:
-    method: put
-    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Contacts/9a98961a-1654-11ec-b13b-0241d1fb84dd?email1=example1%40example.com&first_name=Doe&hbxid_c=73018c3b05824fc7abd40d3f41973765&last_name=John&phone_mobile=20211111111
+    method: post
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: client_id=sugar&client_secret=&grant_type=password&params%5Bgrant_type%5D=password&params%5Bpassword%5D=SUGAR_CRM_ENCODED_PASSWORD>&params%5Bplatform%5D=mobile&params%5Busername%5D=<SUGAR_CRM_USERNAME>&password=SUGAR_CRM_ENCODED_PASSWORD>&username=<SUGAR_CRM_USERNAME>
     headers:
       User-Agent:
       - Faraday v1.4.3
-      Authorization:
-      - Bearer 859a2874-b4d8-4e94-b687-4efb5ed01a38
+      Content-Type:
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
@@ -224,11 +347,53 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Thu, 16 Sep 2021 16:33:43 GMT
+      - Sun, 19 Sep 2021 00:14:58 GMT
       content-type:
       - application/json
       content-length:
-      - '3848'
+      - '248'
+      connection:
+      - keep-alive
+      set-cookie:
+      - PHPSESSID=auh5mr1brr4k2tok1uufv528p8; path=/, PHPSESSID=c58f7cfd-4898-45b0-a452-94733c1453a8;
+        path=/, download_token_base=a6d88454-3a83-4778-a36c-4d97fe1a13a2; expires=Sun,
+        03-Oct-2021 00:14:58 GMT; Max-Age=1209600; path=/; HttpOnly
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate
+      pragma:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"c58f7cfd-4898-45b0-a452-94733c1453a8","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"70b08cd0-fb7f-41de-aee3-2ab01473e8e6","refresh_expires_in":1209600,"download_token":"a6d88454-3a83-4778-a36c-4d97fe1a13a2"}'
+  recorded_at: Sun, 19 Sep 2021 00:14:58 GMT
+- request:
+    method: put
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Contacts/9a98961a-1654-11ec-b13b-0241d1fb84dd
+    body:
+      encoding: UTF-8
+      string: '{"hbxid_c":"73018c3b05824fc7abd40d3f41973765","first_name":"Doe","last_name":"John","phone_mobile":"20211111111","email1":"example1@example.com","birthdate":"1972-04-04","relationship_c":"self"}'
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer c58f7cfd-4898-45b0-a452-94733c1453a8
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Sun, 19 Sep 2021 00:14:58 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '3862'
       connection:
       - keep-alive
       expires:
@@ -239,9 +404,9 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"id":"9a98961a-1654-11ec-b13b-0241d1fb84dd","name":"Doe John","date_entered":"2021-09-15T14:41:56-04:00","date_modified":"2021-09-16T12:33:43-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
+      string: '{"id":"9a98961a-1654-11ec-b13b-0241d1fb84dd","name":"Doe John","date_entered":"2021-09-15T14:41:56-04:00","date_modified":"2021-09-18T20:14:58-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
         Transue","modified_user_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"created_by":"d09fe726-feb8-11eb-a595-0241d1fb84dd","created_by_name":"Bill
         Transue","created_by_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"description":"","deleted":false,"salutation":"","first_name":"Doe","last_name":"John","full_name":"Doe
-        John","title":"","facebook":"","twitter":"","googleplus":"","department":"","do_not_call":false,"phone_home":"","phone_mobile":"20211111111","phone_work":"","phone_other":"","phone_fax":"","primary_address_street":"","primary_address_street_2":"","primary_address_street_3":"","primary_address_city":"","primary_address_state":"","primary_address_postalcode":"","primary_address_country":"","alt_address_street":"","alt_address_street_2":"","alt_address_street_3":"","alt_address_city":"","alt_address_state":"","alt_address_postalcode":"","alt_address_country":"","assistant":"","assistant_phone":"","picture":"","email_and_name1":"","lead_source":"","account_name":"","accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"account_id":"","dnb_principal_id":"","opportunity_role_fields":"","opportunities":{"id":""},"opportunity_role_id":"","opportunity_role":"","reports_to_id":"","report_to_name":"","reports_to_link":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"birthdate":"","portal_name":"","portal_active":false,"portal_password":null,"portal_password1":null,"portal_app":"","portal_user_company_name":"","preferred_language":"","cookie_consent":false,"cookie_consent_received_on":"","business_center_name":"","business_centers":{"name":"","id":"","_acl":{"fields":[],"access":"no","view":"no","list":"no","edit":"no","delete":"no","import":"no","export":"no","massupdate":"no","_hash":"3fd204ac1b6d951752c529c51f978bc3"}},"business_center_id":"","dp_business_purpose":[],"dp_consent_last_updated":"2021-09-15","campaign_id":"","campaign_name":"","campaign_contacts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"c_accept_status_fields":"","calls":{"id":""},"m_accept_status_fields":"","meetings":{"id":""},"accept_status_id":"","accept_status_name":"","accept_status_calls":"","accept_status_meetings":"","sync_contact":false,"mkto_sync":false,"mkto_id":null,"mkto_lead_score":null,"entry_source":"internal","site_user_id":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd","primary_address":true,"reply_to_address":false}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","gender_c":"male","relationship_c":"","hbxid_c":"73018c3b05824fc7abd40d3f41973765","_acl":{"fields":{}},"_module":"Contacts"}'
-  recorded_at: Thu, 16 Sep 2021 16:33:43 GMT
+        John","title":"","facebook":"","twitter":"","googleplus":"","department":"","do_not_call":false,"phone_home":"","phone_mobile":"20211111111","phone_work":"","phone_other":"","phone_fax":"","primary_address_street":"","primary_address_street_2":"","primary_address_street_3":"","primary_address_city":"","primary_address_state":"","primary_address_postalcode":"","primary_address_country":"","alt_address_street":"","alt_address_street_2":"","alt_address_street_3":"","alt_address_city":"","alt_address_state":"","alt_address_postalcode":"","alt_address_country":"","assistant":"","assistant_phone":"","picture":"","email_and_name1":"","lead_source":"","account_name":"","accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"account_id":"","dnb_principal_id":"","opportunity_role_fields":"","opportunities":{"id":""},"opportunity_role_id":"","opportunity_role":"","reports_to_id":"","report_to_name":"","reports_to_link":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"birthdate":"1972-04-04","portal_name":"","portal_active":false,"portal_password":null,"portal_password1":null,"portal_app":"","portal_user_company_name":"","preferred_language":"","cookie_consent":false,"cookie_consent_received_on":"","business_center_name":"","business_centers":{"name":"","id":"","_acl":{"fields":[],"access":"no","view":"no","list":"no","edit":"no","delete":"no","import":"no","export":"no","massupdate":"no","_hash":"3fd204ac1b6d951752c529c51f978bc3"}},"business_center_id":"","dp_business_purpose":[],"dp_consent_last_updated":"2021-09-15","campaign_id":"","campaign_name":"","campaign_contacts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"c_accept_status_fields":"","calls":{"id":""},"m_accept_status_fields":"","meetings":{"id":""},"accept_status_id":"","accept_status_name":"","accept_status_calls":"","accept_status_meetings":"","sync_contact":false,"mkto_sync":false,"mkto_id":null,"mkto_lead_score":null,"entry_source":"internal","site_user_id":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd","primary_address":true,"reply_to_address":false}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","gender_c":"male","relationship_c":"self","hbxid_c":"73018c3b05824fc7abd40d3f41973765","_acl":{"fields":{}},"_module":"Contacts"}'
+  recorded_at: Sun, 19 Sep 2021 00:14:58 GMT
 recorded_with: VCR 6.0.0

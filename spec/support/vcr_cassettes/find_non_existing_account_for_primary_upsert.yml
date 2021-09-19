@@ -1,6 +1,46 @@
 ---
 http_interactions:
 - request:
+    method: post
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
+    body:
+      encoding: UTF-8
+      string: client_id=sugar&client_secret=&grant_type=password&params%5Bgrant_type%5D=password&params%5Bpassword%5D=SUGAR_CRM_ENCODED_PASSWORD>&params%5Bplatform%5D=mobile&params%5Busername%5D=<SUGAR_CRM_USERNAME>&password=SUGAR_CRM_ENCODED_PASSWORD>&username=<SUGAR_CRM_USERNAME>
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Sun, 19 Sep 2021 00:14:22 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '248'
+      connection:
+      - keep-alive
+      set-cookie:
+      - PHPSESSID=csq4ih4l4o1toudaeteicc3tu2; path=/, PHPSESSID=f2b4ba91-67a3-4317-9f2d-6f832d3f941d;
+        path=/, download_token_base=0371c6f7-04b8-4800-8b6d-5e3a3cd837d8; expires=Sun,
+        03-Oct-2021 00:14:22 GMT; Max-Age=1209600; path=/; HttpOnly
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate
+      pragma:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"f2b4ba91-67a3-4317-9f2d-6f832d3f941d","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"94c2ad52-b087-4641-991a-db808e0f15f9","refresh_expires_in":1209600,"download_token":"0371c6f7-04b8-4800-8b6d-5e3a3cd837d8"}'
+  recorded_at: Sun, 19 Sep 2021 00:14:22 GMT
+- request:
     method: get
     uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts?filter%5B%5D%5Bhbxid_c%5D=zzjkdlf
     body:
@@ -10,7 +50,7 @@ http_interactions:
       User-Agent:
       - Faraday v1.4.3
       Authorization:
-      - Bearer 4735129e-1f5c-4405-a518-dde4d3e506da
+      - Bearer f2b4ba91-67a3-4317-9f2d-6f832d3f941d
   response:
     status:
       code: 200
@@ -19,7 +59,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Thu, 16 Sep 2021 21:21:09 GMT
+      - Sun, 19 Sep 2021 00:14:22 GMT
       content-type:
       - application/json
       content-length:
@@ -37,5 +77,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"records":[],"next_offset":-1}'
-  recorded_at: Thu, 16 Sep 2021 21:21:09 GMT
+  recorded_at: Sun, 19 Sep 2021 00:14:22 GMT
 recorded_with: VCR 6.0.0
