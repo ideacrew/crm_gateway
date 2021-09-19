@@ -15,10 +15,7 @@
   <td><%= event.event_name_identifier %></td>
   <td><%= event.aasm_state.titleize %></td>
   <td><%= event.error unless event.error_message.nil? %></td>
-  <td><%= js_timeago event.latest_timestamp %>
-    <span class='timeago' datetime="<%= event.latest_timestamp.strftime('%Y-%m-%dT%H:%M:%S.%L%z') %>">
-    </span>
-  </td>
+  <td><%= js_timeago event.latest_timestamp %></td>
   <td>
     <%= link_to event do %>
       <i class="fas fa-info-circle"></i>

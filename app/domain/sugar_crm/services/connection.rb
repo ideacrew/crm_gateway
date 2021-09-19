@@ -31,7 +31,7 @@ module SugarCRM
           tries ||= 1
           self.class.connection.send(verb, path, params)
         rescue Faraday::Error
-          tries += 1 # rubocop:disable Lint/Syntax
+          tries += 1
           retry if tries < 3 && self.class.connection(force: true)
         end
       end
