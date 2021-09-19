@@ -8,6 +8,7 @@
     "popper.js": "^1.16.1",
     "stimulus": "^2.0.0",
     "stimulus_reflex": "3.4.1",
+    "timeago.js": "^4.0.2",
     "velocity": "^0.7.3",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"

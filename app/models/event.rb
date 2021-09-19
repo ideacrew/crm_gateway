@@ -75,7 +75,7 @@ class Event
       failure_at
     else
       updated_at
-    end
+    end || updated_at || created_at
   end
 
   after_update do

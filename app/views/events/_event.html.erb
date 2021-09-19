@@ -29,9 +29,7 @@
         Backtrace
       </div>
       <div class='col-10'>
-        <pre class='debug-dump'>
-          <%= event.error_backtrace.join("</br>").html_safe %>
-        </pre>
+        <pre class='debug-dump'><%= event.error_backtrace.join("\n") %></pre>
       </div>
     </div>
   <% end %>
