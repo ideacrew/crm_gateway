@@ -33,15 +33,17 @@ module SugarCRM
         else
           Success("Successful family update")
         end
+      rescue Faraday::ConnectionFailed => e
+        Failure(error: "couldn't connect to host", error_message: e.message, error_backtrace: e.backtrace)
       rescue StandardError => e
-        Failure(e)
+        Failure(error: 'Unknown error', error_message: e.message, error_backtrace: e.backtrace)
       end
 
       def mobile_phone_finder(payload)
-        phone_number = payload.detect { |number| number[:kind] == 'mobile' } ||
-                       payload.detect { |number| number[:kind] == 'home' } ||
+        phone_number = payload.compact.detect { |number| number[:kind] == 'mobile' } ||
+                       payload.compact.detect { |number| number[:kind] == 'home' } ||
                        payload.first
-        phone_number[:full_phone_number]
+        phone_number&.dig(:full_phone_number)
       end
 
       def payload_to_account_params(payload)

@@ -29,7 +29,9 @@ module SugarCRM
             @event_log.complete!
             Success("Update the family")
           else
-            @event_log.error_message = result.failure
+            @event_log.error = result.failure[:error]
+            @event_log.error_message = result.failure[:error_message]
+            @event_log.error_backtrace = result.failure[:error_backtrace]
             @event_log.fail!
           end
           result
