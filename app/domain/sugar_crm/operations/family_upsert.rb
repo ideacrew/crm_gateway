@@ -18,12 +18,15 @@ module SugarCRM
         existing_account = find_existing_account(
           hbx_id: primary_person[:hbx_id]
         )
+        if existing_account.failure?
+          existing_account = create_account
+        end
         return Failure(existing_account.failure) if existing_account.failure?
         contacts = yield find_contacts_by_account(existing_account.value!)
         results = @payload[:family_members].map do |family_member|
           matched_contact = match_family_member_to_contact(family_member: family_member, contacts: contacts)
           if matched_contact.success?
-            update_existing_contact(id: matched_contact.value![:id], params: family_member)
+            update_existing_contact(id: matched_contact.value!['id'], params: family_member)
           else
             create_contact(account_id: existing_account.value!, params: family_member)
           end
@@ -46,20 +49,20 @@ module SugarCRM
         phone_number&.dig(:full_phone_number)
       end
 
-      def payload_to_account_params(payload)
+      def payload_to_account_params
         {
-          hbxid_c: payload[:hbx_id],
-          name: "#{payload[:person][:person_name][:first_name]} #{payload[:person][:person_name][:last_name]}",
-          email1: payload[:emails].first[:address],
-          billing_address_street: payload.dig(:addresses, 0, :address_1),
-          billing_address_street_2: payload.dig(:addresses, 0, :address_2),
-          billing_address_street_3: payload.dig(:addresses, 0, :address_3),
-          billing_address_street_4: payload.dig(:addresses, 0, :address_4),
-          billing_address_city: payload.dig(:addresses, 0, :city),
-          billing_address_postalcode: payload.dig(:addresses, 0, :zip),
-          billing_address_state: payload.dig(:addresses, 0, :state),
-          phone_office: mobile_phone_finder(payload[:phones]),
-          rawssn_c: payload[:person][:person_demographics][:ssn]
+          hbxid_c: primary_person[:hbx_id],
+          name: primary_person.dig(:person, :person_name, :full_name),
+          email1: primary_person.dig(:person, :emails, 0, :address),
+          billing_address_street: primary_person.dig(:person, :addresses, 0, :address_1),
+          billing_address_street_2: primary_person.dig(:person, :addresses, 0, :address_2),
+          billing_address_street_3: primary_person.dig(:person, :addresses, 0, :address_3),
+          billing_address_street_4: primary_person.dig(:person, :addresses, 0, :address_4),
+          billing_address_city: primary_person.dig(:person, :addresses, 0, :city),
+          billing_address_postalcode: primary_person.dig(:person, :addresses, 0, :zip),
+          billing_address_state: primary_person.dig(:person, :addresses, 0, :state),
+          phone_office: mobile_phone_finder(primary_person.dig(:person, :phones)),
+          rawssn_c: primary_person[:person][:person_demographics][:ssn]
         }
       end
 
@@ -137,6 +140,12 @@ module SugarCRM
         )
         Failure("Couldn't create contact") unless contact
         Success(contact)
+      end
+
+      def create_account
+        account = service.create_account(payload: payload_to_account_params)
+        Failure("Couldn't create account") unless account
+        Success(account['id'])
       end
 
       def service
