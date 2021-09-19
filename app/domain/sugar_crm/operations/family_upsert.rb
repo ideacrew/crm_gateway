@@ -14,17 +14,16 @@ module SugarCRM
       attr_accessor :primary_family_member_hbx_id
 
       def call(payload:)
-        payload = payload.deep_symbolize_keys
+        @payload = payload.deep_symbolize_keys
         existing_account = find_existing_account(
-          hbx_id: payload[:hbx_id]
+          hbx_id: primary_person[:hbx_id]
         )
-        @payload = payload
         return Failure(existing_account.failure) if existing_account.failure?
         contacts = yield find_contacts_by_account(existing_account.value!)
-        results = payload[:family_members].map do |family_member|
+        results = @payload[:family_members].map do |family_member|
           matched_contact = match_family_member_to_contact(family_member: family_member, contacts: contacts)
           if matched_contact.success?
-            update_existing_contact(id: matched_contact.value!['id'], params: family_member)
+            update_existing_contact(id: matched_contact.value![:id], params: family_member)
           else
             create_contact(account_id: existing_account.value!, params: family_member)
           end
@@ -50,13 +49,13 @@ module SugarCRM
           hbxid_c: payload[:hbx_id],
           name: "#{payload[:person][:person_name][:first_name]} #{payload[:person][:person_name][:last_name]}",
           email1: payload[:emails].first[:address],
-          billing_address_street: payload[:addresses].first[:address_1],
-          billing_address_street_2: payload[:addresses].first[:address_2],
-          billing_address_street_3: payload[:addresses].first[:address_3],
-          billing_address_street_4: payload[:addresses].first[:address_4],
-          billing_address_city: payload[:addresses].first[:city],
-          billing_address_postalcode: payload[:addresses].first[:zip],
-          billing_address_state: payload[:addresses].first[:state],
+          billing_address_street: payload.dig(:addresses, 0, :address_1),
+          billing_address_street_2: payload.dig(:addresses, 0, :address_2),
+          billing_address_street_3: payload.dig(:addresses, 0, :address_3),
+          billing_address_street_4: payload.dig(:addresses, 0, :address_4),
+          billing_address_city: payload.dig(:addresses, 0, :city),
+          billing_address_postalcode: payload.dig(:addresses, 0, :zip),
+          billing_address_state: payload.dig(:addresses, 0, :state),
           phone_office: mobile_phone_finder(payload[:phones]),
           rawssn_c: payload[:person][:person_demographics][:ssn]
         }
@@ -65,13 +64,19 @@ module SugarCRM
       def payload_to_contact_params(payload)
         {
           hbxid_c: payload[:hbx_id],
-          first_name: payload[:person][:person_name][:first_name],
-          last_name: payload[:person][:person_name][:last_name],
-          phone_mobile: mobile_phone_finder(payload[:person][:phones]),
-          email1: payload[:person][:emails].first[:address],
-          birthdate: convert_dob_to_string(payload[:person][:person_demographics][:dob]),
+          first_name: payload.dig(:person, :person_name, :first_name),
+          last_name: payload.dig(:person, :person_name, :last_name),
+          phone_mobile: mobile_phone_finder(payload.dig(:person, :phones)),
+          email1: payload.dig(:person, :emails, 0, :address),
+          birthdate: convert_dob_to_string(payload.dig(:person, :person_demographics, :dob)),
           relationship_c: person_relationship_finder(payload[:hbx_id])
         }
+      end
+
+      def primary_person
+        @payload[:family_members].detect do |family_member|
+          family_member[:is_primary_applicant] == true
+        end
       end
 
       def convert_dob_to_string(dob)
@@ -80,10 +85,9 @@ module SugarCRM
       end
 
       def person_relationship_finder(hbx_id_to_match)
-        @primary_family_member ||= @payload[:family_members].detect { |fm| fm[:is_primary_applicant] == true }
-        return "self" if hbx_id_to_match == @primary_family_member[:hbx_id]
+        return "self" if hbx_id_to_match == primary_person[:hbx_id]
 
-        matched_relative = @primary_family_member[:person][:person_relationships].detect do |relative_hash|
+        matched_relative = primary_person[:person][:person_relationships].detect do |relative_hash|
           relative_hash[:relative][:hbx_id] == hbx_id_to_match
         end
         Rails.logger.debug { "matched relative #{matched_relative}" }
