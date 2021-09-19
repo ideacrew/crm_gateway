@@ -22,7 +22,7 @@ module SugarCRM
                      payload_to_account_params(payload)
                    )
                    yield update_contact(
-                     payload_to_contact_params(payload)
+                     payload_to_contact_params(payload.merge('account.id': existing_account.value!))
                    )
                  else
                    yield create_account_and_contact(
@@ -93,7 +93,7 @@ module SugarCRM
         Failure("Couldn't create account") unless account
 
         contact = service.create_contact_for_account(
-          payload: { **payload_to_contact_params(payload), 'account.id': account }
+          payload: payload_to_contact_params(payload).merge('account_id': account)
         )
         Failure("Couldn't create contact") unless contact
         Success(contact)

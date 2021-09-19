@@ -15,7 +15,7 @@
       <% end %>
     </div>
   </div>
-  <% if event.error.present? %>
+  <% if event.error_message.present? %>
     <div class='row'>
       <div class='col-2 text-right font-weight-bolder'>
         Error
@@ -24,6 +24,8 @@
         <pre><%= event.error_message %></pre>
       </div>
     </div>
+  <% end %>
+  <% if event.error_backtrace&.present? %>
     <div class='row'>
       <div class='col-2 text-right font-weight-bolder'>
         Backtrace
