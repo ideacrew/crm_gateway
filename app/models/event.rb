@@ -51,7 +51,7 @@ class Event
         self.error_backtrace = []
       end
 
-      transitions from: :failure, to: :received
+      transitions from: [:failure, :successful, :processing], to: :received
     end
   end
 

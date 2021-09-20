@@ -20,10 +20,8 @@
     <%= link_to event do %>
       <i class="fas fa-info-circle"></i>
     <% end %>
-    <% if event.failure? %>
-      <%= link_to retry_event_path(event), remote: true do %>
-        <i class="fas fa-redo"></i>
-      <% end %>
+    <%= link_to retry_event_path(event), remote: true do %>
+      <i class="fas fa-redo"></i>
     <% end %>
   </td>
 </tr>
