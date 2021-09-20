@@ -19,11 +19,10 @@ module SugarCRM
           hbx_id: primary_person[:hbx_id]
         )
         if existing_account.failure?
-          puts "failure"
+          Rails.logger.debug "failure"
           existing_account = create_account
         end
         return Failure(existing_account.failure) if existing_account.failure?
-        contacts = yield find_contacts_by_account(existing_account.value!)
         results = @payload[:family_members].map do |family_member|
           family_member_hbx_id = family_member[:hbx_id]
           existing_contact = service.find_contact_by_hbx_id(family_member_hbx_id)
@@ -109,28 +108,10 @@ module SugarCRM
         end
       end
 
-      def find_contacts_by_account(account_id)
-        contacts = service.find_contacts_by_account(account_id)
-
-        Success(contacts['records'])
-        # rescue =>
-      end
-
-      def match_family_member_to_contact(family_member:, contacts:)
-        matched_contact = contacts.find do |contact|
-          contact['hbxid_c'] == family_member[:hbx_id]
-        end
-        if matched_contact
-          Success(matched_contact)
-        else
-          Failure("No matched contact found")
-        end
-      end
-
       def update_existing_contact(id:, account_id:, params:)
         result = service.update_contact(
           id: id,
-          payload: payload_to_contact_params(params).merge('account_id': account_id)
+          payload: payload_to_contact_params(params).merge(account_id: account_id)
         )
         if result
           Success(result)
@@ -141,7 +122,7 @@ module SugarCRM
 
       def create_contact(account_id:, params:)
         contact = service.create_contact_for_account(
-          payload: payload_to_contact_params(params).merge('account_id': account_id)
+          payload: payload_to_contact_params(params).merge(account_id: account_id)
         )
         Failure("Couldn't create contact") unless contact
         Success(contact)
