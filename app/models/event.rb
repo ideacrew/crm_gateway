@@ -7,6 +7,8 @@ class Event
   include AASM
   include CableReady::Broadcaster
 
+  embeds_many :actions
+
   field :processing_at, type: DateTime, default: nil
   field :failure_at, type: DateTime, default: nil
   field :successful_at, type: DateTime, default: nil
