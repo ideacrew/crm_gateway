@@ -9,7 +9,11 @@ module Subscribers
     # rubocop:disable Style/LineEndConcatenation
     # rubocop:disable Style/StringConcatenation
     subscribe(:on_primary_subscriber_update) do |delivery_info, _properties, payload|
-      person_update_result = ::People::HandlePrimaryPersonUpdate.new.call(payload)
+      event = Event.create(
+        event_name_identifier: 'Primary Subscriber Update', 
+        data: person_payload
+      )
+      person_update_result = ::People::HandlePrimaryPersonUpdate.new(event: event).call(payload)
 
       if person_update_result.success?
         logger.info(
