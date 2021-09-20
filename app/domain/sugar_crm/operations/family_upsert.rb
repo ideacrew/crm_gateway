@@ -47,7 +47,19 @@ module SugarCRM
         phone_number = payload.compact.detect { |number| number[:kind] == 'mobile' } ||
                        payload.compact.detect { |number| number[:kind] == 'home' } ||
                        payload.first
-        phone_number&.dig(:full_phone_number)
+        phone_formatter phone_number
+      end
+
+      def phone_formatter(phone)
+        return nil unless phone
+
+        if phone[:area_code] && phone[:number]
+          "(#{phone[:area_code]}) #{phone[:number].first(3)}-#{phone[:number][3..-1]}"
+        elsif phone[:full_number].length == 10
+          "(#{phone[:full_number].first(3)}) #{phone[:full_number][3..5]}-#{phone[:full_number][6..-1]}"
+        else
+          phone[:full_number]
+        end
       end
 
       def payload_to_account_params
@@ -91,7 +103,7 @@ module SugarCRM
       end
 
       def person_relationship_finder(hbx_id_to_match)
-        return "self" if hbx_id_to_match == primary_person[:hbx_id]
+        return "Self" if hbx_id_to_match == primary_person[:hbx_id]
 
         matched_relative = primary_person[:person][:person_relationships].detect do |relative_hash|
           relative_hash[:relative][:hbx_id] == hbx_id_to_match
