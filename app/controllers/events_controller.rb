@@ -1,4 +1,4 @@
- e# frozen_string_literal: true
+# frozen_string_literal: true
 
 # class for Events Rails controller for managing events
 class EventsController < ApplicationController
