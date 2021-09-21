@@ -6,7 +6,6 @@ module SugarCRM
       # Invoke a Family update service and update/create their corresponding contact records
       class HandleFamilyUpdate
         include Dry::Monads[:result, :do, :try]
-        include EventSource::Command
         require 'dry/monads'
         require 'dry/monads/do'
         require 'aca_entities/crms/accounts/account'

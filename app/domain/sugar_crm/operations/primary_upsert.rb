@@ -14,49 +14,25 @@ module SugarCRM
 
       def call(payload:)
         hbx_id = payload[:hbx_id]
-        existing_account = response_call do
-           find_existing_account(hbx_id: hbx_id)
+        account = SugarCRM::Operations::CreateOrUpdateAccount.new
+        results = account.call(
+          hbx_id: hbx_id,
+          params: payload_to_account_params(payload)
+        )
+        account_id = account.id
+
+        results += SugarCRM::Operations::CreateOrUpdateContact.new.call(
+          hbx_id: hbx_id,
+          params: payload_to_contact_params(payload).merge(account_id: account_id)
+        )
+
+        if results.map(&:first).all? do |(step, result)|
+          step =~ /create|update/ && result.success?
         end
-        results = [find_existing_account: existing_account]
-
-        if existing_account.success?
-          account_id = extract_first_record_id(existing_account.value!)
-          updated_account = response_call { update_account(account_id, payload_to_account_params(payload)) }
-          results += [update_account: updated_account]
-        else
-          created_account = response_call { create_account(payload_to_account_params(payload)) }
-          account_id = extract_record_id(created_account.value!) if created_account.success?
-
-          results += [create_account: created_account]
-        end
-
-        if account_id
-          existing_contact = find_existing_contact(hbx_id: hbx_id)
-          results += [find_existing_contact: existing_contact]
-          if existing_contact.success?
-            id = extract_first_record_id(existing_contact.value!)
-            updated_contact = response_call { update_contact(id, account_id, payload_to_contact_params(payload)) }
-            results += [update_contact: updated_contact]
-          else 
-            created_contact = response_call { create_contact(account_id, payload_to_contact_params(payload)) }
-            results += [create_contact: created_contact]
-          end
-          if (updated_account&.success? || created_account&.success?) && (updated_contact&.success? || created_contact&.success?)
-            Success(results)
-          else
-            Failure(results)
-          end
+          Success(results)
         else
           Failure(results)
         end
-      end
-
-      def response_call
-        yield
-      rescue Faraday::ConnectionFailed => e
-        Failure(e)
-      rescue StandardError => e
-        Failure(e)
       end
 
       def payload_to_contact_params(payload)
@@ -111,79 +87,6 @@ module SugarCRM
           raw_ssn_c: payload[:person_demographics][:ssn],
           dob_c: convert_dob_to_string(payload.dig(:person_demographics, :dob))
         }
-      end
-
-      def find_existing_account(hbx_id:)
-        response = service.filter_accounts([hbxid_c: hbx_id])
-        if response.parsed['records'].empty?
-          Failure(response)
-        else
-          Success(response)
-        end
-      end
-
-      def find_existing_contact(hbx_id:)
-        response = service.filter_contacts([hbxid_c: hbx_id])
-        if response.parsed['records'].empty?
-          Failure(response)
-        else
-          Success(response)
-        end
-      end
-
-      def extract_first_record_id(response)
-        pp response.parsed
-        response.parsed.dig('records', 0, 'id')
-      end
-
-      def extract_record_id(response)
-        response.parsed['id']
-      end
-
-      def create_account(payload)
-        response = service.create_account(payload: payload)
-        if response.status == 200
-          Success(response)
-        else
-          Failure(response)
-        end
-      end
-
-      def create_contact(account_id, payload)
-        response = service.create_contact(payload: payload.merge(account_id: account_id))
-        if response.status == 200
-          Success(response)
-        else
-          Failure(response)
-        end
-      end
-
-      def update_account(id, payload)
-        response = service.update_account(
-          id: id,
-          payload: payload
-        )
-        if response.status == 200
-          Success(response)
-        else
-          Failure(response)
-        end
-      end
-
-      def update_contact(id, account_id, payload)
-        response = service.update_contact(
-          id: id,
-          payload: payload.merge(account_id: account_id)
-        )
-        if response.status == 200
-          Success(response)
-        else
-          Failure(response)
-        end
-      end
-
-      def service
-        @service ||= SugarCRM::Services::Connection.new
       end
     end
   end
