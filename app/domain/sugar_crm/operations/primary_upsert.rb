@@ -38,6 +38,7 @@ module SugarCRM
 
       def payload_to_contact_params(payload)
         {
+          enroll_account_link_c: payload[:external_person_link],
           hbxid_c: payload[:hbx_id],
           first_name: payload[:person_name][:first_name],
           last_name: payload[:person_name][:last_name],
