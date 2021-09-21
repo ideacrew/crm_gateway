@@ -13,9 +13,9 @@ module SugarCRM
       attr_accessor :hbx_id
 
       def call(payload:)
-        @hbx_id = payload[:hbx_id]
+        hbx_id = payload[:hbx_id]
         existing_account = response_call do
-           find_existing_account(hbx_id: @hbx_id)
+           find_existing_account(hbx_id: hbx_id)
         end
         results = [find_existing_account: existing_account]
 
@@ -31,7 +31,7 @@ module SugarCRM
         end
 
         if account_id
-          existing_contact = find_existing_contact(@hbx_id)
+          existing_contact = find_existing_contact(hbx_id: hbx_id)
           results += [find_existing_contact: existing_contact]
           if existing_contact.success?
             id = extract_first_record_id(existing_contact.value!)
@@ -52,7 +52,7 @@ module SugarCRM
       end
 
       def response_call
-        yield 
+        yield
       rescue Faraday::ConnectionFailed => e
         Failure(e)
       rescue StandardError => e
@@ -116,22 +116,23 @@ module SugarCRM
       def find_existing_account(hbx_id:)
         response = service.filter_accounts([hbxid_c: hbx_id])
         if response.parsed['records'].empty?
-          Success(response)
-        else
           Failure(response)
+        else
+          Success(response)
         end
       end
 
       def find_existing_contact(hbx_id:)
         response = service.filter_contacts([hbxid_c: hbx_id])
         if response.parsed['records'].empty?
-          Success(response)
-        else
           Failure(response)
+        else
+          Success(response)
         end
       end
 
       def extract_first_record_id(response)
+        pp response.parsed
         response.parsed.dig('records', 0, 'id')
       end
 
@@ -139,39 +140,46 @@ module SugarCRM
         response.parsed['id']
       end
 
-      def create_account_and_contact(payload)
-        account = service.create_account(
-          payload: payload_to_account_params(payload)
-        )
-        Failure("Couldn't create account") unless account
-
-        contact = service.create_contact_for_account(
-          payload: payload_to_contact_params(payload).merge(account_id: account)
-        )
-        Failure("Couldn't create contact") unless contact
-        Success(contact)
-      end
-
       def create_account(payload)
-        yield service.create_account(payload: payload)
+        response = service.create_account(payload: payload)
+        if response.status == 200
+          Success(response)
+        else
+          Failure(response)
+        end
       end
 
       def create_contact(account_id, payload)
-        yield service.create_contact(payload: payload.merge(account_id: account_id))
+        response = service.create_contact(payload: payload.merge(account_id: account_id))
+        if response.status == 200
+          Success(response)
+        else
+          Failure(response)
+        end
       end
 
       def update_account(id, payload)
-        yield service.update_account(
+        response = service.update_account(
           id: id,
           payload: payload
         )
+        if response.status == 200
+          Success(response)
+        else
+          Failure(response)
+        end
       end
 
       def update_contact(id, account_id, payload)
-        yield service.update_contact(
+        response = service.update_contact(
           id: id,
           payload: payload.merge(account_id: account_id)
         )
+        if response.status == 200
+          Success(response)
+        else
+          Failure(response)
+        end
       end
 
       def service
