@@ -100,6 +100,7 @@ module SugarCRM
         {
           hbxid_c: payload[:hbx_id],
           name: payload[:person_name][:full_name],
+          enroll_account_link_c: payload[:external_person_link],
           email1: payload.dig(:emails, 0, :address),
           billing_address_street: payload.dig(:addresses, 0, :address_1),
           billing_address_street_2: payload.dig(:addresses, 0, :address_2),
