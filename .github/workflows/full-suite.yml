@@ -28,7 +28,7 @@ jobs:
           bundle install
       - name: Run rubocop
         run: |
-          rubocop
+          bundle exec rubocop-git origin/trunk 
   brakeman:
     needs: [rubocop]
     runs-on: ubuntu-latest
