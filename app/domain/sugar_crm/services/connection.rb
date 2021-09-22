@@ -45,6 +45,14 @@ module SugarCRM
         end
       end
 
+      def filter_accounts(filter)
+        get('/rest/v11_8/Accounts', params: { filter: filter })
+      end
+
+      def filter_contacts(filter)
+        get('/rest/v11_8/Contacts', params: { filter: filter })
+      end
+
       def find_contact_by_hbx_id(hbx_id)
         response = get('/rest/v11_8/Contacts', params: { filter: [{ hbxid_c: hbx_id }] })
         if response.parsed['records'].empty?
@@ -68,6 +76,15 @@ module SugarCRM
         response.parsed
       end
 
+      def create_contact(payload:)
+        response = post(
+          '/rest/v11_8/Contacts',
+          body: payload.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+        response.parsed
+      end
+
       def create_contact_for_account(payload:)
         response = post(
           '/rest/v11_8/Contacts',
@@ -78,14 +95,12 @@ module SugarCRM
       end
 
       # pass name
-      def update_account(hbx_id:, payload:)
-        account = find_account_by_hbx_id(hbx_id)
-        response = put(
-          "/rest/v11_8/Accounts/#{account}",
+      def update_account(id:, payload:)
+        put(
+          "/rest/v11_8/Accounts/#{id}",
           body: payload.to_json,
           headers: { "Content-Type" => "application/json" }
         )
-        response.parsed
       end
 
       # change spec
@@ -100,12 +115,11 @@ module SugarCRM
       end
 
       def update_contact(id:, payload:)
-        response = put(
+        put(
           "/rest/v11_8/Contacts/#{id}",
           body: payload.to_json,
           headers: { "Content-Type" => "application/json" }
         )
-        response.parsed
       end
     end
   end

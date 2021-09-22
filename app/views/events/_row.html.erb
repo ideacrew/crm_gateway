@@ -1,3 +1,11 @@
+<style>
+.fa-times {
+  color: red;
+}
+.fa-check {
+  color: green;
+}
+</style>
 <tr
   id="<%= "event-row-#{event.id}" %>"
   scope="row"
@@ -14,7 +22,11 @@
   </td>
   <td><%= event.event_name_identifier %></td>
   <td><%= event.aasm_state.titleize %></td>
-  <td><%= event.error unless event.error_message.nil? %></td>
+  <% if event.error_message.present? %>
+    <td><i class="fa fa-times" title="<%= event.error %>" aria-hidden="true"></i></td>
+  <% else %>
+    <td><i class="fa fa-check" title="No Action Needed" aria-hidden="true"></i></td>
+  <% end %>
   <td><%= js_timeago event.latest_timestamp %></td>
   <td>
     <%= link_to event do %>

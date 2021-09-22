@@ -9,6 +9,7 @@ RSpec.describe SugarCRM::Services::Connection do
     {
       :hbxid_c => "aa918614ae014d42bb8547a1ae5734e1",
       :name => "John Jacob",
+      :enroll_account_link_c => "https://enroll-preprod.dchbx.org/exchanges/agents/resume_enrollment?person_id=53e697faeb899ad9ca035f1c",
       :email1 => "example1@example.com",
       :dob_c => "1981-09-14",
       :billing_address_street => "1111 Awesome Street NE",
@@ -54,6 +55,10 @@ RSpec.describe SugarCRM::Services::Connection do
     it 'has the correct name' do
       expect(response['name']).to eql('John Jacob')
     end
+
+    it 'has the correct account link' do
+      expect(response['enroll_account_link_c']).to eql('https://enroll-preprod.dchbx.org/exchanges/agents/resume_enrollment?person_id=53e697faeb899ad9ca035f1c')
+    end
   end
 
   describe '#create_contact_for_account' do
@@ -87,21 +92,23 @@ RSpec.describe SugarCRM::Services::Connection do
       VCR.use_cassette('find_contacts_by_account') do
         account = subject.create_account(payload: account_params)
         subject.create_contact_for_account(payload: contact_params.merge('account.id': account['id']))
-        response = subject.find_account_by_hbx_id(hbx_id)
-        subject.find_contacts_by_account(response)
+        response_id = subject.find_account_by_hbx_id(hbx_id)
+        subject.find_contacts_by_account(response_id)
+        binding.pry
       end
     end
 
     it 'finds the correct contacts' do
       expect(response['records'].first['name']).to eql('John Jacob')
+      binding.pry
     end
   end
 
   describe '#update_account' do
     let(:response) do
       VCR.use_cassette('update_account') do
-        subject.create_account(payload: account_params)
-        subject.update_account(hbx_id: hbx_id, payload: account_params.merge(name: 'Tim Robinson'))
+        account = subject.create_account(payload: account_params)
+        subject.update_account(id: account['id'], payload: account_params.merge(name: 'Tim Robinson')).parsed
       end
     end
 
@@ -120,7 +127,7 @@ RSpec.describe SugarCRM::Services::Connection do
         contact = subject.create_contact_for_account(
           payload: contact_params.merge('account.id': account['id'])
         )
-        subject.update_contact(id: contact['id'], payload: contact_params.merge(first_name: 'Tim'))
+        subject.update_contact(id: contact['id'], payload: contact_params.merge(first_name: 'Tim')).parsed
       end
     end
 

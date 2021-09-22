@@ -20,12 +20,7 @@ class EventsController < ApplicationController
   def retry
     @event = Event.find(params[:id])
     @event.retry!
-    case @event.event_name_identifier
-    when 'Family Update'
-      SugarCRM::Operations::Families::HandleFamilyUpdate.new.call(@event.data, @event)
-    when 'Primary Subscriber Update'
-      People::HandlePrimaryPersonUpdate.new.call(@event.data, @event)
-    end
+    People::HandleUpdate.new(event: @event).call(@event.data)
 
     head :ok
   end
