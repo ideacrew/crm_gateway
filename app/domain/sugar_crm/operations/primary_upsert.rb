@@ -13,27 +13,50 @@ module SugarCRM
       attr_accessor :hbx_id
 
       def call(payload:)
-        @hbx_id = payload[:hbx_id]
-        existing_account = find_existing_account(
-          hbx_id: @hbx_id
-        )
-        result = if existing_account.success?
-                   yield update_account(
-                     payload_to_account_params(payload)
-                   )
-                   yield update_contact(
-                     payload_to_contact_params(payload.merge('account.id': existing_account.value!))
-                   )
-                 else
-                   yield create_account_and_contact(
-                     payload
-                   )
-                 end
-        Success(result)
+        hbx_id = payload[:hbx_id]
+        existing_account = response_call do
+           find_existing_account(hbx_id: hbx_id)
+        end
+        results = [find_existing_account: existing_account]
+
+        if existing_account.success?
+          account_id = extract_first_record_id(existing_account.value!)
+          updated_account = response_call { update_account(account_id, payload_to_account_params(payload)) }
+          results += [update_account: updated_account]
+        else
+          created_account = response_call { create_account(payload_to_account_params(payload)) }
+          account_id = extract_record_id(created_account.value!) if created_account.success?
+
+          results += [create_account: created_account]
+        end
+
+        if account_id
+          existing_contact = find_existing_contact(hbx_id: hbx_id)
+          results += [find_existing_contact: existing_contact]
+          if existing_contact.success?
+            id = extract_first_record_id(existing_contact.value!)
+            updated_contact = response_call { update_contact(id, account_id, payload_to_contact_params(payload)) }
+            results += [update_contact: updated_contact]
+          else 
+            created_contact = response_call { create_contact(account_id, payload_to_contact_params(payload)) }
+            results += [create_contact: created_contact]
+          end
+          if (updated_account&.success? || created_account&.success?) && (updated_contact&.success? || created_contact&.success?)
+            Success(results)
+          else
+            Failure(results)
+          end
+        else
+          Failure(results)
+        end
+      end
+
+      def response_call
+        yield
       rescue Faraday::ConnectionFailed => e
-        Failure(error: "couldn't connect to host", error_message: e.message, error_backtrace: e.backtrace)
+        Failure(e)
       rescue StandardError => e
-        Failure(error: 'Unknown error', error_message: e.message, error_backtrace: e.backtrace)
+        Failure(e)
       end
 
       def payload_to_contact_params(payload)
@@ -92,42 +115,72 @@ module SugarCRM
       end
 
       def find_existing_account(hbx_id:)
-        if existing_account = service.find_account_by_hbx_id(hbx_id)
-          Success(existing_account)
+        response = service.filter_accounts([hbxid_c: hbx_id])
+        if response.parsed['records'].empty?
+          Failure(response)
         else
-          Failure("No account found")
+          Success(response)
         end
       end
 
-      def create_account_and_contact(payload)
-        account = service.create_account(
-          payload: payload_to_account_params(payload)
-        )
-        Failure("Couldn't create account") unless account
-
-        contact = service.create_contact_for_account(
-          payload: payload_to_contact_params(payload).merge(account_id: account)
-        )
-        Failure("Couldn't create contact") unless contact
-        Success(contact)
+      def find_existing_contact(hbx_id:)
+        response = service.filter_contacts([hbxid_c: hbx_id])
+        if response.parsed['records'].empty?
+          Failure(response)
+        else
+          Success(response)
+        end
       end
 
-      def update_account(payload)
-        account = service.update_account(
-          hbx_id: @hbx_id,
-          payload: payload
-        )
-        Failure("Couldn't update account") unless account
-        Success(account)
+      def extract_first_record_id(response)
+        pp response.parsed
+        response.parsed.dig('records', 0, 'id')
       end
 
-      def update_contact(payload)
-        contact = service.update_contact_by_hbx_id(
-          hbx_id: @hbx_id,
+      def extract_record_id(response)
+        response.parsed['id']
+      end
+
+      def create_account(payload)
+        response = service.create_account(payload: payload)
+        if response.status == 200
+          Success(response)
+        else
+          Failure(response)
+        end
+      end
+
+      def create_contact(account_id, payload)
+        response = service.create_contact(payload: payload.merge(account_id: account_id))
+        if response.status == 200
+          Success(response)
+        else
+          Failure(response)
+        end
+      end
+
+      def update_account(id, payload)
+        response = service.update_account(
+          id: id,
           payload: payload
         )
-        Failure("Couldn't update contact") unless contact
-        Success(contact)
+        if response.status == 200
+          Success(response)
+        else
+          Failure(response)
+        end
+      end
+
+      def update_contact(id, account_id, payload)
+        response = service.update_contact(
+          id: id,
+          payload: payload.merge(account_id: account_id)
+        )
+        if response.status == 200
+          Success(response)
+        else
+          Failure(response)
+        end
       end
 
       def service
