@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Lint
+      # For the empty rescue clause
       class EmptyRescueClause < Cop
         include RescueNode
 
