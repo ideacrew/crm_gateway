@@ -11,7 +11,7 @@ module Subscribers
     subscribe(:on_primary_subscriber_update) do |delivery_info, _properties, payload|
       event = Event.create(
         event_name_identifier: 'Primary Subscriber Update', 
-        data: person_payload
+        data: payload
       )
       person_update_result = ::People::HandlePrimaryPersonUpdate.new(event: event).call(payload)
 
