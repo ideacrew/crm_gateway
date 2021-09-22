@@ -28,7 +28,7 @@ module People
       result = publish_to_crm(person_payload)
       if result.success?
         @event_log.complete!
-        Success("Update the family")
+        Success("Updated the primary subscriber")
       else
         @event_log.error = result.failure[:error]
         @event_log.error_message = result.failure[:error_message]
@@ -43,7 +43,8 @@ module People
     def publish_to_crm(validated_payload)
       SugarCRM::Operations::PrimaryUpsert.new.call(payload: validated_payload)
     end
-
+    
+    # Are these contract methods not being used..?
     def build_contact(person_payload)
       {
         hbx_id: person_payload[:hbx_id],
