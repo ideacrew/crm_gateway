@@ -1,0 +1,11 @@
+default: &default
+  host: sandbox-crm.cme.openhbx.org
+  username: bill.transue
+  password: m94*9S$Gf6$7
+
+development: *default
+test: *default
+production:
+  host: <%= ENV['SUGAR_CRM_HOST'] %>
+  username: <%= ENV['SUGAR_CRM_USERNAME'] %>
+  password: <%= ENV['SUGAR_CRM_PASSWORD'] %>

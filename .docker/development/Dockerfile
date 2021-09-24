@@ -1,4 +1,4 @@
-FROM ruby:2.6.6 AS crm_gateway_base
+FROM ruby:2.6.6 AS crm_gateway
 
 LABEL author="IdeaCrew"
 
@@ -26,14 +26,23 @@ RUN apt-get update && \
     apt-get -yq dist-upgrade && \
     apt-get install -y tzdata build-essential nodejs vim && \
     apt-get autoremove -y && \
-    gem install bundler:$BUNDLER_VERSION_OVERRIDE && \
     npm install --global yarn
 
-COPY . $HOME
+RUN gem install --source "https://rubygems.org" bundler:2.2.14
+
+
+COPY Gemfile .
+COPY Gemfile.lock .
+COPY package.json .
+COPY yarn.lock .
 
 # Setting env up
 ENV RAILS_ENV='development'
 ENV NODE_ENV='development'
 
-RUN bundle config set deployment 'true' && \
-    bundle install
+# RUN bundle config set deployment 'true' && \
+RUN cat $HOME/Gemfile
+RUN cd $HOME && bundle install
+RUN cd $HOME && yarn install
+
+COPY . $HOME
