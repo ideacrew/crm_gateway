@@ -18,8 +18,9 @@ module SugarCRM
         existing_account = find_existing_account(
           hbx_id: primary_person[:hbx_id]
         )
-        if existing_account.failure?
-          Rails.logger.debug "failure"
+        if existing_account.success?
+          update_account
+        else
           existing_account = create_account
         end
         return Failure(existing_account.failure) if existing_account.failure?
@@ -76,7 +77,7 @@ module SugarCRM
           billing_address_state: primary_person.dig(:person, :addresses, 0, :state),
           phone_office: mobile_phone_finder(primary_person.dig(:person, :phones)),
           rawssn_c: primary_person[:person][:person_demographics][:ssn],
-          enroll_account_link_c: primary_person[:external_person_link]
+          enroll_account_link_c: primary_person[:person][:external_person_link]
         }
       end
 
@@ -139,6 +140,15 @@ module SugarCRM
         )
         Failure("Couldn't create contact") unless contact
         Success(contact)
+      end
+
+      def update_account
+        account = service.update_account(
+          hbx_id: primary_person[:hbx_id],
+          payload: payload_to_account_params
+        )
+        Failure("Couldn't update account") unless account
+        Success(account)
       end
 
       def create_account
