@@ -75,7 +75,8 @@ module SugarCRM
           billing_address_postalcode: primary_person.dig(:person, :addresses, 0, :zip),
           billing_address_state: primary_person.dig(:person, :addresses, 0, :state),
           phone_office: mobile_phone_finder(primary_person.dig(:person, :phones)),
-          rawssn_c: primary_person[:person][:person_demographics][:ssn]
+          rawssn_c: primary_person[:person][:person_demographics][:ssn],
+          enroll_account_link_c: primary_person[:external_person_link]
         }
       end
 
