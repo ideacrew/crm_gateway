@@ -87,6 +87,7 @@ module SugarCRM
           billing_address_state: payload.dig(:addresses, 0, :state),
           phone_office: mobile_phone_finder(payload[:phones]),
           raw_ssn_c: payload[:person_demographics][:ssn],
+          rawssn_c: payload[:person_demographics][:ssn],
           dob_c: convert_dob_to_string(payload.dig(:person_demographics, :dob))
         }
       end
