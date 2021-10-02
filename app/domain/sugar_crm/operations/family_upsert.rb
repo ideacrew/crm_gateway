@@ -78,6 +78,7 @@ module SugarCRM
           phone_office: mobile_phone_finder(primary_person.dig(:person, :phones)),
           rawssn_c: primary_person[:person][:person_demographics][:ssn],
           raw_ssn_c: primary_person[:person][:person_demographics][:ssn],
+          dob_c: convert_dob_to_string(primary_person.dig(:person, :person_demographics, :dob))
           enroll_account_link_c: primary_person[:person][:external_person_link]
         }
       end
