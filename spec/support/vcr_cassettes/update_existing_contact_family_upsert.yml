@@ -19,7 +19,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Mon, 04 Oct 2021 17:22:53 GMT
+      - Mon, 04 Oct 2021 20:02:14 GMT
       content-type:
       - application/json
       content-length:
@@ -27,9 +27,9 @@ http_interactions:
       connection:
       - keep-alive
       set-cookie:
-      - PHPSESSID=pp7docr6d65hr5dksaapdr6oi4; path=/, PHPSESSID=c88bb31d-007f-42ba-b7aa-1a964e4d9021;
-        path=/, download_token_base=1535f362-7996-4994-a679-c7e9b63e8c26; expires=Mon,
-        18-Oct-2021 17:22:53 GMT; Max-Age=1209600; path=/; HttpOnly
+      - PHPSESSID=d0dg5qna2qg6fodhkpbdsi8ju0; path=/, PHPSESSID=328fdf23-fc30-45e8-bee3-14c7301b25d6;
+        path=/, download_token_base=4774fafc-d0f9-4152-99d5-45a5ec4c6901; expires=Mon,
+        18-Oct-2021 20:02:14 GMT; Max-Age=1209600; path=/; HttpOnly
       expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       cache-control:
@@ -38,8 +38,8 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"access_token":"c88bb31d-007f-42ba-b7aa-1a964e4d9021","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"417c6461-dacd-4df8-a500-54907edd809f","refresh_expires_in":1209600,"download_token":"1535f362-7996-4994-a679-c7e9b63e8c26"}'
-  recorded_at: Mon, 04 Oct 2021 17:22:53 GMT
+      string: '{"access_token":"328fdf23-fc30-45e8-bee3-14c7301b25d6","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"99f74bd1-1562-4ec9-8e4b-07e5262a7c11","refresh_expires_in":1209600,"download_token":"4774fafc-d0f9-4152-99d5-45a5ec4c6901"}'
+  recorded_at: Mon, 04 Oct 2021 20:02:14 GMT
 - request:
     method: post
     uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts
@@ -53,7 +53,7 @@ http_interactions:
       Content-Type:
       - application/json
       Authorization:
-      - Bearer c88bb31d-007f-42ba-b7aa-1a964e4d9021
+      - Bearer 328fdf23-fc30-45e8-bee3-14c7301b25d6
   response:
     status:
       code: 200
@@ -62,7 +62,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Mon, 04 Oct 2021 17:22:54 GMT
+      - Mon, 04 Oct 2021 20:02:15 GMT
       content-type:
       - application/json
       content-length:
@@ -77,11 +77,11 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"id":"b575e19e-2537-11ec-bc9c-0241d1fb84dd","name":"John Jacob","date_entered":"2021-10-04T13:22:53-04:00","date_modified":"2021-10-04T13:22:53-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
+      string: '{"id":"f8303244-254d-11ec-8d2c-0241d1fb84dd","name":"John Jacob","date_entered":"2021-10-04T16:02:14-04:00","date_modified":"2021-10-04T16:02:14-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
         Transue","modified_user_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"created_by":"d09fe726-feb8-11eb-a595-0241d1fb84dd","created_by_name":"Bill
         Transue","created_by_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"description":"","deleted":false,"facebook":"","twitter":"","googleplus":"","account_type":"","industry":"","annual_revenue":"","phone_fax":"","billing_address_street":"1111
         Awesome Street NE\n#111","billing_address_street_2":"","billing_address_street_3":"","billing_address_street_4":"","billing_address_city":"Washington","billing_address_state":"DC","billing_address_postalcode":"01001","billing_address_country":"","rating":"","phone_office":"2021030404","phone_alternate":"","website":"","ownership":"","employees":"","ticker_symbol":"","shipping_address_street":"","shipping_address_street_2":"","shipping_address_street_3":"","shipping_address_street_4":"","shipping_address_city":"","shipping_address_state":"","shipping_address_postalcode":"","shipping_address_country":"","service_level":"","parent_id":"","sic_code":"","duns_num":"","parent_name":"","member_of":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"campaign_id":"","campaign_name":"","campaign_accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"next_renewal_date":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd","primary_address":true,"reply_to_address":false}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","raw_ssn_c":"","last_ea_action_at_c":"","dob_c":"1981-09-14","broker_c":"","next_best_action_c":"","hbxid_c":"a95878c60b424759935bca542832d5b7","last_ea_action_c":"","enroll_account_link_c":"","ssn_c":"XXX-XX-","opt_out_of_emails_c":false,"_acl":{"fields":{}},"_module":"Accounts"}'
-  recorded_at: Mon, 04 Oct 2021 17:22:54 GMT
+  recorded_at: Mon, 04 Oct 2021 20:02:15 GMT
 - request:
     method: post
     uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
@@ -101,7 +101,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Mon, 04 Oct 2021 17:22:55 GMT
+      - Mon, 04 Oct 2021 20:02:15 GMT
       content-type:
       - application/json
       content-length:
@@ -109,9 +109,9 @@ http_interactions:
       connection:
       - keep-alive
       set-cookie:
-      - PHPSESSID=3t15gp74appu3lb6e2b90sboir; path=/, PHPSESSID=5051743d-b388-473c-95c2-6bd27b3732e6;
-        path=/, download_token_base=2f964f97-1f1d-408d-9080-6c2dffdbb58a; expires=Mon,
-        18-Oct-2021 17:22:54 GMT; Max-Age=1209599; path=/; HttpOnly
+      - PHPSESSID=dmag6fc3507mbeoo71ianfs0i5; path=/, PHPSESSID=5df48ba8-6763-4176-9b70-7d8887d052bd;
+        path=/, download_token_base=f27b288a-f139-463c-a94d-4fa95ea8bbc9; expires=Mon,
+        18-Oct-2021 20:02:15 GMT; Max-Age=1209600; path=/; HttpOnly
       expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       cache-control:
@@ -120,21 +120,21 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"access_token":"5051743d-b388-473c-95c2-6bd27b3732e6","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"50c249aa-6bf9-41e0-b756-3ae4f4058f5b","refresh_expires_in":1209599,"download_token":"2f964f97-1f1d-408d-9080-6c2dffdbb58a"}'
-  recorded_at: Mon, 04 Oct 2021 17:22:55 GMT
+      string: '{"access_token":"5df48ba8-6763-4176-9b70-7d8887d052bd","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"36cf29ea-f5d7-4496-bf47-8e7511c486a6","refresh_expires_in":1209600,"download_token":"f27b288a-f139-463c-a94d-4fa95ea8bbc9"}'
+  recorded_at: Mon, 04 Oct 2021 20:02:15 GMT
 - request:
     method: post
     uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Contacts
     body:
       encoding: UTF-8
-      string: '{"hbxid_c":"a95878c60b424759935bca542832d5b7","first_name":"John","last_name":"Jacob","phone_mobile":"2021030404","email1":"example1@example.com","account.id":"b575e19e-2537-11ec-bc9c-0241d1fb84dd"}'
+      string: '{"hbxid_c":"a95878c60b424759935bca542832d5b7","first_name":"John","last_name":"Jacob","phone_mobile":"2021030404","email1":"example1@example.com","account.id":"f8303244-254d-11ec-8d2c-0241d1fb84dd"}'
     headers:
       User-Agent:
       - Faraday v1.4.3
       Content-Type:
       - application/json
       Authorization:
-      - Bearer 5051743d-b388-473c-95c2-6bd27b3732e6
+      - Bearer 5df48ba8-6763-4176-9b70-7d8887d052bd
   response:
     status:
       code: 200
@@ -143,7 +143,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Mon, 04 Oct 2021 17:22:55 GMT
+      - Mon, 04 Oct 2021 20:02:16 GMT
       content-type:
       - application/json
       content-length:
@@ -158,9 +158,93 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"id":"b6408390-2537-11ec-9db0-0241d1fb84dd","name":"John Jacob","date_entered":"2021-10-04T13:22:55-04:00","date_modified":"2021-10-04T13:22:55-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
+      string: '{"id":"f8e1a1fa-254d-11ec-be4d-0241d1fb84dd","name":"John Jacob","date_entered":"2021-10-04T16:02:15-04:00","date_modified":"2021-10-04T16:02:15-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
         Transue","modified_user_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"created_by":"d09fe726-feb8-11eb-a595-0241d1fb84dd","created_by_name":"Bill
         Transue","created_by_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"description":"","deleted":false,"salutation":"","first_name":"John","last_name":"Jacob","full_name":"John
         Jacob","title":"","facebook":"","twitter":"","googleplus":"","department":"","do_not_call":false,"phone_home":"","phone_mobile":"2021030404","phone_work":"","phone_other":"","phone_fax":"","primary_address_street":"","primary_address_street_2":"","primary_address_street_3":"","primary_address_city":"","primary_address_state":"","primary_address_postalcode":"","primary_address_country":"","alt_address_street":"","alt_address_street_2":"","alt_address_street_3":"","alt_address_city":"","alt_address_state":"","alt_address_postalcode":"","alt_address_country":"","assistant":"","assistant_phone":"","picture":"","email_and_name1":"","lead_source":"","account_name":"","accounts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"account_id":"","dnb_principal_id":"","opportunity_role_fields":"","opportunities":{"id":""},"opportunity_role_id":"","opportunity_role":"","reports_to_id":"","report_to_name":"","reports_to_link":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"birthdate":"","portal_name":"","portal_active":false,"portal_password":null,"portal_password1":null,"portal_app":"","portal_user_company_name":"","preferred_language":"","cookie_consent":false,"cookie_consent_received_on":"","business_center_name":"","business_centers":{"name":"","id":"","_acl":{"fields":[],"access":"no","view":"no","list":"no","edit":"no","delete":"no","import":"no","export":"no","massupdate":"no","_hash":"3fd204ac1b6d951752c529c51f978bc3"}},"business_center_id":"","dp_business_purpose":[],"dp_consent_last_updated":"2021-10-04","campaign_id":"","campaign_name":"","campaign_contacts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"c_accept_status_fields":"","calls":{"id":""},"m_accept_status_fields":"","meetings":{"id":""},"accept_status_id":"","accept_status_name":"","accept_status_calls":"","accept_status_meetings":"","sync_contact":false,"mkto_sync":false,"mkto_id":null,"mkto_lead_score":null,"entry_source":"internal","site_user_id":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd","primary_address":true,"reply_to_address":false}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","gender_c":"male","relationship_c":"","hbxid_c":"a95878c60b424759935bca542832d5b7","_acl":{"fields":{}},"_module":"Contacts"}'
-  recorded_at: Mon, 04 Oct 2021 17:22:55 GMT
+  recorded_at: Mon, 04 Oct 2021 20:02:16 GMT
+- request:
+    method: post
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
+    body:
+      encoding: UTF-8
+      string: client_id=sugar&client_secret=&grant_type=password&params%5Bgrant_type%5D=password&params%5Bpassword%5D=SUGAR_CRM_ENCODED_PASSWORD>&params%5Bplatform%5D=mobile&params%5Busername%5D=<SUGAR_CRM_USERNAME>&password=SUGAR_CRM_ENCODED_PASSWORD>&username=<SUGAR_CRM_USERNAME>
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Mon, 04 Oct 2021 20:02:16 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '248'
+      connection:
+      - keep-alive
+      set-cookie:
+      - PHPSESSID=favard4ge2ctlld8ba88h7hcov; path=/, PHPSESSID=5387fea9-9b34-4357-9fef-e54685a7c447;
+        path=/, download_token_base=65d7eaa8-6f4c-4cb0-8847-5c7dd84d885d; expires=Mon,
+        18-Oct-2021 20:02:16 GMT; Max-Age=1209600; path=/; HttpOnly
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate
+      pragma:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"5387fea9-9b34-4357-9fef-e54685a7c447","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"254a43c5-fecf-4d1c-b4ce-9ac5ad34996e","refresh_expires_in":1209600,"download_token":"65d7eaa8-6f4c-4cb0-8847-5c7dd84d885d"}'
+  recorded_at: Mon, 04 Oct 2021 20:02:16 GMT
+- request:
+    method: put
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Contacts/f8e1a1fa-254d-11ec-be4d-0241d1fb84dd
+    body:
+      encoding: UTF-8
+      string: '{"hbxid_c":"a95878c60b424759935bca542832d5b7","first_name":"John","last_name":"Smith1","phone_mobile":"(202)
+        103-0404","email1":"example1@example.com","birthdate":"1991-10-04","relationship_c":"Self","account_id":"f8303244-254d-11ec-8d2c-0241d1fb84dd"}'
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer 5387fea9-9b34-4357-9fef-e54685a7c447
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Mon, 04 Oct 2021 20:02:16 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '3966'
+      connection:
+      - keep-alive
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate
+      pragma:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"id":"f8e1a1fa-254d-11ec-be4d-0241d1fb84dd","name":"John Smith1","date_entered":"2021-10-04T16:02:15-04:00","date_modified":"2021-10-04T16:02:16-04:00","modified_user_id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","modified_by_name":"Bill
+        Transue","modified_user_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"created_by":"d09fe726-feb8-11eb-a595-0241d1fb84dd","created_by_name":"Bill
+        Transue","created_by_link":{"full_name":"Bill Transue","id":"d09fe726-feb8-11eb-a595-0241d1fb84dd","_acl":{"fields":{"pwd_last_changed":{"write":"no","create":"no"},"last_login":{"write":"no","create":"no"}},"_hash":"6d408abe1708e7afd72eaecf780699c2"}},"description":"","deleted":false,"salutation":"","first_name":"John","last_name":"Smith1","full_name":"John
+        Smith1","title":"","facebook":"","twitter":"","googleplus":"","department":"","do_not_call":false,"phone_home":"","phone_mobile":"(202)
+        103-0404","phone_work":"","phone_other":"","phone_fax":"","primary_address_street":"","primary_address_street_2":"","primary_address_street_3":"","primary_address_city":"","primary_address_state":"","primary_address_postalcode":"","primary_address_country":"","alt_address_street":"","alt_address_street_2":"","alt_address_street_3":"","alt_address_city":"","alt_address_state":"","alt_address_postalcode":"","alt_address_country":"","assistant":"","assistant_phone":"","picture":"","email_and_name1":"","lead_source":"","account_name":"John
+        Jacob","accounts":{"name":"John Jacob","id":"f8303244-254d-11ec-8d2c-0241d1fb84dd","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"account_id":"f8303244-254d-11ec-8d2c-0241d1fb84dd","dnb_principal_id":"","opportunity_role_fields":"","opportunities":{"id":""},"opportunity_role_id":"","opportunity_role":"","reports_to_id":"","report_to_name":"","reports_to_link":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"birthdate":"1991-10-04","portal_name":"","portal_active":false,"portal_password":null,"portal_password1":null,"portal_app":"","portal_user_company_name":"","preferred_language":"","cookie_consent":false,"cookie_consent_received_on":"","business_center_name":"","business_centers":{"name":"","id":"","_acl":{"fields":[],"access":"no","view":"no","list":"no","edit":"no","delete":"no","import":"no","export":"no","massupdate":"no","_hash":"3fd204ac1b6d951752c529c51f978bc3"}},"business_center_id":"","dp_business_purpose":[],"dp_consent_last_updated":"2021-10-04","campaign_id":"","campaign_name":"","campaign_contacts":{"name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"c_accept_status_fields":"","calls":{"id":""},"m_accept_status_fields":"","meetings":{"id":""},"accept_status_id":"","accept_status_name":"","accept_status_calls":"","accept_status_meetings":"","sync_contact":false,"mkto_sync":false,"mkto_id":null,"mkto_lead_score":null,"entry_source":"internal","site_user_id":"","following":true,"my_favorite":false,"tag":[],"locked_fields":[],"assigned_user_id":"","assigned_user_name":"","assigned_user_link":{"full_name":"","id":"","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_count":"","team_count_link":{"team_count":"","id":"1","_acl":{"fields":[],"_hash":"654d337e0e912edaa00dbb0fb3dc3c17"}},"team_name":[{"id":"1","name":"Global","name_2":"","primary":true,"selected":false}],"email":[{"email_address":"example1@example.com","invalid_email":false,"opt_out":false,"email_address_id":"3f48f0fa-163d-11ec-ae61-0241d1fb84dd","primary_address":true,"reply_to_address":false}],"email1":"example1@example.com","email2":"","invalid_email":false,"email_opt_out":false,"email_addresses_non_primary":"","gender_c":"male","relationship_c":"Self","hbxid_c":"a95878c60b424759935bca542832d5b7","_acl":{"fields":{}},"_module":"Contacts"}'
+  recorded_at: Mon, 04 Oct 2021 20:02:16 GMT
 recorded_with: VCR 6.0.0

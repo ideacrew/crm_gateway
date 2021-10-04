@@ -11,7 +11,7 @@ module SugarCRM
     class FamilyUpsert
       include Dry::Monads[:result, :do, :try]
 
-      attr_accessor :primary_family_member_hbx_id
+      attr_accessor :primary_family_member_hbx_id, :payload
 
       def call(payload:)
         @payload = payload.deep_symbolize_keys
