@@ -16,16 +16,14 @@ RSpec.describe People::HandlePrimaryPersonUpdate, dbclean: :after_each do
 
     let(:result) do
       VCR.use_cassette 'handle_primary_person' do
-        subject.call(payload)
+        result = subject.call(payload)
+        expect(Event.last.aasm_state).to eql("successful")
+        result
       end
     end
 
     it 'subject should be successful' do
       expect(result).to be_success
-    end
-
-    it 'creates and updates an event' do
-      expect(subject.event_log.aasm_state).to eql("successful")
     end
 
     context "with bad username/password" do
@@ -35,13 +33,19 @@ RSpec.describe People::HandlePrimaryPersonUpdate, dbclean: :after_each do
             Rails.application.config.sugar_crm[:host],
             Rails.application.config.sugar_crm[:username],
             'bad_password'
-]
+          ]
         )
       end
 
-      it "event shound have an error" do
-        result
-        expect(subject.event_log.error).to eql("Unknown error")
+      let(:bad_username_pass_result) do
+        VCR.use_cassette 'handle_primary_person_bad_username' do
+          result = subject.call(payload)
+          Event.last.error
+        end
+      end
+
+      it "event should have an error" do
+        expect(bad_username_pass_result).to eq("Unknown error")
       end
     end
 
@@ -52,13 +56,19 @@ RSpec.describe People::HandlePrimaryPersonUpdate, dbclean: :after_each do
             'bad_host',
             Rails.application.config.sugar_crm[:username],
             Rails.application.config.sugar_crm[:password]
-]
+          ]
         )
       end
 
-      it "event shound have an error" do
-        result
-        expect(subject.event_log.error).to include("couldn't connect to host")
+      let(:bad_host_result) do
+        VCR.use_cassette 'handle_primary_person_bad_host' do
+          result = subject.call(payload)
+          Event.last.error
+        end
+      end
+
+      xit "event should have an error" do
+        expect(bad_host_result).to eq("couldn't connect to host")
       end
     end
   end
