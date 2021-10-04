@@ -19,7 +19,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Mon, 04 Oct 2021 20:04:46 GMT
+      - Mon, 04 Oct 2021 20:24:58 GMT
       content-type:
       - application/json
       content-length:
@@ -27,9 +27,9 @@ http_interactions:
       connection:
       - keep-alive
       set-cookie:
-      - PHPSESSID=bgefm2c18fb99q09im55fbog09; path=/, PHPSESSID=f32bb6cb-4e4f-4c32-89f7-98d19295c542;
-        path=/, download_token_base=c4a6d2b4-0bfa-4758-bbe2-ff88fecac764; expires=Mon,
-        18-Oct-2021 20:04:46 GMT; Max-Age=1209600; path=/; HttpOnly
+      - PHPSESSID=028t30eftgdi5abr2k6opet1bm; path=/, PHPSESSID=e3ed87bd-2f4c-4502-86a1-d7b63de105a3;
+        path=/, download_token_base=42ce38d7-b386-4020-84b8-1e0ce2f67a4f; expires=Mon,
+        18-Oct-2021 20:24:58 GMT; Max-Age=1209600; path=/; HttpOnly
       expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       cache-control:
@@ -38,8 +38,8 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"access_token":"f32bb6cb-4e4f-4c32-89f7-98d19295c542","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"852b76ed-8b3d-4055-b232-fd385fd27102","refresh_expires_in":1209600,"download_token":"c4a6d2b4-0bfa-4758-bbe2-ff88fecac764"}'
-  recorded_at: Mon, 04 Oct 2021 20:04:46 GMT
+      string: '{"access_token":"e3ed87bd-2f4c-4502-86a1-d7b63de105a3","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"9e4ae496-b133-44c1-a05f-39dffbe5de1c","refresh_expires_in":1209600,"download_token":"42ce38d7-b386-4020-84b8-1e0ce2f67a4f"}'
+  recorded_at: Mon, 04 Oct 2021 20:24:58 GMT
 - request:
     method: get
     uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts?filter%5B%5D%5Bhbxid_c%5D=zzjkdlf
@@ -50,7 +50,7 @@ http_interactions:
       User-Agent:
       - Faraday v1.4.3
       Authorization:
-      - Bearer f32bb6cb-4e4f-4c32-89f7-98d19295c542
+      - Bearer e3ed87bd-2f4c-4502-86a1-d7b63de105a3
   response:
     status:
       code: 200
@@ -59,7 +59,7 @@ http_interactions:
       server:
       - nginx/1.16.1
       date:
-      - Mon, 04 Oct 2021 20:04:46 GMT
+      - Mon, 04 Oct 2021 20:24:59 GMT
       content-type:
       - application/json
       content-length:
@@ -77,5 +77,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"records":[],"next_offset":-1}'
-  recorded_at: Mon, 04 Oct 2021 20:04:46 GMT
+  recorded_at: Mon, 04 Oct 2021 20:24:59 GMT
 recorded_with: VCR 6.0.0

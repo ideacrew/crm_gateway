@@ -54,11 +54,6 @@ module SugarCRM
         end
       end
 
-      def find_contacts_by_account(account_id)
-        response = get('/rest/v11_8/Contacts', params: { filter: [{'accounts.id': account_id}] })
-        response.parsed
-      end
-
       def create_account(payload:)
         response = post(
           '/rest/v11_8/Accounts',

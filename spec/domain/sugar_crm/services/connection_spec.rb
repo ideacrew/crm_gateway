@@ -82,21 +82,6 @@ RSpec.describe SugarCRM::Services::Connection do
     end
   end
 
-  describe '#find_contacts_by_account' do
-    let(:response) do
-      VCR.use_cassette('find_contacts_by_account') do
-        account = subject.create_account(payload: account_params)
-        subject.create_contact_for_account(payload: contact_params.merge('account.id': account['id']))
-        response = subject.find_account_by_hbx_id(hbx_id)
-        subject.find_contacts_by_account(response)
-      end
-    end
-
-    it 'finds the correct contacts' do
-      expect(response['records'].first['name']).to eql('John Jacob')
-    end
-  end
-
   describe '#update_account' do
     let(:response) do
       VCR.use_cassette('update_account') do
