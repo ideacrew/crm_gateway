@@ -43,7 +43,7 @@ module People
     def publish_to_crm(validated_payload)
       SugarCRM::Operations::PrimaryUpsert.new.call(payload: validated_payload)
     end
-    
+
     # Are these contract methods not being used..?
     def build_contact(person_payload)
       {
