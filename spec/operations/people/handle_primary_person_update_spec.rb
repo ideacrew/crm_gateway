@@ -39,7 +39,7 @@ RSpec.describe People::HandlePrimaryPersonUpdate, dbclean: :after_each do
 
       let(:bad_username_pass_result) do
         VCR.use_cassette 'handle_primary_person_bad_username' do
-          result = subject.call(payload)
+          subject.call(payload)
           Event.last.error
         end
       end
@@ -62,7 +62,7 @@ RSpec.describe People::HandlePrimaryPersonUpdate, dbclean: :after_each do
 
       let(:bad_host_result) do
         VCR.use_cassette 'handle_primary_person_bad_host' do
-          result = subject.call(payload)
+          subject.call(payload)
           Event.last.error
         end
       end
