@@ -15,32 +15,28 @@ module SugarCRM
 
       def call(payload:)
         @payload = payload.deep_symbolize_keys
-        existing_account = find_existing_account(
-          hbx_id: primary_person[:hbx_id]
+
+        account = SugarCRM::Operations::CreateOrUpdateAccount.new
+        results = account.call(
+          hbx_id: hbx_id,
+          params: payload_to_account_params(payload)
         )
-        if existing_account.failure?
-          Rails.logger.debug "failure"
-          existing_account = create_account
+        account_id = account.id
+
+        results += payload[:family_members].map do |family_member|
+          SugarCRM::Operations::CreateOrUpdateContact.new.call(
+            hbx_id: family_member[:hbx_id],
+            params: payload_to_contact_params(payload).merge(account_id: account_id)
+          )
         end
-        return Failure(existing_account.failure) if existing_account.failure?
-        results = @payload[:family_members].map do |family_member|
-          family_member_hbx_id = family_member[:hbx_id]
-          existing_contact = service.find_contact_by_hbx_id(family_member_hbx_id)
-          if existing_contact
-            update_existing_contact(id: existing_contact, account_id: existing_account.value!, params: family_member)
-          else
-            create_contact(account_id: existing_account.value!, params: family_member)
-          end
+
+        if results.map(&:first).all? do |(step, result)|
+          step =~ /create|update/ && result.success?
         end
-        if failing_result = results.detect(&:failure?)
-          Failure(failing_result.failure)
+          Success(results)
         else
-          Success("Successful family update")
+          Failure(results)
         end
-      rescue Faraday::ConnectionFailed => e
-        Failure(error: "couldn't connect to host", error_message: e.message, error_backtrace: e.backtrace)
-      rescue StandardError => e
-        Failure(error: 'Unknown error', error_message: e.message, error_backtrace: e.backtrace)
       end
 
       def mobile_phone_finder(payload)
@@ -75,6 +71,7 @@ module SugarCRM
           billing_address_postalcode: primary_person.dig(:person, :addresses, 0, :zip),
           billing_address_state: primary_person.dig(:person, :addresses, 0, :state),
           phone_office: mobile_phone_finder(primary_person.dig(:person, :phones)),
+          dob_c: convert_dob_to_string(primary_person.dig(:person, :person_demographics, :dob)),
           rawssn_c: primary_person[:person][:person_demographics][:ssn]
         }
       end
