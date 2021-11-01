@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ideacrew/aca_entities.git
-  revision: a959070f4ced3c425c590e7aa4162cca8b1536f4
-  branch: release_0.6.0
+  revision: 08a28819e19198bf9aad3691a36e2caa2e353cd3
+  branch: trunk
   specs:
-    aca_entities (0.6.0)
+    aca_entities (0.9.0)
       deep_merge
       dry-monads (~> 1.2)
       dry-struct (~> 1.0)
@@ -13,6 +13,7 @@ GIT
       iso_country_codes
       nokogiri-happymapper
       oj (~> 3.11)
+      rbnacl (~> 7.1)
 
 GIT
   remote: https://github.com/ideacrew/event_source.git
@@ -331,6 +332,8 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rbnacl (7.1.1)
+      ffi
     rbtree (0.4.4)
     redis (4.5.1)
     redis-namespace (1.8.1)
