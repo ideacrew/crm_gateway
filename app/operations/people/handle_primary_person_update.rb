@@ -43,27 +43,5 @@ module People
     def publish_to_crm(validated_payload)
       SugarCRM::Operations::PrimaryUpsert.new.call(payload: validated_payload)
     end
-
-    # Are these contract methods not being used..?
-    def build_contact(person_payload)
-      {
-        hbx_id: person_payload[:hbx_id],
-        first_name: person_payload.dig(:person_name, :first_name),
-        last_name: person_payload.dig(:person_name, :last_name),
-        date_of_birth: person_payload.dig(:person_demographics, :dob),
-        email: person_payload[:emails].detect { |email| email[:address].present? }.try(:[], :address),
-        ssn: person_payload.dig(:person_demographics, :ssn),
-        relationship_to_primary: "self"
-      }
-    end
-
-    def validate_contact(contact_payload)
-      result = AcaEntities::Crms::Contacts::ContactContract.new.call(contact_payload)
-      if result.success?
-        Success(result.to_h)
-      else
-        Failure(result.errors.to_h)
-      end
-    end
   end
 end

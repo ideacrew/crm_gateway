@@ -42,6 +42,7 @@ module SugarCRM
           hbxid_c: payload[:hbx_id],
           first_name: payload[:person_name][:first_name],
           last_name: payload[:person_name][:last_name],
+          phone_office: mobile_phone_finder(payload[:phones]),
           phone_mobile: mobile_phone_finder(payload[:phones]), #spec
           email1: payload.dig(:emails, 0, :address),
           birthdate: convert_dob_to_string(payload.dig(:person_demographics, :dob)),

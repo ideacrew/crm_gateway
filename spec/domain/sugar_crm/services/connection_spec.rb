@@ -58,10 +58,8 @@ RSpec.describe SugarCRM::Services::Connection do
 
   describe '#create_contact_for_account' do
     let(:response) do
-      VCR.use_cassette('create_contact') do
         account = subject.create_account(payload: account_params)
         subject.create_contact_for_account(payload: contact_params.merge('account.id': account['id']))
-      end
     end
 
     it 'creates a contact with the correct name' do
