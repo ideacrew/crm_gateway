@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/oauth2/token
+    body:
+      encoding: UTF-8
+      string: client_id=sugar&client_secret=&grant_type=password&params%5Bgrant_type%5D=password&params%5Bpassword%5D=SUGAR_CRM_ENCODED_PASSWORD>&params%5Bplatform%5D=mobile&params%5Busername%5D=<SUGAR_CRM_USERNAME>&password=SUGAR_CRM_ENCODED_PASSWORD>&username=<SUGAR_CRM_USERNAME>
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Mon, 04 Oct 2021 20:24:58 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '248'
+      connection:
+      - keep-alive
+      set-cookie:
+      - PHPSESSID=028t30eftgdi5abr2k6opet1bm; path=/, PHPSESSID=e3ed87bd-2f4c-4502-86a1-d7b63de105a3;
+        path=/, download_token_base=42ce38d7-b386-4020-84b8-1e0ce2f67a4f; expires=Mon,
+        18-Oct-2021 20:24:58 GMT; Max-Age=1209600; path=/; HttpOnly
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate
+      pragma:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"e3ed87bd-2f4c-4502-86a1-d7b63de105a3","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"9e4ae496-b133-44c1-a05f-39dffbe5de1c","refresh_expires_in":1209600,"download_token":"42ce38d7-b386-4020-84b8-1e0ce2f67a4f"}'
+  recorded_at: Mon, 04 Oct 2021 20:24:58 GMT
+- request:
+    method: get
+    uri: https://sandbox-crm.cme.openhbx.org/rest/v11_8/Accounts?filter%5B%5D%5Bhbxid_c%5D=zzjkdlf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.3
+      Authorization:
+      - Bearer e3ed87bd-2f4c-4502-86a1-d7b63de105a3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.16.1
+      date:
+      - Mon, 04 Oct 2021 20:24:59 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '31'
+      connection:
+      - keep-alive
+      expires:
+      - ''
+      cache-control:
+      - max-age=0, private
+      pragma:
+      - ''
+      etag:
+      - 5d0cf03cd35880151b2f59eae817b564
+    body:
+      encoding: UTF-8
+      string: '{"records":[],"next_offset":-1}'
+  recorded_at: Mon, 04 Oct 2021 20:24:59 GMT
+recorded_with: VCR 6.0.0

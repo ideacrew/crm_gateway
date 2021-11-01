@@ -1,0 +1,27 @@
+<tr
+  id="<%= "event-row-#{event.id}" %>"
+  scope="row"
+  class="<%= 'table-danger' if event.failure? %>">
+  <td><%= event.data[:hbx_id] %></td>
+  <td>
+    <% if event.event_name_identifier == "Primary Subscriber Update" %>
+        <%= event.data.dig(:person_name, :first_name) %>
+        <%= event.data.dig(:person_name, :last_name) %>
+    <% end %>
+    <% if event.event_name_identifier == "Family Update" %>
+        <%= event_row(event) %>
+    <% end %>
+  </td>
+  <td><%= event.event_name_identifier %></td>
+  <td><%= event.aasm_state.titleize %></td>
+  <td><%= event.error unless event.error_message.nil? %></td>
+  <td><%= js_timeago event.latest_timestamp %></td>
+  <td>
+    <%= link_to event do %>
+      <i class="fas fa-info-circle"></i>
+    <% end %>
+    <%= link_to retry_event_path(event), remote: true do %>
+      <i class="fas fa-redo"></i>
+    <% end %>
+  </td>
+</tr>

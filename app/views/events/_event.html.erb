@@ -1,0 +1,66 @@
+<div id="event-<%= event.id %>">
+  <div class='row'>
+    <div class='col-2 text-right font-weight-bolder'>Status</div>
+    <div class='col-8'>
+      <%= event.aasm_state.titleize %>
+    </div>
+
+    <div class='col-2'>
+      <%= form_with model: event, local: false do |form| %>
+        <%= form.hidden_field :archived, value: !event.archived %>
+        <%= form.button class: class_names('btn btn-primary', active: event.archived?),
+           data: { toggle: 'button' },
+           'aria-pressed': event.archived? do %>
+          <i class="fas fa-archive"></i>&nbsp; <%= event.archived? ? 'Archived' : 'Archive' %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class='row'>
+    <div class='col-2 text-right font-weight-bolder'>Received at</div>
+    <div class='col-8'><%= event.created_at.localtime.to_s(:short) %></div>
+  </div>
+  <div class='row'>
+    <div class='col-2 text-right font-weight-bolder'>Processed at</div>
+    <div class='col-8'><%= event.processing_at&.localtime&.to_s(:short) %></div>
+  </div>
+  <div class='row'>
+    <% if event.successful? %>
+      <div class='col-2 text-right font-weight-bolder'>Succesful at</div>
+      <div class='col-8'><%= event.successful_at.localtime.to_s(:short) %></div>
+    <% elsif event.failure? %>
+      <div class='col-2 text-right font-weight-bolder'>Failed at</div>
+      <div class='col-8'><%= event.failure_at.localtime.to_s(:short) %></div>
+    <% end %>
+  </div>
+
+  <% if event.error_message.present? %>
+    <div class='row'>
+      <div class='col-2 text-right font-weight-bolder'>
+        Error
+      </div>
+      <div class='col-10'>
+        <pre><%= event.error_message %></pre>
+      </div>
+    </div>
+  <% end %>
+  <% if event.error_backtrace&.present? %>
+    <div class='row'>
+      <div class='col-2 text-right font-weight-bolder'>
+        Backtrace
+      </div>
+      <div class='col-10'>
+        <pre class='debug-dump'><%= event.error_backtrace.join("\n") %></pre>
+      </div>
+    </div>
+  <% end %>
+  <div class='row'>
+    <div class='col-2 text-right font-weight-bolder'>
+      Payload
+    </div>
+    <div class='col-10'>
+      <%= ap(event.data).html_safe %>
+    </div>
+  </div>
+</div>
