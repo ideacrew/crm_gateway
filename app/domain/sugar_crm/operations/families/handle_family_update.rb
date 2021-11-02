@@ -24,6 +24,7 @@ module SugarCRM
             data: family_payload
           )
           @event_log.process!
+          sleep 3 # sometimes primary and family follow behind each other to quick
           result = publish_to_crm(family_payload)
           if result.success?
             @event_log.complete!
