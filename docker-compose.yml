@@ -59,7 +59,7 @@ services:
       - WF_PRIVATE_KEY=${WF_API_KEY:-1234567890}
     tmpfs:
       - /tmp
-    command: "bash -c rm -f tmp/pids/server.pid && mkdir -p tmp/pids && mkdir -p pids && ln -sf /dev/stdout /crm_gateway/log/production.log && bundle exec puma -C config/puma.rb"
+    command: "bash -c 'rm -f tmp/pids/server.pid && mkdir -p tmp/pids && mkdir -p pids && ln -sf /dev/stdout /crm_gateway/log/production.log && bundle exec puma -C config/puma.rb'"
     depends_on:
       - mongodb
       - rabbitmq
