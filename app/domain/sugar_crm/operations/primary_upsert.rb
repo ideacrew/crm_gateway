@@ -27,7 +27,7 @@ module SugarCRM
         )
         contact_result = if existing_contact.success?
                    yield update_contact(
-                     payload_to_contact_params(existing_contact.value!, payload.merge('account.id': result['id']))
+                    existing_contact.value!, payload_to_contact_params(payload.merge('account.id': result['id']))
                    )
                  else
                    yield create_contact(
