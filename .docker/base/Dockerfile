@@ -1,4 +1,4 @@
-FROM ruby:2.6.6 AS crm_gateway
+FROM ruby:2.7.3 AS crm_gateway
 
 LABEL author="IdeaCrew"
 
@@ -24,7 +24,7 @@ ARG BUNDLER_VERSION_OVERRIDE
 RUN echo $BUNDLER_VERSION_OVERRIDE
 RUN apt-get update && \
     apt-get -yq dist-upgrade && \
-    apt-get install -y tzdata build-essential nodejs vim && \
+    apt-get install -y tzdata build-essential nodejs vim libsodium-dev && \
     apt-get autoremove -y && \
     npm install --global yarn
 

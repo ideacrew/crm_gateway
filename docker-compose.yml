@@ -1,7 +1,7 @@
 version: "3.4"
 
 services:
-  app:
+  crm_gateway_local:
     build:
       context: .
       dockerfile: ./.docker/development/Dockerfile
@@ -9,8 +9,6 @@ services:
         RUBY_VERSION: "2.6.6"
         BUNDLER_VERSION_OVERRIDE: "2.2.14"
     image: crm_gateway_dev:0.3.0
-    links:
-      - db
     ports:
       - "3000:3000"
     volumes:
@@ -61,16 +59,44 @@ services:
       - WF_PRIVATE_KEY=${WF_API_KEY:-1234567890}
     tmpfs:
       - /tmp
-    command: bash -c "rm -f tmp/pids/server.pid && mkdir -p tmp/pids && yarn install --check-files && bundle install && bundle exec puma -C config/puma.rb"
+    command: "bash -c rm -f tmp/pids/server.pid && mkdir -p tmp/pids && mkdir -p pids && ln -sf /dev/stdout /crm_gateway/log/production.log && bundle exec puma -C config/puma.rb"
     depends_on:
-      - db
-  db:
+      - mongodb
+      - rabbitmq
+      - redis
+
+  mongodb:
     image: mongo:4.2
     volumes:
       - mongodb:/data/db
       - mongodb_config:/data/configdb
     ports:
       - 27017:27017
+
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    container_name: rabbitmq
+    volumes:
+      - rabbitmq_etc:/etc/rabbitmq/
+      - rabbitmq_data:/var/lib/rabbitmq/
+      - rabbitmq_logs:/var/log/rabbitmq/
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE:-123456789}
+      - RABBITMQ_USER=${RABBITMQ_DEFAULT_USER:-guest}
+      - RABBITMQ_PASSWORD=${RABBITMQ_DEFAULT_PASS:-guest}
+    ports:
+      - 4369
+      - 5672:5672
+      - 25672:25672
+      - 15672:15672
+
+  redis:
+    build: ./.docker/development/redis
+    container_name: redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379:6379
 
 volumes:
   bundle:
@@ -79,3 +105,6 @@ volumes:
   packs:
   mongodb:
   mongodb_config:
+  rabbitmq_etc:
+  rabbitmq_data:
+  rabbitmq_logs:

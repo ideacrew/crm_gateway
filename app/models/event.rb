@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'application_controller'
 # Class for recording the outcome of publishing
 class Event
   include Mongoid::Document
