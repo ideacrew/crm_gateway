@@ -19,7 +19,7 @@ module SugarCRM
           hbx_id: primary_person[:hbx_id]
         )
         if existing_account.success?
-          update_account
+          update_account(existing_account.value!)
         else
           existing_account = create_account
         end
@@ -144,9 +144,9 @@ module SugarCRM
         Success(contact)
       end
 
-      def update_account
+      def update_account(id)
         account = service.update_account(
-          hbx_id: primary_person[:hbx_id],
+          id: id,
           payload: payload_to_account_params
         )
         Failure("Couldn't update account") unless account

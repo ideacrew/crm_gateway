@@ -18,18 +18,23 @@ module SugarCRM
           hbx_id: @hbx_id
         )
         result = if existing_account.success?
-                   yield update_account(
-                     payload_to_account_params(payload)
-                   )
+                   yield update_account(existing_account.value!, payload_to_account_params(payload))
+                  else
+                    yield create_account(payload_to_account_params(payload))
+                  end
+        existing_contact = find_existing_contact(
+          hbx_id: @hbx_id
+        )
+        contact_result = if existing_contact.success?
                    yield update_contact(
-                     payload_to_contact_params(payload.merge('account.id': existing_account.value!))
+                     payload_to_contact_params(existing_contact.value!, payload.merge('account.id': result['id']))
                    )
                  else
-                   yield create_account_and_contact(
-                     payload
+                   yield create_contact(
+                    payload_to_contact_params(payload.merge('account.id': result['id']))
                    )
                  end
-        Success(result)
+        Success(contact_result)
       rescue Faraday::ConnectionFailed => e
         Failure(error: "couldn't connect to host", error_message: e.message, error_backtrace: e.backtrace)
       rescue StandardError => e
@@ -100,34 +105,42 @@ module SugarCRM
         end
       end
 
-      def create_account_and_contact(payload)
-        account = service.create_account(
-          payload: payload_to_account_params(payload)
-        )
-        Failure("Couldn't create account") unless account
 
-        contact = service.create_contact_for_account(
-          payload: payload_to_contact_params(payload).merge(account_id: account)
-        )
-        Failure("Couldn't create contact") unless contact
-        Success(contact)
+      def find_existing_contact(hbx_id:)
+        if existing_account = service.find_contact_by_hbx_id(hbx_id)
+          Success(existing_account)
+        else
+          Failure("No contact found")
+        end
       end
 
-      def update_account(payload)
-        account = service.update_account(
-          hbx_id: @hbx_id,
+      def create_account(payload)
+        account = service.create_account(
           payload: payload
         )
-        Failure("Couldn't update account") unless account
         Success(account)
       end
 
-      def update_contact(payload)
-        contact = service.update_contact_by_hbx_id(
-          hbx_id: @hbx_id,
+      def create_contact(payload)
+        contact = service.create_contact_for_account(
           payload: payload
         )
-        Failure("Couldn't update contact") unless contact
+        Success(contact)
+      end
+
+      def update_account(id, payload)
+        account = service.update_account(
+          id: id,
+          payload: payload
+        )
+        Success(account)
+      end
+
+      def update_contact(id, payload)
+        contact = service.update_contact(
+          id: id,
+          payload: payload
+        )
         Success(contact)
       end
 
