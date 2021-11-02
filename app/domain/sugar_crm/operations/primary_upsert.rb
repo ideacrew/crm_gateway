@@ -91,10 +91,17 @@ module SugarCRM
           billing_address_postalcode: payload.dig(:addresses, 0, :zip),
           billing_address_state: payload.dig(:addresses, 0, :state),
           phone_office: mobile_phone_finder(payload[:phones]),
-          raw_ssn_c: payload[:person_demographics][:ssn],
-          rawssn_c: payload[:person_demographics][:ssn],
+          raw_ssn_c: decrypt_ssn(payload[:person_demographics][:ssn]),
+          rawssn_c: decrypt_ssn(payload[:person_demographics][:ssn]),
           dob_c: convert_dob_to_string(payload.dig(:person_demographics, :dob))
         }
+      end
+
+      def decrypt_ssn(encrypted_ssn)
+        AcaEntities::Operations::Encryption::Decrypt.new.call(value: encrypted_ssn).value!
+      rescue
+        Rails.logger.warn "Could not decrypt SSN with RBNACL_SECRET_KEY: #{AcaEntities::Configuration::Encryption.config.secret_key} RBNACL_IV: #{AcaEntities::Configuration::Encryption.config.iv}"
+        nil
       end
 
       def find_existing_account(hbx_id:)
