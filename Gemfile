@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.6'
+ruby '2.7.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.3'
@@ -22,11 +22,11 @@ gem 'event_source', git: 'https://github.com/ideacrew/event_source.git', branch:
 gem 'awesome_print'
 gem 'dry-matcher',     '~> 0.8'
 gem 'dry-monads',      '~> 1.3'
-gem 'dry-struct',      '~> 1.3'
+gem 'dry-struct',      '~> 1.4'
 gem 'dry-transaction'
-gem 'dry-types',       '~> 1.4'
+gem 'dry-types',       '~> 1.5'
 gem 'dry-validation',  '~> 1.6'
-gem 'mongoid',         '~> 7.2.1'
+gem 'mongoid',         '~> 7.3.3'
 gem 'oauth2'
 gem 'overcommit'
 gem 'stimulus_reflex', '~> 3.4'
