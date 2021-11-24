@@ -102,6 +102,8 @@ jobs:
       - name: Install node dependencies
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: yarn install
+      - name: Set hostname
+        run: sudo bash -c "echo '127.0.0.1 rabbitmq mongodb' >> /etc/hosts"
       - name: Run tests
         env:
           RSPEC_SPLIT_CONFIGURATION_PATH: "ci/rspec-split-config.json"
