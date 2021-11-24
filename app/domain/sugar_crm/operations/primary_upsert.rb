@@ -91,8 +91,8 @@ module SugarCRM
           billing_address_postalcode: payload.dig(:addresses, 0, :zip),
           billing_address_state: payload.dig(:addresses, 0, :state),
           phone_office: mobile_phone_finder(payload[:phones]),
-          raw_ssn_c: decrypt_ssn(payload[:person_demographics][:ssn]),
-          rawssn_c: decrypt_ssn(payload[:person_demographics][:ssn]),
+          raw_ssn_c: decrypt_ssn(payload[:person_demographics][:encrypted_ssn]),
+          rawssn_c: decrypt_ssn(payload[:person_demographics][:encrypted_ssn]),
           dob_c: convert_dob_to_string(payload.dig(:person_demographics, :dob))
         }
       end

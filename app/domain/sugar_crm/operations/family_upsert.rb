@@ -76,8 +76,8 @@ module SugarCRM
           billing_address_postalcode: primary_person.dig(:person, :addresses, 0, :zip),
           billing_address_state: primary_person.dig(:person, :addresses, 0, :state),
           phone_office: mobile_phone_finder(primary_person.dig(:person, :phones)),
-          rawssn_c: decrypt_ssn(primary_person[:person][:person_demographics][:ssn]),
-          raw_ssn_c: decrypt_ssn(primary_person[:person][:person_demographics][:ssn]),
+          rawssn_c: decrypt_ssn(primary_person[:person][:person_demographics][:encrypted_ssn]),
+          raw_ssn_c: decrypt_ssn(primary_person[:person][:person_demographics][:encrypted_ssn]),
           dob_c: convert_dob_to_string(primary_person.dig(:person, :person_demographics, :dob)),
           enroll_account_link_c: primary_person[:person][:external_person_link]
         }
