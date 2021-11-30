@@ -85,8 +85,8 @@ RSpec.describe SugarCRM::Services::Connection do
   describe '#update_account' do
     let(:response) do
       VCR.use_cassette('update_account') do
-        subject.create_account(payload: account_params)
-        subject.update_account(hbx_id: hbx_id, payload: account_params.merge(name: 'Tim Robinson'))
+        account = subject.create_account(payload: account_params)
+        subject.update_account(id: account['id'], payload: account_params.merge(name: 'Tim Robinson'))
       end
     end
 
