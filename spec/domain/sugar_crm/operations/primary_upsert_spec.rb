@@ -212,14 +212,14 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
     end
   end
 
-  describe "#create_account_and_contact" do
+  describe "#create_account" do
     subject do
       described_class.new
     end
 
     let(:result) do
-      VCR.use_cassette('create_account_and_contact_for_primary_upsert') do
-        subject.create_account_and_contact(payload)
+      VCR.use_cassette('create_account_for_primary_upsert') do
+        subject.create_account(payload)
       end
     end
 
@@ -248,7 +248,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
     let(:result) do
       VCR.use_cassette('update_account_for_primary_upsert') do
         account
-        subject.update_account(subject.payload_to_account_params(payload))
+        subject.update_account(account['id'], subject.payload_to_account_params(payload))
       end
     end
 
@@ -286,7 +286,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
     let(:result) do
       VCR.use_cassette('update_contact_for_primary_upsert') do
         contact
-        subject.update_contact(payload)
+        subject.update_contact(contact['id'], payload)
       end
     end
 
