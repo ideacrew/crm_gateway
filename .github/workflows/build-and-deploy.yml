@@ -136,6 +136,8 @@ jobs:
           # More: https://github.com/moby/buildkit#--export-cache-options
           # And: https://github.com/docker/buildx#--cache-tonametypetypekeyvalue
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+          build-args: |
+            HOSTNAME=172.17.0.1
 
       - name: Check encryption
         run: docker run --network="host" ${{ needs.prep.outputs.taggedImage }} /bin/bash .docker/check-encryption.sh
