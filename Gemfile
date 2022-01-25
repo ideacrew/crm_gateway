@@ -28,7 +28,6 @@ gem 'dry-types',       '~> 1.5'
 gem 'dry-validation',  '~> 1.6'
 gem 'mongoid',         '~> 7.3.3'
 gem 'oauth2'
-gem 'overcommit'
 gem 'stimulus_reflex', '~> 3.4'
 gem 'webpacker'
 

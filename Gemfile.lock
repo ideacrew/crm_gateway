@@ -124,7 +124,6 @@ GEM
     cable_ready (4.5.0)
       rails (>= 5.2)
       thread-local (>= 1.1.0)
-    childprocess (4.1.0)
     coderay (1.1.3)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
@@ -218,7 +217,6 @@ GEM
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
-    iniparse (1.5.0)
     iso_country_codes (0.7.8)
     jwt (2.2.3)
     listen (3.6.0)
@@ -266,10 +264,6 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     oj (3.13.9)
-    overcommit (0.58.0)
-      childprocess (>= 0.6.3, < 5)
-      iniparse (~> 1.4)
-      rexml (~> 3.2)
     ox (2.14.5)
     parallel (1.20.1)
     parser (3.0.2.0)
@@ -478,7 +472,6 @@ DEPENDENCIES
   listen (~> 3.3)
   mongoid (~> 7.3.3)
   oauth2
-  overcommit
   prettier
   pry-byebug
   pry-rails
