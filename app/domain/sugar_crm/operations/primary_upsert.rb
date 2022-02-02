@@ -2,7 +2,7 @@
 
 require 'dry/monads'
 require 'dry/monads/do'
-require_relative "../../sugar_crm/services/connection"
+#require_relative "../../sugar_crm/services/connection"
 
 module SugarCRM
   module Operations
@@ -59,24 +59,6 @@ module SugarCRM
         date.strftime("%Y-%m-%d")
       end
 
-      def mobile_phone_finder(payload)
-        phone_number = payload.detect { |number| number[:kind] == 'mobile' } ||
-                       payload.detect { |number| number[:kind] == 'home' } ||
-                       payload.first
-        phone_formatter phone_number
-      end
-
-      def phone_formatter(phone)
-        return nil unless phone
-
-        if phone[:area_code] && phone[:number]
-          "(#{phone[:area_code]}) #{phone[:number].first(3)}-#{phone[:number][3..-1]}"
-        elsif phone[:full_number].length == 10
-          "(#{phone[:full_number].first(3)}) #{phone[:full_number][3..5]}-#{phone[:full_number][6..-1]}"
-        else
-          phone[:full_number]
-        end
-      end
 
       def payload_to_account_params(payload)
         {

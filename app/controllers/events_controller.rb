@@ -3,7 +3,7 @@
 # class for Events Rails controller for managing events
 class EventsController < ApplicationController
   def index
-    @events = Event.not.archived.order_by(updated_at: :desc).limit(200)
+    @events = Event.where(updated_at: (Time.now - 1.hour)..Time.now).not.archived.order_by(updated_at: :desc).limit(200)
   end
 
   def show
@@ -13,6 +13,7 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     @event.update params.require(:event).permit(:archived)
+    #@event.update(event_params)
 
     head :ok
   end
@@ -38,5 +39,11 @@ class EventsController < ApplicationController
     Event.not.archived.each(&:archive!)
 
     head :ok
+  end
+
+  private
+
+  def event_params
+    params.require(:event).permit(:archived)
   end
 end

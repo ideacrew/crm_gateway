@@ -28,4 +28,21 @@ RSpec.describe Event, type: :model, dbclean: :around_each do
       expect(event.processing_at.present?).to eq(true)
     end
   end
+
+  describe "GET index" do
+    new_event = Event.new(updated_at: Time.now)
+    old_event = Event.new(updated_at: Time.now - 3.hours)
+
+    it "should include new_event" do
+      get :index
+      expect(response).to include(new_event)
+    end
+
+    it "should not include old_event" do
+      get :index
+      expect(response).to_not include(old_event)
+    end
+
+
+  end
 end
