@@ -131,7 +131,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
 
       let(:contact) do
         SugarCRM::Services::Connection.new.create_contact_for_account(
-          payload:  SugarCRM::Operations::Payload::Contact.new.call(payload.merge('account.id': account_id))
+          payload: SugarCRM::Operations::Payload::Contact.new.call(payload.merge('account.id': account_id))
         )
       end
 
@@ -277,7 +277,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
 
     let(:contact) do
       SugarCRM::Services::Connection.new.create_contact_for_account(
-        payload: subject.payload_to_contact_params(
+        payload: SugarCRM::Operations::Payload::Contact.new.call(
           payload.merge('account.id': account_id)
         )
       )
