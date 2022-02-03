@@ -20,4 +20,3 @@ module SugarCRM
     end
   end
 end
-
