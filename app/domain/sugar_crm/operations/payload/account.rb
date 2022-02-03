@@ -5,11 +5,10 @@ require 'dry/monads/do'
 #require_relative "../../sugar_crm/services/connection"
 require 'date'
 
-include FormatHelper
-
 module SugarCRM
   module Operations
     module Payload
+      # Account Operation
       class Account
         include Dry::Monads[:result, :do, :try]
 
@@ -40,8 +39,6 @@ module SugarCRM
         def hbx_id(payload)
           payload[:hbx_id] ? Success(payload[:hbx_id]) : Failure("No HBX ID found")
         end
-
-        
 
         def decrypt_ssn(payload)
           encrypted_ssn = payload.dig(:person, :person_demographics, :encrypted_ssn)

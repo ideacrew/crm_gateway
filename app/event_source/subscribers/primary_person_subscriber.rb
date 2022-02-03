@@ -9,7 +9,7 @@ module Subscribers
     # rubocop:disable Style/LineEndConcatenation
     # rubocop:disable Style/StringConcatenation
     subscribe(:on_primary_subscriber_update) do |delivery_info, _properties, payload|
-      person_update_result = ::People::HandlePrimaryPersonUpdate.new.call(payload)
+      person_update_result = SugarCRM::Operations::People::HandlePrimaryPersonUpdate.new.call(payload)
 
       if person_update_result.success?
         logger.info(

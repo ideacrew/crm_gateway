@@ -5,11 +5,10 @@ require 'dry/monads/do'
 #require_relative "../../sugar_crm/services/connection"
 require 'date'
 
-include FormatHelper
-
 module SugarCRM
   module Operations
     module Payload
+      # Phone Number Operation
       class PhoneNumber
         include Dry::Monads[:result, :do, :try]
 
@@ -18,11 +17,12 @@ module SugarCRM
           phone_formatter(mobile_phone)
         end
 
-
         def mobile_phone_finder(payload)
-          phone_number = payload.compact.detect { |number| valid_phone?(number) && number[:kind] == 'mobile' } ||
-                         payload.compact.detect { |number| valid_phone?(number) && number[:kind] == 'home' } ||
-                         valid_phone?(payload.first) ? payload.first : nil
+          phone_number = if payload.compact.detect { |number| valid_phone?(number) && number[:kind] == 'mobile' } ||
+                            payload.compact.detect { |number| valid_phone?(number) && number[:kind] == 'home' } ||
+                            valid_phone?(payload.first)
+                           payload.first
+                         end
 
           phone_number.present? ? Success(phone_number) : Failure("No valid phone number found")
         rescue StandardError => e

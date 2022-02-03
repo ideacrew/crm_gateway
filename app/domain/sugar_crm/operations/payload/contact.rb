@@ -5,16 +5,14 @@ require 'dry/monads/do'
 #require_relative "../../sugar_crm/services/connection"
 require 'date'
 
-include FormatHelper
-
 module SugarCRM
   module Operations
     module Payload
+      # Contact Operation
       class Contact
         include Dry::Monads[:result, :do, :try]
 
-        def call(payload, relationship_to_primary)
-          #binding.irb
+        def call(payload, relationship_to_primary = "Self")
           dob = SugarCRM::Operations::Payload::Dob.new.call(payload.dig(:person, :person_demographics, :dob))
           phone_number = SugarCRM::Operations::Payload::PhoneNumber.new.call(payload.dig(:person, :phones))
           hbx_id = yield SugarCRM::Operations::Payload::HbxId.new.call(payload)

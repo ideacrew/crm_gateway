@@ -5,11 +5,10 @@ require 'dry/monads/do'
 #require_relative "../../sugar_crm/services/connection"
 require 'date'
 
-include FormatHelper
-
 module SugarCRM
   module Operations
     module Payload
+      # Dob Operation
       class Dob
         include Dry::Monads[:result, :do, :try]
 

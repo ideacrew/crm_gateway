@@ -124,14 +124,14 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
     context "with an existing account and contact" do
       let(:account_id) do
         account = SugarCRM::Services::Connection.new.create_account(
-          payload: described_class.new.payload_to_account_params(payload)
+          payload: SugarCRM::Operations::Payload::Account.new.call(payload)
         )
         account['id']
       end
 
       let(:contact) do
         SugarCRM::Services::Connection.new.create_contact_for_account(
-          payload: described_class.new.payload_to_contact_params(payload).merge('account.id': account_id)
+          payload:  SugarCRM::Operations::Payload::Contact.new.call(payload.merge('account.id': account_id))
         )
       end
 
@@ -190,7 +190,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
     context "with an existing account" do
       let(:account) do
         account = SugarCRM::Services::Connection.new.create_account(
-          payload: described_class.new.payload_to_account_params(payload)
+          payload: SugarCRM::Operations::Payload::Account.new.call(payload)
         )
         account['hbxid_c']
       end
@@ -241,14 +241,14 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
 
     let(:account) do
       SugarCRM::Services::Connection.new.create_account(
-        payload: subject.payload_to_account_params(payload)
+        payload: SugarCRM::Operations::Payload::Account.new.call(payload)
       )
     end
 
     let(:result) do
       VCR.use_cassette('update_account_for_primary_upsert') do
         account
-        subject.update_account(account['id'], subject.payload_to_account_params(payload))
+        subject.update_account(account['id'], SugarCRM::Operations::Payload::Account.new.call(payload))
       end
     end
 
@@ -270,7 +270,7 @@ RSpec.describe SugarCRM::Operations::PrimaryUpsert do
 
     let(:account_id) do
       account = SugarCRM::Services::Connection.new.create_account(
-        payload: subject.payload_to_account_params(payload)
+        payload: SugarCRM::Operations::Payload::Account.new.call(payload)
       )
       account['id']
     end
