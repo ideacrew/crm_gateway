@@ -20,7 +20,8 @@ class Event
   field :error, type: String
   field :archived, type: Boolean, default: false
 
-  scope :archived, ->{ where(archived: true) }
+  scope :archived, -> { where(archived: true) }
+  scope :updated_in_last_hour, -> {where(updated_at: (Time.current - 1.hour)..Time.current)}
 
   aasm timestamps: true do
     state :received, initial: true
