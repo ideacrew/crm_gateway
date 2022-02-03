@@ -8,7 +8,7 @@ require 'date'
 module SugarCRM
   module Operations
     module Payload
-      # HBX ID Operation
+      # Hbx id operation to pull the payload's hbx_id
       class HbxId
         include Dry::Monads[:result, :do, :try]
 
