@@ -69,7 +69,8 @@ module SugarCRM
       end
 
       def update_existing_contact(id:, account_id:, params:)
-        relationship_to_primary = person_relationship_finder(primary_person[:hbx_id])
+        hbx_id_to_match = SugarCRM::Operations::Payload::HbxId.new.call(params).value!
+        relationship_to_primary = person_relationship_finder(hbx_id_to_match)
         payload = yield SugarCRM::Operations::Payload::Contact.new.call(params, relationship_to_primary)
         result = service.update_contact(
           id: id,
@@ -83,7 +84,8 @@ module SugarCRM
       end
 
       def create_contact(account_id:, params:)
-        relationship_to_primary = person_relationship_finder(primary_person[:hbx_id])
+        hbx_id_to_match = SugarCRM::Operations::Payload::HbxId.new.call(params).value!
+        relationship_to_primary = person_relationship_finder(hbx_id_to_match)
         contact_payload = yield SugarCRM::Operations::Payload::Contact.new.call(params, relationship_to_primary)
         contact = service.create_contact_for_account(
           payload: contact_payload.merge(account_id: account_id)

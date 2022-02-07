@@ -13,7 +13,6 @@ module SugarCRM
         include Dry::Monads[:result, :do, :try]
 
         def call(dob)
-          #convert to operation
           date = Date.parse(dob.to_s)
           Success(date.strftime("%Y-%m-%d"))
         rescue Date::Error
