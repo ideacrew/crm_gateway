@@ -162,17 +162,3 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-  notify-slack:
-    if: github.event_name != 'pull_request'
-    needs: [prep, build-and-upload-image]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Post to a Slack channel
-        id: slack
-        uses: slackapi/slack-github-action@v1.16.0
-        with:
-          channel-id: "docker-images-${{ needs.prep.outputs.repositoryName }}"
-          slack-message: "New image pushed: ${{ needs.prep.outputs.taggedImage }} built from <https://github.com/ideacrew/${{ needs.prep.outputs.repositoryName }}/commit/${{ needs.prep.outputs.shortSha }}|${{ needs.prep.outputs.shortSha }}> on `${{ needs.prep.outputs.branchName }}`"
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.YELLR_BOT_TOKEN }}
