@@ -18,19 +18,6 @@ jobs:
         - name: run bearer
           run: |
             bearer scan --debug --force --config-file ./bearer.yml .
-  brakeman:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - uses: ruby/setup-ruby@v1
-          with:
-            bundler-cache: true
-        - name: install brakeman
-          run: |
-            gem install brakeman
-        - name: run brakeman
-          run: |
-            brakeman
   bundler-audit:
       runs-on: ubuntu-latest
       steps:

@@ -31,6 +31,30 @@ jobs:
           git config diff.renameLimit 800
           git fetch --no-tags --depth=1 origin trunk
           bundle exec rubocop-git origin/trunk | grep "no offenses detected"
+  brakeman:
+    needs: [rubocop]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+      - name: Cache Gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: v2-${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}-${{ hashFiles('**/Gemfile' ) }}
+          restore-keys: |
+            v2-${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}-${{ hashFiles('**/Gemfile' ) }}
+      - name: Install project gems
+        run: gem install brakeman
+      - name: Run Brakeman
+        run: brakeman -i config/brakeman.ignore
+      - name: Run Brakeman In Components
+        run: |
+          for test_dir in `ls -1 components`; do
+            cd components/$test_dir
+            brakeman -i config/brakeman.ignore
+            cd ../..
+          done
   rspec:
     needs: [rubocop]
     runs-on: ubuntu-latest
