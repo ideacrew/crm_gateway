@@ -1,0 +1,46 @@
+name: Security Checks
+on: push
+
+jobs:
+  bearer:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: ruby/setup-ruby@v1
+          with:
+            bundler-cache: true
+        - name: install bearer
+          run: |
+            sudo apt-get install apt-transport-https
+            echo "deb [trusted=yes] https://apt.fury.io/bearer/ /" | sudo tee -a /etc/apt/sources.list.d/fury.list
+            sudo apt-get update
+            sudo apt-get install bearer
+        - name: run bearer
+          run: |
+            bearer scan --debug --force --config-file ./bearer.yml .
+  brakeman:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: ruby/setup-ruby@v1
+          with:
+            bundler-cache: true
+        - name: install brakeman
+          run: |
+            gem install brakeman
+        - name: run brakeman
+          run: |
+            brakeman
+  bundler-audit:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: ruby/setup-ruby@v1
+          with:
+            bundler-cache: true
+        - name: install bundler-audit
+          run: |
+            gem install bundler-audit
+        - name: run bundler-audit
+          run: |
+            bundler-audit
