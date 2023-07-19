@@ -37,7 +37,7 @@ jobs:
             bundler-cache: true
         - name: install brakeman
           run: |
-            gem install brakeman
+            gem install brakeman -v 5.4.1
         - name: run brakeman
           run: |
             brakeman --format html --output brakeman.html
