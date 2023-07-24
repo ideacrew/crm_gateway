@@ -45,7 +45,7 @@ jobs:
           restore-keys: |
             v2-${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}-${{ hashFiles('**/Gemfile' ) }}
       - name: Install project gems
-        run: gem install brakeman
+        run: gem install brakeman -v 5.1.1
       - name: Run Brakeman
         run: brakeman -i config/brakeman.ignore
       - name: Run Brakeman In Components
