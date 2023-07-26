@@ -1,4 +1,4 @@
-FROM ruby:2.7.3 AS crm_gateway
+FROM ruby:3.0.0 AS crm_gateway
 
 LABEL author="IdeaCrew"
 
