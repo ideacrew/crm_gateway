@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ideacrew/aca_entities.git
-  revision: 4258bc8f6949b9c3f52e1c8b7d22c8622edf02a7
+  revision: ae2401f9b7795564cf53ac9acf250f1e6900ff78
   branch: pt_185751932
   specs:
     aca_entities (0.10.0)
@@ -512,7 +512,7 @@ DEPENDENCIES
   yard
 
 RUBY VERSION
-   ruby 3.0.6p216
+   ruby 3.1.4p223
 
 BUNDLED WITH
    2.2.33
