@@ -119,11 +119,9 @@ GEM
     bunny (2.19.0)
       amq-protocol (~> 2.3, >= 2.3.1)
       sorted_set (~> 1, >= 1.0.2)
-    byebug (11.1.3)
     cable_ready (4.5.0)
       rails (>= 5.2)
       thread-local (>= 1.1.0)
-    coderay (1.1.3)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
     database_cleaner (1.99.0)
@@ -282,12 +280,6 @@ GEM
     parser (3.0.2.0)
       ast (~> 2.4.1)
     prettier (1.6.1)
-    pry (0.13.1)
-      coderay (~> 1.1)
-      method_source (~> 1.0)
-    pry-byebug (3.9.0)
-      byebug (~> 11.0)
-      pry (~> 0.13.0)
     public_suffix (4.0.6)
     puma (6.3.0)
       nio4r (~> 2.0)
@@ -470,7 +462,6 @@ DEPENDENCIES
   aca_entities!
   awesome_print
   brakeman
-  byebug
   database_cleaner (~> 1.7)
   dry-matcher (~> 0.8)
   dry-monads (~> 1.3)
@@ -484,7 +475,6 @@ DEPENDENCIES
   mongoid (~> 7.3.3)
   oauth2
   prettier
-  pry-byebug
   puma (>= 5.6.4)
   rails (~> 6.1.7.1)
   rbtree (~> 0.4.5)
