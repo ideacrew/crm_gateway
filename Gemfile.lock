@@ -37,7 +37,7 @@ GIT
       faraday_middleware (~> 1.0)
       logging (~> 2.3.0)
       mime-types
-      nokogiri (>= 1.12.5)
+      nokogiri (>= 1.13.0)
       oj (~> 3.11)
       ox (~> 2.14)
       resque-bus (~> 0.7.0)
@@ -509,7 +509,7 @@ DEPENDENCIES
   yard
 
 RUBY VERSION
-   ruby 3.0.6p216
+   ruby 3.1.4p223
 
 BUNDLED WITH
    2.2.33
