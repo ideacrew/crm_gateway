@@ -40,8 +40,6 @@ group :development, :test do
   gem 'database_cleaner', '~> 1.7'
   gem 'factory_bot_rails'
   gem 'pry-byebug'
-  gem 'pry-rails'
-  gem 'pry-stack_explorer'
   gem 'rspec-rails',      '~> 4.0'
   gem 'shoulda-matchers', '~> 3'
   gem 'vcr'
