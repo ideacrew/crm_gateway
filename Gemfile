@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.4'
+ruby '3.0.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.7.1'
@@ -14,7 +14,7 @@ gem 'sass-rails', '>= 6'
 gem 'aasm'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'aca_entities',  git:  'https://github.com/ideacrew/aca_entities.git', branch: 'trunk'
+gem 'aca_entities',  git:  'https://github.com/ideacrew/aca_entities.git', branch: 'pt_185751932'
 # Enroll branch enroll_ridp_1.0 has some activity around this
 # https://github.com/ideacrew/enroll/tree/enroll_ridp_1.0/app/event_source
 gem 'event_source', git: 'https://github.com/ideacrew/event_source.git', branch: 'trunk'

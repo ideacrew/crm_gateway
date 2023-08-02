@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/ideacrew/aca_entities.git
-  revision: 13fce8c3533f1c31e8252571baf806aad16ce0a5
-  branch: trunk
+  revision: 4258bc8f6949b9c3f52e1c8b7d22c8622edf02a7
+  branch: pt_185751932
   specs:
     aca_entities (0.10.0)
       deep_merge
@@ -11,6 +11,7 @@ GIT
       dry-types (~> 1.0)
       dry-validation (~> 1.2)
       iso_country_codes
+      json-schema
       nokogiri-happymapper
       oj (~> 3.11)
       rbnacl (~> 7.1)
@@ -219,6 +220,8 @@ GEM
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     iso_country_codes (0.7.8)
+    json-schema (4.0.0)
+      addressable (>= 2.8)
     jwt (2.2.3)
     listen (3.6.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -509,7 +512,7 @@ DEPENDENCIES
   yard
 
 RUBY VERSION
-   ruby 3.1.4p223
+   ruby 3.0.6p216
 
 BUNDLED WITH
    2.2.33
