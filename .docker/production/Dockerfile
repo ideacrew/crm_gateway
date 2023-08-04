@@ -12,7 +12,7 @@ ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH \
     BUNDLE_BIN=$BUNDLE_PATH/bin
 ENV PATH /crm_gateway/bin:$BUNDLE_BIN:$PATH
 
-RUN gem install --source "https://rubygems.org" bundler:2.2.14
+RUN gem install --source "https://rubygems.org" bundler:2.2.33
 
 # Configure app home directory
 ENV HOME /crm_gateway

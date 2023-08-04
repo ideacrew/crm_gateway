@@ -12,7 +12,7 @@ ENV USERNAME=crm_gateway
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Taken from Gemfile.lock
-ARG BUNDLER_VERSION=2.2.14
+ARG BUNDLER_VERSION=2.2.33
 
 # Must be set as ENV variable to overrride the default
 ENV BUNDLER_VERSION=$BUNDLER_VERSION

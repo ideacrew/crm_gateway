@@ -28,7 +28,7 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     npm install --global yarn
 
-RUN gem install --source "https://rubygems.org" bundler:2.2.14
+RUN gem install --source "https://rubygems.org" bundler:2.2.33
 
 COPY . $HOME
 
