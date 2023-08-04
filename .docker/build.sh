@@ -12,7 +12,7 @@ cp .docker/config/production.rb config/environments
 #cp .docker/config/master.key config/
 #cp .docker/config/secrets.yml config/
 
-docker build --build-arg BUNDLER_VERSION_OVERRIDE='2.2.24' \
+docker build --build-arg BUNDLER_VERSION_OVERRIDE='2.2.33' \
              --build-arg NODE_MAJOR='12' \
              --build-arg YARN_VERSION='1.22.4' \
              --build-arg CRM_GATEWAY_DB_HOST='host.docker.internal' \

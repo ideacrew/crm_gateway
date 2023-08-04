@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.8'
+ruby '3.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.7.1'
@@ -28,19 +28,16 @@ gem 'dry-types',       '~> 1.5'
 gem 'dry-validation',  '~> 1.6'
 gem 'mongoid',         '~> 7.3.3'
 gem 'oauth2'
+gem 'rbtree',  '~> 0.4.5'
 gem 'sinatra', '~> 2.2.3'
 gem 'stimulus_reflex', '~> 3.4'
 gem 'webpacker'
 
 group :development, :test do
   gem 'brakeman'
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'database_cleaner', '~> 1.7'
   gem 'factory_bot_rails'
   gem 'pry-byebug'
-  gem 'pry-rails'
-  gem 'pry-stack_explorer'
   gem 'rspec-rails',      '~> 4.0'
   gem 'shoulda-matchers', '~> 3'
   gem 'vcr'
