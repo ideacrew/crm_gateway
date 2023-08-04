@@ -21,7 +21,7 @@ module SugarCRM
           Rails.logger.debug { "event log #{@event_log}" }
           # TODO: Coming through as a string on enroll for some reason
           person_payload = JSON.parse(person_payload).with_indifferent_access if person_payload.instance_of?(String)
-          @event_log = event_retry || Event.create(
+          @event_log = event_retry || ::Event.create(
             event_name_identifier: 'Primary Subscriber Update',
             data: person_payload
           )

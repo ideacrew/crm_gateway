@@ -19,7 +19,7 @@ module SugarCRM
         # @return [Dry::Monads::Result]
         def call(family_payload, event_retry = nil)
           family_payload = JSON.parse(family_payload).with_indifferent_access if family_payload.instance_of?(String)
-          @event_log = event_retry || Event.create(
+          @event_log = event_retry || ::Event.create(
             event_name_identifier: 'Family Update',
             data: family_payload
           )

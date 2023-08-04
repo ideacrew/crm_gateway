@@ -3,22 +3,22 @@
 # class for Events Rails controller for managing events
 class EventsController < ApplicationController
   def index
-    @events = Event.updated_in_last_hour.not.archived.order_by(updated_at: :desc).limit(200)
+    @events = ::Event.updated_in_last_hour.not.archived.order_by(updated_at: :desc).limit(200)
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event = ::Event.find(params[:id])
   end
 
   def update
-    @event = Event.find(params[:id])
+    @event = ::Event.find(params[:id])
     @event.update(event_params)
 
     head :ok
   end
 
   def retry
-    @event = Event.find(params[:id])
+    @event = ::Event.find(params[:id])
     @event.retry!
     case @event.event_name_identifier
     when 'Family Update'
@@ -31,11 +31,11 @@ class EventsController < ApplicationController
   end
 
   def archived
-    @events = Event.archived.order_by(updated_at: :desc).limit(200)
+    @events = ::Event.archived.order_by(updated_at: :desc).limit(200)
   end
 
   def archive
-    Event.not.archived.each(&:archive!)
+    ::Event.not.archived.each(&:archive!)
 
     head :ok
   end
