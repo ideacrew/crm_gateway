@@ -1,7 +1,0 @@
-baseURL = "http://example.org/"
-languageCode = "en-us"
-title = "Crm Gateway Documentation"
-theme = "docsy"
-showLicense = true
-showToc = true
-relativeURLs = true
