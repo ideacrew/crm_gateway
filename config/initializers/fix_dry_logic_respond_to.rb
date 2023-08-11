@@ -15,9 +15,11 @@ require "dry/logic/version"
 warn("You may need not this file: if dry-logic gem is upgraded to 1.5.") if Gem::Version.new(Dry::Logic::VERSION) >= Gem::Version.new('1.5')
 module Dry
   module Logic
+    # This is a monkey patch to fix the issue with irb autocomplete functionality
     module Predicates
       include Dry::Core::Constants
 
+      # This is a monkey patch to fix the issue with irb autocomplete functionality
       module Methods
         # This overrides Object#respond_to? so we need to make it compatible
         def respond_to?(method, input = Undefined)
