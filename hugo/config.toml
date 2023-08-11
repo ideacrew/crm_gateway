@@ -1,0 +1,10 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'CRM Gateway Documentation'
+showLicense = true
+showToc = true
+relativeURLs = true
+[[module.imports]]
+path = "github.com/google/docsy"
+[[module.imports]]
+path = "github.com/google/docsy/dependencies"
