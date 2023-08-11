@@ -1,6 +1,10 @@
 disable-version-check: false
 report:
-  exclude-fingerprint: []
+  exclude-fingerprint:
+    # Example mongoid.yml connection URL in config/mongoid.yml:7
+    - 90b18ca30d297d4d0939209d6ab764b1_0
+    # Docker config file parameters for AMQP connection in docker-compose.yml
+    - 2d04d7c8b4ee5d3e593887310559866b_0
   format: ""
   no-color: false
   output: ""
@@ -23,6 +27,13 @@ scan:
   quiet: false
   scanner:
     - sast
+    - secrets
   skip-path:
-    - "hugo/docs/_vendor/github.com/gohugoio/gohugoioTheme/assets/output/js/*.js"
-    - "hugo/docs/_vendor/github.com/gohugoio/gohugoioTheme/assets/js/*.js"
+    # The hugo files are used for documentation generation, not in the
+    # runtime application.
+    - "hugo/_vendor/github.com/twbs/bootstrap/dist/js/bootstrap.bundle.js"
+    - "hugo/_vendor/github.com/twbs/bootstrap/dist/js/bootstrap.js"
+    - "hugo/_vendor/github.com/twbs/bootstrap/dist/js/bootstrap.esm.js"
+    - "hugo/_vendor/github.com/google/docsy/assets/js/drawio.js"
+    - "hugo/_vendor/github.com/google/docsy/static/js/prism.js"
+    - "hugo/_vendor/github.com/google/docsy/assets/js/plantuml.js"
