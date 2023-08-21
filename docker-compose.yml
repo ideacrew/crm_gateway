@@ -1,6 +1,21 @@
 version: "3.4"
 
 services:
+  crm_gateway_keycloak:
+    build:
+      context: .
+      dockerfile: ./.docker/development/Dockerfile.keycloak
+      args:
+        - KEYCLOAK_USER=admin
+        - KEYCLOAK_PASSWORD=admin
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080 || exit 1"]
+      interval: 15s
+      timeout: 1m30s
+      retries: 5
+      start_period: 15s
+    ports:
+      - "8080:8080"
   crm_gateway_local:
     build:
       context: .
@@ -64,6 +79,7 @@ services:
       - mongodb
       - rabbitmq
       - redis
+      - crm_gateway_keycloak
 
   mongodb:
     image: mongo:4.2
