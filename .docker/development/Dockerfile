@@ -2,14 +2,6 @@ FROM ruby:3.2.2 AS crm_gateway
 
 LABEL author="IdeaCrew"
 
-ENV HOME /crm_gateway
-
-RUN mkdir -p $HOME
-
-WORKDIR $HOME
-
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-
 # Configure bundler and PATH
 ENV LANG=C.UTF-8 \
     GEM_HOME=/bundle \
@@ -24,12 +16,26 @@ ARG BUNDLER_VERSION_OVERRIDE
 RUN echo $BUNDLER_VERSION_OVERRIDE
 RUN apt-get update && \
     apt-get -yq dist-upgrade && \
-    apt-get install -y tzdata build-essential nodejs vim libsodium-dev && \
-    apt-get autoremove -y && \
-    npm install --global yarn
+    apt-get install -y curl tzdata build-essential vim libsodium-dev && \
+    apt-get autoremove -y
+
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 12
+
+# Install nvm with node and npm
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.20.0/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && mkdir $NVM_DIR/versions \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
+RUN mkdir -p /crm_gateway
+
+ENV HOME /crm_gateway
+WORKDIR $HOME
 
 RUN gem install --source "https://rubygems.org" bundler:2.2.33
-
 
 COPY Gemfile .
 COPY Gemfile.lock .
@@ -40,9 +46,10 @@ COPY yarn.lock .
 ENV RAILS_ENV='development'
 ENV NODE_ENV='development'
 
-# RUN bundle config set deployment 'true' && \
-RUN cat $HOME/Gemfile
-RUN cd $HOME && bundle install
-RUN cd $HOME && yarn install
+RUN . $NVM_DIR/nvm.sh && nvm use 12 && npm install -g yarn && yarn install
 
-COPY . $HOME
+RUN cat /crm_gateway/Gemfile
+RUN cd /crm_gateway && . $NVM_DIR/nvm.sh && nvm use 12 && bundle install
+RUN cd /crm_gateway && . $NVM_DIR/nvm.sh && nvm use 12 && yarn install
+
+COPY . /crm_gateway
