@@ -484,7 +484,7 @@ DEPENDENCIES
   oauth2
   prettier
   pry-byebug
-  puma (>= 5.6.4)
+  puma (~> 6.3.1)
   rails (~> 6.1.7.1)
   rbtree (~> 0.4.5)
   rspec-rails (~> 4.0)
