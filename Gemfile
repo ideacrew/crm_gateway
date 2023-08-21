@@ -8,7 +8,7 @@ ruby '3.2.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.7.1'
 # Use Puma as the app server
-gem 'puma', '>= 5.6.4'
+gem 'puma', '>= 6.3.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 gem 'aasm'

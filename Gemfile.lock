@@ -289,7 +289,7 @@ GEM
       byebug (~> 11.0)
       pry (>= 0.13, < 0.15)
     public_suffix (4.0.6)
-    puma (6.3.0)
+    puma (6.3.1)
       nio4r (~> 2.0)
     queue-bus (0.12.0)
       multi_json
@@ -484,7 +484,7 @@ DEPENDENCIES
   oauth2
   prettier
   pry-byebug
-  puma (>= 5.6.4)
+  puma (>= 6.3.1)
   rails (~> 6.1.7.1)
   rbtree (~> 0.4.5)
   rspec-rails (~> 4.0)
