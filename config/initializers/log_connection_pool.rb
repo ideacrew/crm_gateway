@@ -1,6 +1,6 @@
+# frozen_string_literal: true
 
-# /usr/local/bundle/ruby/3.2.0/gems/mongo-2.16.0/lib/mongo/server/connection_pool.rb:386:in `block (2 levels) in check_out'
-
+# Module for logging connection pool checkouts
 module ConnectionLoggingHack
   def format_caller(caller_obj)
     caller_obj.join("\n")
