@@ -79,10 +79,10 @@ class Event
     end || updated_at || created_at
   end
 
-  after_update do
-    archived? ? archive_morph : row_morph
-    show_morph
-  end
+  # after_update do
+  #   archived? ? archive_morph : row_morph
+  #   show_morph
+  # end
 
   def archive_morph
     cable_ready['events'].remove(
@@ -123,9 +123,9 @@ class Event
     cable_ready.broadcast
   end
 
-  after_create do
-    create_morph
-  end
+  # after_create do
+  #   create_morph
+  # end
 
   def create_morph
     row_html = ApplicationController.render(
