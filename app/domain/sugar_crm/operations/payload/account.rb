@@ -45,7 +45,7 @@ module SugarCRM
           return Failure("No SSN") unless encrypted_ssn
           AcaEntities::Operations::Encryption::Decrypt.new.call(value: encrypted_ssn)
         rescue StandardError => e
-          Rails.logger.warn "Could not decrypt SSN with RBNACL_SECRET_KEY: #{AcaEntities::Configuration::Encryption.config.secret_key} RBNACL_IV: #{AcaEntities::Configuration::Encryption.config.iv}"
+          Rails.logger.warn "Could not decrypt SSN with error: #{e.message}"
           Failure(e)
         end
       end
