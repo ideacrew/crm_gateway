@@ -7,7 +7,9 @@ module ConnectionLoggingHack
   end
 
   def check_out(service_id: nil)
+    Rails.logger.error { '------------------------------------START-----------------------------------------------' }
     Rails.logger.error { "Checking out connection from pool #{service_id}, caller: #{format_caller(caller)}" }
+    Rails.logger.error { '--------------------------------------END----------------------------------------------' }
 
     super(service_id: service_id)
   end
