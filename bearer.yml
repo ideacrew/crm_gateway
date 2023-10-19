@@ -24,4 +24,4 @@ scan:
   scanner:
     - sast
   skip-path:
-    - "hugo/docs/"
+    - "hugo/"
