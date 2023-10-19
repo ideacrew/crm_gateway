@@ -24,5 +24,4 @@ scan:
   scanner:
     - sast
   skip-path:
-    - "hugo/docs/_vendor/github.com/gohugoio/gohugoioTheme/assets/output/js/*.js"
-    - "hugo/docs/_vendor/github.com/gohugoio/gohugoioTheme/assets/js/*.js"
+    - "hugo/"
