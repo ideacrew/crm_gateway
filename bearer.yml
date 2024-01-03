@@ -25,3 +25,4 @@ scan:
     - sast
   skip-path:
     - "hugo/"
+    - "vendor/"
