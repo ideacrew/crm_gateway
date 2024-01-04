@@ -25,3 +25,5 @@ scan:
     - sast
   skip-path:
     - "hugo/"
+    # These files should not be scanned anyway and we should cache the bundler higher up
+    - "vendor/"
