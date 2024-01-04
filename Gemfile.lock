@@ -41,6 +41,7 @@ GIT
       nokogiri (>= 1.13.0)
       oj (~> 3.11)
       ox (~> 2.14)
+      typhoeus (~> 1.4.0)
 
 GEM
   remote: https://rubygems.org/
