@@ -2,7 +2,7 @@
 
 require 'yaml'
 
-rabbitmq_dev_config = YAML.load_file(File.join(Rails.root, 'config', 'development', 'rabbitmq_config.yml'))
+rabbitmq_dev_config = YAML.load_file(Rails.root.join('config/development/rabbitmq_config.yml'))
 
 EventSource.configure do |config|
   config.protocols = %w[amqp http]
