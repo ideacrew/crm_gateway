@@ -9,17 +9,17 @@ EventSource.configure do |config|
   config.servers do |server|
     server.amqp do |rabbitmq|
       rabbitmq.ref = 'amqp://rabbitmq:5672/event_source'
-      rabbitmq.host = ENV['RABBITMQ_HOST'] || 'amqp://rabbitmq'
+      rabbitmq.host = ENV.fetch('RABBITMQ_HOST', rabbitmq_dev_config['rabbitmq_host'])
       warn rabbitmq.host
-      rabbitmq.vhost = ENV['RABBITMQ_VHOST'] || '/'
+      rabbitmq.vhost = ENV.fetch('RABBITMQ_VHOST', rabbitmq_dev_config['rabbitmq_vhost'])
       warn rabbitmq.vhost
-      rabbitmq.port = ENV['RABBITMQ_PORT'] || '5672'
+      rabbitmq.port = ENV.fetch('RABBITMQ_PORT', rabbitmq_dev_config['rabbitmq_port'])
       warn rabbitmq.port
-      rabbitmq.url = ENV['RABBITMQ_URL_EVENT_SOURCE'] || 'amqp://rabbitmq:5672/'
+      rabbitmq.url = ENV.fetch('RABBITMQ_URL_EVENT_SOURCE', rabbitmq_dev_config['rabbitmq_url'])
       warn rabbitmq.url
-      rabbitmq.user_name = ENV['RABBITMQ_USERNAME'] || 'guest'
+      rabbitmq.user_name = ENV.fetch('RABBITMQ_USERNAME', rabbitmq_dev_config['rabbitmq_username'])
       warn rabbitmq.user_name
-      rabbitmq.password = ENV['RABBITMQ_PASSWORD'] || 'guest'
+      rabbitmq.password = ENV.fetch('RABBITMQ_PASSWORD', rabbitmq_dev_config['rabbitmq_password'])
       warn rabbitmq.password
     end
   end
