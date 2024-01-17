@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'yaml'
+
+rabbitmq_dev_config = YAML.load_file(File.join(Rails.root, 'config', 'development', 'rabbitmq_config.yml'))
+
 EventSource.configure do |config|
   config.protocols = %w[amqp http]
   config.pub_sub_root = Pathname.pwd.join('app', 'event_source')
