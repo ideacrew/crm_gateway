@@ -263,11 +263,11 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.4)
+    nokogiri (1.16.2)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nokogiri-happymapper (0.9.0)
-      nokogiri (~> 1.5)
+      nokogiri (~> 1.16.2)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
@@ -316,10 +316,10 @@ GEM
     rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
-      nokogiri (>= 1.6)
+      nokogiri (>= 1.16.2)
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
-      nokogiri (~> 1.14)
+      nokogiri (~> 1.16.2)
     railties (6.1.7.6)
       actionpack (= 6.1.7.6)
       activesupport (= 6.1.7.6)
@@ -453,6 +453,7 @@ DEPENDENCIES
   factory_bot_rails
   listen (~> 3.3)
   mongoid (~> 7.3.3)
+  nokogiri (~> 1.16.2)
   oauth2
   prettier
   pry-byebug
