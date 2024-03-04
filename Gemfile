@@ -12,6 +12,7 @@ gem 'puma', '~> 6.4.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 gem 'aasm'
+gem 'rack', '~> 2.2.8.1'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'aca_entities',  git:  'https://github.com/ideacrew/aca_entities.git', branch: 'trunk'
@@ -42,7 +43,7 @@ group :development, :test do
   gem 'rspec-rails',      '~> 4.0'
   gem 'shoulda-matchers', '~> 3'
   gem 'vcr'
-  gem 'yard'
+  gem 'yard', '~> 0.9.35'
 end
 
 group :development do
