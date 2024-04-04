@@ -32,7 +32,7 @@ gem 'nokogiri',        '~> 1.16.2'
 gem 'oauth2'
 gem 'rbtree',  '~> 0.4.5'
 gem 'sinatra', '~> 2.2.3'
-gem 'stimulus_reflex', '~> 3.4'
+gem 'stimulus_reflex', '3.4.2'
 gem 'webpacker'
 
 group :development, :test do
