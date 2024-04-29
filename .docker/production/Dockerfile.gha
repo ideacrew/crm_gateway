@@ -62,6 +62,7 @@ RUN groupadd --gid 1001 $USERNAME \
   && useradd --uid 1001 --gid $USERNAME --shell /bin/bash --create-home $USERNAME
 
 RUN mkdir $HOME && chown -R $USERNAME:$USERNAME $HOME
+RUN mkdir /etc/infra
 
 # Configure app home directory
 WORKDIR $HOME
@@ -184,5 +185,7 @@ COPY --chown=$USERNAME:$USERNAME ./.docker/config/mongoid.yml $HOME/config
 COPY --chown=$USERNAME:$USERNAME ./.docker/config/cable.yml $HOME/config
 COPY --chown=$USERNAME:$USERNAME ./.docker/config/secrets.yml $HOME/config
 COPY --chown=$USERNAME:$USERNAME ./.docker/config/production.rb $HOME/config/environments
+
+RUN echo '[ ! -z "$TERM" -a -r /etc/infra/motd ] && cat /etc/infra/motd' >> /etc/bash.bashrc
 
 USER $USERNAME 
