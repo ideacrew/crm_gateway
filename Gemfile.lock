@@ -241,7 +241,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2021.0901)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.4)
+    mini_portile2 (2.8.6)
     minitest (5.19.0)
     mongo (2.16.0)
       bson (>= 4.8.2, < 5.0.0)
@@ -264,7 +264,7 @@ GEM
     net-smtp (0.4.0.1)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.16.2)
+    nokogiri (1.16.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nokogiri-happymapper (0.9.0)
@@ -290,7 +290,7 @@ GEM
     public_suffix (4.0.6)
     puma (6.4.2)
       nio4r (~> 2.0)
-    racc (1.7.1)
+    racc (1.8.0)
     rack (2.2.8.1)
     rack-protection (2.2.4)
       rack
@@ -336,7 +336,8 @@ GEM
     rbtree (0.4.6)
     redis (4.5.1)
     regexp_parser (2.1.1)
-    rexml (3.2.5)
+    rexml (3.2.8)
+      strscan (>= 3.0.9)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -411,6 +412,7 @@ GEM
       rack
       rails (>= 5.2)
       redis
+    strscan (3.1.0)
     thor (1.2.2)
     thread-local (1.1.0)
     tilt (2.2.0)
@@ -451,7 +453,7 @@ DEPENDENCIES
   factory_bot_rails
   listen (~> 3.3)
   mongoid (~> 7.3.3)
-  nokogiri (~> 1.16.2)
+  nokogiri (~> 1.16.5)
   oauth2
   prettier
   pry-byebug
@@ -459,6 +461,7 @@ DEPENDENCIES
   rack (~> 2.2.8.1)
   rails (~> 7.0.8.1)
   rbtree (~> 0.4.5)
+  rexml (~> 3.2.7)
   rspec-rails (~> 4.0)
   rubocop
   rubocop-git
