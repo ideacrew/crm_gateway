@@ -15,5 +15,5 @@ CrmGatewayRegistry = ResourceRegistry::Registry.new
 CrmGatewayRegistry.configure do |config|
   config.name       = :crm_gateway
   config.created_at = DateTime.now
-  config.load_path  = Rails.root.join('system', 'config', 'templates', 'features').to_s
+  config.load_path  = Rails.root.join('system/config/templates/features').to_s
 end
