@@ -1,0 +1,8 @@
+---
+registry:
+  - namespace:
+      - :crm_gateway
+      - :aca_individual_market
+    features:
+      - key: :publish_families_updated
+        is_enabled: <%= ENV['PUBLISH_FAMILIES_UPDATED_IS_ENABLED'] || false %>
