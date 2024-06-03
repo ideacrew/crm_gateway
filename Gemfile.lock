@@ -485,6 +485,7 @@ DEPENDENCIES
   prettier
   pry-byebug
   puma (~> 6.4.2)
+  rack (~> 2.2.8.1)
   rails (~> 7.0.8.1)
   rbtree (~> 0.4.5)
   resource_registry!

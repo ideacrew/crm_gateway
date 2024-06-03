@@ -8,7 +8,6 @@ RSpec.describe SugarCRM::Operations::Payload::Dob do
   end
 
   context "Valid dob" do
-    binding.irb
     dob = "1769-08-15"
     let(:result) {subject.call(dob)}
 

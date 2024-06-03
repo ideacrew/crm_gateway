@@ -12,6 +12,7 @@ gem 'puma', '~> 6.4.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 gem 'aasm'
+gem 'rack', '~> 2.2.8.1'
 gem 'resource_registry',  git: 'https://github.com/ideacrew/resource_registry.git', branch: 'trunk'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
