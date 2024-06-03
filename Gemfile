@@ -35,6 +35,7 @@ gem 'sinatra', '~> 2.2.3'
 gem 'stimulus_reflex', '3.4.2'
 gem 'webpacker'
 gem 'rexml',   '~> 3.2.7'
+gem 'actiontext', '~> 7.0.8.3'
 
 group :development, :test do
   gem 'brakeman'
