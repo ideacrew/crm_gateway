@@ -27,7 +27,7 @@ module Subscribers
 
       def subscriber_logger_for(event)
         Logger.new(
-          Rails.root.join("log", "#{event}_1_#{Time.zone.today.strftime('%Y_%m_%d')}.log")
+          Rails.root.join("log", "#{event}_#{Time.zone.today.strftime('%Y_%m_%d')}.log")
         )
       end
     end
