@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-# SubscribersFamiliesCreatedOrUpdatedSubscriber
 
+# SubscribersFamiliesCreatedOrUpdatedSubscriber
 module Subscribers
   module Families
     # Subscribe events for family create or update requests from enroll
@@ -13,7 +13,7 @@ module Subscribers
         payload = JSON.parse(response, symbolize_names: true)
 
         pre_process_message(subscriber_logger, payload)
-      
+
         ack(delivery_info.delivery_tag)
       rescue StandardError, SystemStackError => e
         subscriber_logger.error "FamiliesSubscriber::CreatedOrUpdated payload: #{payload}, error message: #{e.message}, backtrace: #{e.backtrace}"
@@ -24,13 +24,12 @@ module Subscribers
       def pre_process_message(subscriber_logger, payload)
         subscriber_logger.info "FamiliesSubscriber::CreatedOrUpdated, response: #{payload}"
       end
-  
+
       def subscriber_logger_for(event)
         Logger.new(
-          "#{Rails.root}/log/#{event}_#{Date.today.strftime('%Y_%m_%d')}.log"
+          "#{Rails.root}/log/#{event}_#{Time.zone.today.strftime('%Y_%m_%d')}.log"
         )
       end
     end
   end
-
 end
