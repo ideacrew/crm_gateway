@@ -6,24 +6,10 @@
 # - db/seedfiles
 # - lib/tasks
 AllCops:
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 3.2
   Exclude:
     - "./bin/**/*"
-    - "./project_gems/effective_datatables-2.6.14/effective_datatables-2.6.14.gemspec"
-    - "./node_modules/**/*"
-    - "./db/seedfiles/**/*"
-    - "./lib/tasks/**/*"
-    - "./script/**/*"
-    - "./components/benefit_markets/spec/dummy/**/*"
-    - "./components/benefit_markets/db/seedfiles/**/*"
-    - "./components/benefit_sponsors/spec/dummy/**/*"
-    - "./components/benefit_sponsors/db/seedfiles/**/*"
-    - "./components/notifier/spec/dummy/**/*"
-    - "./components/old_sponsored_benefits/**/*"
-    - "./components/sponsored_benefits/spec/dummy/**/*"
-    - "./components/transport_profiles/spec/dummy/**/*"
-    - "./components/transport_profiles/spec/dummy/**/*"
-    - "./eyes/enroll.eye.rb"
+  NewCops: enable
 
 Layout/CommentIndentation:
   Enabled: true
@@ -202,7 +188,7 @@ Style/RedundantArgument: # (new in 1.4)
 Style/SwapValues: # (new in 1.1)
   Enabled: true
 
-Gemspec/DateAssignment: # (new in 1.10)
+Gemspec/DeprecatedAttributeAssignment: # (new in 1.10)
   Enabled: true
 Layout/LineEndStringConcatenationIndentation: # (new in 1.18)
   Enabled: true
