@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require "#{Rails.root}/spec/shared_contexts/transmittable_data.rb"
+require Rails.root.join('spec/shared_contexts/transmittable_data.rb')
 
 RSpec.describe Transmittable::Job, type: :model do
   include_context 'a full transmittable setup'
