@@ -45,8 +45,15 @@ module Operations
       end
 
       def create_process_status(event, state_key)
-        result = Operations::Transmittable::CreateProcessStatusHash.new.call({ event: event, state_key: state_key, started_at: DateTime.now,
-                                                                               message: 'created transaction' })
+        result = Operations::Transmittable::CreateProcessStatusHash.new.call(
+          {
+            event: event,
+            state_key: state_key,
+            started_at: DateTime.now,
+            message: 'created transaction'
+          }
+        )
+
         result.success? ? Success(result.value!) : result
       end
 
@@ -61,10 +68,12 @@ module Operations
       end
 
       def create_transaction_transmission(transaction, transmission)
-        Success(::Transmittable::TransactionsTransmissions.create(
-                  transmission: transmission,
-                  transaction: transaction
-                ))
+        Success(
+          ::Transmittable::TransactionsTransmissions.create(
+            transmission: transmission,
+            transaction: transaction
+          )
+        )
       end
     end
   end

@@ -27,12 +27,16 @@ module Operations
         return Failure('Cannot link a subject without a correlation_id') unless params[:correlation_id].is_a?(String)
         return Failure('Cannot link a subject without a subject_gid') unless params[:subject_gid].is_a?(URI::GID)
 
-        Success({ key: params[:key],
-                  title: params[:key].to_s.humanize.titleize,
-                  correlation_id: params[:correlation_id],
-                  started_at: DateTime.now,
-                  publish_on: DateTime.now,
-                  job_id: params[:job_id]})
+        Success(
+          {
+            key: params[:key],
+            title: params[:key].to_s.humanize.titleize,
+            correlation_id: params[:correlation_id],
+            started_at: DateTime.now,
+            publish_on: DateTime.now,
+            job_id: params[:job_id]
+          }
+        )
       end
 
       def find_subject(gid)
@@ -61,10 +65,14 @@ module Operations
       end
 
       def transmittable
-        Success({ transaction: @transaction,
-                  transmission: @transmission,
-                  job: @job,
-                  subject: @subject})
+        Success(
+          {
+            transaction: @transaction,
+            transmission: @transmission,
+            job: @job,
+            subject: @subject
+          }
+        )
       end
     end
   end

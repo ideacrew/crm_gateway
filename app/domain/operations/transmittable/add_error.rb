@@ -31,8 +31,12 @@ module Operations
       end
 
       def create_error(values)
-        AcaEntities::Protocols::Transmittable::Operations::TransmittableErrors::Create.new.call({ key: values[:key],
-                                                                                                  message: values[:message] })
+        ::AcaEntities::Protocols::Transmittable::Operations::TransmittableErrors::Create.new.call(
+          {
+            key: values[:key],
+            message: values[:message]
+          }
+        )
       end
     end
   end

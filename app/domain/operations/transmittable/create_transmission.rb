@@ -29,21 +29,30 @@ module Operations
       end
 
       def build_transmission_hash(values, process_status)
-        Success({
-                  key: values[:key],
-                  title: values[:title],
-                  description: values[:description],
-                  started_at: values[:started_at],
-                  ended_at: values[:ended_at],
-                  process_status: process_status,
-                  transmission_id: values[:correlation_id],
-                  transmittable_errors: []
-                })
+        Success(
+          {
+            key: values[:key],
+            title: values[:title],
+            description: values[:description],
+            started_at: values[:started_at],
+            ended_at: values[:ended_at],
+            process_status: process_status,
+            transmission_id: values[:correlation_id],
+            transmittable_errors: []
+          }
+        )
       end
 
       def create_process_status(event, state_key)
-        result = Operations::Transmittable::CreateProcessStatusHash.new.call({ event: event, state_key: state_key, started_at: DateTime.now,
-                                                                               message: 'created transmission' })
+        result = Operations::Transmittable::CreateProcessStatusHash.new.call(
+          {
+            event: event,
+            state_key: state_key,
+            started_at: DateTime.now,
+            message: 'created transmission'
+          }
+        )
+
         result.success? ? Success(result.value!) : result
       end
 
@@ -56,7 +65,11 @@ module Operations
       def create_transmission(job, tranmission_entity)
         transmission = job.transmissions.new(tranmission_entity.to_h)
 
-        transmission.save ? Success(transmission) : Failure("Failed to save transmission")
+        if transmission.save
+          Success(transmission)
+        else
+          Failure('Failed to save transmission')
+        end
       end
     end
   end

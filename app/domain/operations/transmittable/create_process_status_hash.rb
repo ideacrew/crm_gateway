@@ -34,12 +34,14 @@ module Operations
       end
 
       def create_process_status_hash(values)
-        Success({
-                  initial_state_key: values[:state_key],
-                  latest_state: values[:state_key],
-                  elapsed_time: values[:elapsed_time],
-                  process_states: [initial_process_state(values)]
-                })
+        Success(
+          {
+            initial_state_key: values[:state_key],
+            latest_state: values[:state_key],
+            elapsed_time: values[:elapsed_time],
+            process_states: [initial_process_state(values)]
+          }
+        )
       end
     end
   end

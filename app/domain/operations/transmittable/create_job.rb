@@ -26,23 +26,25 @@ module Operations
       end
 
       def create_job_hash(values, process_status)
-        Success({
-                  job_id: generate_job_id(values[:key]),
-                  saga_id: values[:saga_id],
-                  key: values[:key],
-                  title: values[:title],
-                  description: values[:description],
-                  publish_on: values[:publish_on],
-                  expire_on: values[:expire_on],
-                  started_at: values[:started_at],
-                  ended_at: values[:ended_at],
-                  time_to_live: values[:time_to_live],
-                  message_id: values[:message_id],
-                  process_status: process_status,
-                  transmittable_errors: [],
-                  allow_list: [],
-                  deny_list: []
-                })
+        Success(
+          {
+            job_id: generate_job_id(values[:key]),
+            saga_id: values[:saga_id],
+            key: values[:key],
+            title: values[:title],
+            description: values[:description],
+            publish_on: values[:publish_on],
+            expire_on: values[:expire_on],
+            started_at: values[:started_at],
+            ended_at: values[:ended_at],
+            time_to_live: values[:time_to_live],
+            message_id: values[:message_id],
+            process_status: process_status,
+            transmittable_errors: [],
+            allow_list: [],
+            deny_list: []
+          }
+        )
       rescue StandardError => e
         Rails.logger.error { "Couldn't create job #{e.backtrace}" }
       end
@@ -58,14 +60,26 @@ module Operations
       end
 
       def create_process_status
-        result = Operations::Transmittable::CreateProcessStatusHash.new.call({ event: 'initial', state_key: :initial, started_at: DateTime.now,
-                                                                               message: 'created job' })
+        result = Operations::Transmittable::CreateProcessStatusHash.new.call(
+          {
+            event: 'initial',
+            state_key: :initial,
+            started_at: DateTime.now,
+            message: 'created job'
+          }
+        )
+
         result.success? ? Success(result.value!) : result
       end
 
       def create_job(job_entity)
         job = ::Transmittable::Job.create(job_entity.to_h)
-        job.save ? Success(job) : Failure("Unable to save job due to invalid params")
+
+        if job.save
+          Success(job)
+        else
+          Failure('Unable to save job due to invalid params')
+        end
       end
     end
   end

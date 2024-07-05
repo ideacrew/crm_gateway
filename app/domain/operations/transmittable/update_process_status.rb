@@ -38,16 +38,25 @@ module Operations
         end
         Success("Process status updated successfully")
       rescue StandardError => e
-        Operations::Transmittable::AddError.new.call({ transmittable_objects: values[:transmittable_objects], key: :update_process_status,
-                                                       message: "Error updating process status: #{e.message}" })
+        Operations::Transmittable::AddError.new.call(
+          {
+            transmittable_objects: values[:transmittable_objects],
+            key: :update_process_status,
+            message: "Error updating process status: #{e.message}"
+          }
+        )
         Failure("Error updating process status: #{e.message}")
       end
 
       def create_process_state(values)
-        validation_result = AcaEntities::Protocols::Transmittable::Operations::ProcessStates::Create.new.call({ event: values[:state].to_s,
-                                                                                                                message: values[:message],
-                                                                                                                started_at: DateTime.now,
-                                                                                                                state_key: values[:state] })
+        validation_result = AcaEntities::Protocols::Transmittable::Operations::ProcessStates::Create.new.call(
+          {
+            event: values[:state].to_s,
+            message: values[:message],
+            started_at: DateTime.now,
+            state_key: values[:state]
+          }
+        )
 
         validation_result.success? ? Success(validation_result.value!) : validation_result
       end
