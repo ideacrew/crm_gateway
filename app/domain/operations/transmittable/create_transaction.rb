@@ -30,18 +30,20 @@ module Operations
       end
 
       def build_transaction_hash(values, process_status)
-        Success({
-                  key: values[:key],
-                  title: values[:title],
-                  description: values[:description],
-                  process_status: process_status,
-                  started_at: values[:started_at],
-                  transaction_id: values[:correlation_id],
-                  ended_at: values[:ended_at],
-                  transmittable_errors: [],
-                  json_payload: nil,
-                  xml_payload: nil
-                })
+        Success(
+          {
+            key: values[:key],
+            title: values[:title],
+            description: values[:description],
+            process_status: process_status,
+            started_at: values[:started_at],
+            transaction_id: values[:correlation_id],
+            ended_at: values[:ended_at],
+            transmittable_errors: [],
+            json_payload: nil,
+            xml_payload: nil
+          }
+        )
       end
 
       def create_process_status(event, state_key)
