@@ -32,6 +32,7 @@ class Family
 
   # @!attribute [rw] outbound_payload
   #   @return [String] A valid Account payload that includes Contacts. Account has a one-to-one mapping with Family, and Contacts has a one-to-one mapping with the Family members, serialized as a String.
+  #   @note This payload is not used to send the data to the source application, but to transform the data for comparison. And it is used to create/update accounts and contacts in the SugarCRM.
   field :outbound_payload, type: String
 
   # @!attribute [rw] job_id
