@@ -4,7 +4,7 @@ require 'rails_helper'
 require Rails.root.join('spec/shared_contexts/transmittable_data.rb')
 
 RSpec.describe Transmittable::Transmission, type: :model do
-  include_context 'a full transmittable setup'
+  include_context 'a full transmittable setup with family as subject'
 
   describe 'fields' do
     it { is_expected.to have_field(:key).of_type(Symbol) }

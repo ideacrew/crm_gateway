@@ -4,7 +4,7 @@ require 'rails_helper'
 require Rails.root.join('spec/shared_contexts/transmittable_data.rb')
 
 RSpec.describe Transmittable::Job, type: :model do
-  include_context 'a full transmittable setup'
+  include_context 'a full transmittable setup with family as subject'
 
   describe '#before_create' do
     let(:job) { FactoryBot.create(:transmittable_job) }
