@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/ideacrew/aca_entities.git
-  revision: fc3e633fd733c0bc97b74f208d548e165bcdff33
-  branch: trunk
+  revision: 158a3746e346eefc4b272a9f6748999dfb98df66
+  branch: pt_187886818
   specs:
     aca_entities (0.10.0)
       deep_merge
@@ -493,6 +493,7 @@ DEPENDENCIES
   dry-validation (~> 1.9)
   event_source!
   factory_bot_rails
+  globalid (~> 1.2.1)
   listen (~> 3.3)
   mongoid (~> 7.3.3)
   mongoid-rspec (~> 4.1.0)

@@ -7,6 +7,8 @@ module Transmittable
     include Mongoid::Document
     include Mongoid::Timestamps
 
+    include GlobalID::Identification
+
     # Associations
     # @!attribute [rw] transmissions
     #   @return [Array<Transmittable::Transmission>] the transmissions associated with this job.
@@ -19,10 +21,6 @@ module Transmittable
     # @!attribute [rw] transmittable_errors
     #   @return [Array<Transmittable::Error>] the errors associated with this job.
     has_many :transmittable_errors, as: :errorable, class_name: 'Transmittable::Error', dependent: :destroy
-
-    # Nested attributes
-    accepts_nested_attributes_for :process_status
-    accepts_nested_attributes_for :transmittable_errors
 
     # Fields
     field :job_id, type: String

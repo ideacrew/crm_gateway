@@ -16,10 +16,6 @@ RSpec.describe Transmittable::Transmission, type: :model do
   end
 
   describe 'associations' do
-    before do
-      transaction
-    end
-
     describe 'belongs_to :job' do
       it 'returns the job object' do
         expect(transmission.job).to eq(job)

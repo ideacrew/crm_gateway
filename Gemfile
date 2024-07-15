@@ -13,9 +13,10 @@ gem 'puma', '~> 6.4.2'
 gem 'sass-rails', '>= 6'
 gem 'aasm'
 gem 'rack', '~> 2.2.8.1'
+gem 'globalid', '~> 1.2.1'
 
 # Internal gems
-gem 'aca_entities',  git:  'https://github.com/ideacrew/aca_entities.git', branch: 'trunk'
+gem 'aca_entities',  git:  'https://github.com/ideacrew/aca_entities.git', branch: 'pt_187886818'
 gem 'event_source', git: 'https://github.com/ideacrew/event_source.git', branch: 'trunk'
 gem 'resource_registry',  git: 'https://github.com/ideacrew/resource_registry.git', branch: 'trunk'
 

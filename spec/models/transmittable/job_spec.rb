@@ -15,10 +15,6 @@ RSpec.describe Transmittable::Job, type: :model do
   end
 
   describe 'associations' do
-    before do
-      transaction
-    end
-
     describe 'has_many :transmissions' do
       it 'returns the transmissions associated with the job' do
         expect(job.transmissions).to include(transmission)

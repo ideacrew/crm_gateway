@@ -22,7 +22,6 @@ module Subscribers
         )
         nack(delivery_info.delivery_tag)
       end
-
     rescue Exception => e
       logger.error(
         "Exception: :family_update\n Exception: #{e.inspect}" +

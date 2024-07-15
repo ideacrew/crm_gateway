@@ -8,6 +8,8 @@ module Transmittable
     include Mongoid::Document
     include Mongoid::Timestamps
 
+    include GlobalID::Identification
+
     # Associations
 
     # @!attribute [rw] transactable
@@ -25,10 +27,6 @@ module Transmittable
     # @!attribute [rw] transmittable_errors
     #   @return [Array<Transmittable::Error>] the errors associated with this transaction.
     has_many :transmittable_errors, as: :errorable, class_name: 'Transmittable::Error', dependent: :destroy
-
-    # Nested attributes
-    accepts_nested_attributes_for :process_status
-    accepts_nested_attributes_for :transmittable_errors
 
     # Fields
 
@@ -66,7 +64,17 @@ module Transmittable
 
     # Indexes
     index({ key: 1 })
-    index({ created_at: 1 })
+
+    # Scopes
+    scope :blocked,          -> { where(status: :blocked) }
+    scope :errored,          -> { where(status: :errored) }
+    scope :no_transmit,      -> { where(transmit_action: :no_transmit) }
+    scope :superseded,       -> { where(status: :superseded) }
+    scope :transmitted,      -> { where(status: :transmitted) }
+    scope :transmit_pending, -> { where(transmit_action: :transmit) }
+
+    scope :newest, -> { order(created_at: :desc) }
+
 
     # Instance Methods
 

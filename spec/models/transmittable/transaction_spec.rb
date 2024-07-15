@@ -18,10 +18,6 @@ RSpec.describe Transmittable::Transaction, type: :model do
   end
 
   describe 'associations' do
-    before do
-      transaction
-    end
-
     describe 'belongs_to :transactable' do
       it 'returns the transactable object' do
         expect(transaction.transactable).to eq(family)
