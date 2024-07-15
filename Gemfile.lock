@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/ideacrew/aca_entities.git
-  revision: 158a3746e346eefc4b272a9f6748999dfb98df66
-  branch: pt_187886818
+  revision: 1ce439f2bbbb6964172e23e3e13cd301e7a27524
+  branch: trunk
   specs:
     aca_entities (0.10.0)
       deep_merge
