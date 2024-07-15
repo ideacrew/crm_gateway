@@ -23,6 +23,10 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
       it "returns a success response" do
         expect(@result).to be_success
       end
+
+      it "returns a family" do
+        expect(@result.success).to be_a(Family)
+      end
     end
 
   end

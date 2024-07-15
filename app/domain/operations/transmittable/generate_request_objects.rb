@@ -9,18 +9,6 @@ module Operations
       attr_reader :transaction, :transmission
 
       def call(params)
-        # job has many transmissions
-        # subject has many transactions
-        # transmissions have many transactions and transactions have many transmissions
-
-        # values = yield validate_params(params)
-        # @job = yield find_or_create_job_by_job_id(values)
-        # transmission_params = values.merge({ job: @job, event: 'acked', state_key: :acked })
-        # @transmission = yield create_response_transmission(transmission_params, { job: @job })
-        # subject = yield find_subject(params[:subject_gid])
-        # transaction_params = values.merge({ transmission: @transmission, subject: subject, event: 'acked', state_key: :acked })
-        # @transaction = yield create_response_transaction(transaction_params, { job: @job, transmission: @transmission })
-        # _transaction = yield save_payload(params[:payload])
         values = yield validate(params)
         job_params = yield construct_job_params
         @job = yield create_job(job_params)
@@ -30,7 +18,6 @@ module Operations
         transaction_params = yield construct_transaction_params
         @transaction = yield create_request_transaction(transaction_params, @job)
 
-        # Also include the Account Entity in the hash
         request_objects
       end
 

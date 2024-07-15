@@ -9,7 +9,7 @@ module Operations
       def call(params)
         values = yield validate(params)
 
-        @primary_person_hbx_id = yield find_primary_person(values[:inbound_family_cv])
+        @primary_person_hbx_id = yield find_primary_person_hbx_id(values[:inbound_family_cv])
         family_params = yield create_family_params(values)
         create_family(family_params)
       end
@@ -32,7 +32,6 @@ module Operations
           Rails.logger.error { "Family creation failed: #{family.errors.full_messages}" }
           Failure("Family creation failed")
         end
-        # Success(Family.create(family_params))
       end
 
       def create_family_params(values)
