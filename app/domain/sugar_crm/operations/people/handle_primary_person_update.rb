@@ -9,10 +9,6 @@ module SugarCRM
         include EventSource::Command
         require 'dry/monads'
         require 'dry/monads/do'
-        require 'aca_entities/crms/accounts/account'
-        require 'aca_entities/crms/contracts/accounts/account_contract'
-        require 'aca_entities/crms/contracts/contacts/contact_contract'
-        require 'aca_entities/crms/contacts/contact'
 
         attr_reader :event_log
 
@@ -56,15 +52,6 @@ module SugarCRM
             ssn: person_payload.dig(:person_demographics, :ssn),
             relationship_to_primary: "self"
           }
-        end
-
-        def validate_contact(contact_payload)
-          result = AcaEntities::Crms::Contacts::ContactContract.new.call(contact_payload)
-          if result.success?
-            Success(result.to_h)
-          else
-            Failure(result.errors.to_h)
-          end
         end
       end
     end

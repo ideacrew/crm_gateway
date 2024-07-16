@@ -9,10 +9,6 @@ module SugarCRM
         include EventSource::Command
         require 'dry/monads'
         require 'dry/monads/do'
-        require 'aca_entities/crms/accounts/account'
-        require 'aca_entities/crms/contracts/accounts/account_contract'
-        require 'aca_entities/crms/contracts/contacts/contact_contract'
-        require 'aca_entities/crms/contacts/contact'
 
         attr_reader :event_log
 
@@ -90,11 +86,6 @@ module SugarCRM
             ssn: family_member_hash.dig(:person, :person_demographics, :ssn),
             relationship_to_primary: relationship_to_primary
           }.with_indifferent_access
-        end
-
-        def validate_contacts_and_accounts(initialized_contacts_and_accounts)
-          account_validation_and_contract_validation = Crms::Accounts::AccountContract.new.call(initialized_contacts_and_accounts)
-          account_validation_and_contract_validation.success? ? Success(account_validation_and_contract_validation.to_h) : Failure(account_validation_and_contract_validation.errors.to_h)
         end
       end
     end

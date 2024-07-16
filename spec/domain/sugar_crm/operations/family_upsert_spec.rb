@@ -329,12 +329,12 @@ RSpec.describe SugarCRM::Operations::FamilyUpsert do
           is_active: true, is_disabled: nil,
           person_relationships: [
             { relative: {
-              hbx_id: 'a95878c60b424759935bca542832d5b7',
-              first_name: 'John', middle_name: nil,
-              last_name: 'Smith1', ssn: '798092332',
-              no_ssn: false,
-              dob: Time.zone.today - 20.years, gender: 'male'
-            },
+                hbx_id: 'a95878c60b424759935bca542832d5b7',
+                first_name: 'John', middle_name: nil,
+                last_name: 'Smith1', ssn: '798092332',
+                no_ssn: false,
+                dob: Time.zone.today - 20.years, gender: 'male'
+              },
               kind: 'self' },
             {
               relative: { hbx_id: '39543c3271b444f79a9c727f39b48f0c', first_name: 'John', middle_name: nil,
@@ -415,12 +415,12 @@ RSpec.describe SugarCRM::Operations::FamilyUpsert do
           is_active: true, is_disabled: nil,
           person_relationships: [
             { relative: {
-              hbx_id: 'a95878c60b424759935bca542832d5b7',
-              first_name: 'John', middle_name: nil,
-              last_name: 'Smith1', ssn: '798092332',
-              no_ssn: false,
-              dob: Time.zone.today - 20.years, gender: 'male'
-            },
+                hbx_id: 'a95878c60b424759935bca542832d5b7',
+                first_name: 'John', middle_name: nil,
+                last_name: 'Smith1', ssn: '798092332',
+                no_ssn: false,
+                dob: Time.zone.today - 20.years, gender: 'male'
+              },
               kind: 'self' },
             {
               relative: { hbx_id: '39543c3271b444f79a9c727f39b48f0c', first_name: 'John', middle_name: nil,
@@ -499,12 +499,12 @@ RSpec.describe SugarCRM::Operations::FamilyUpsert do
           is_active: true, is_disabled: nil,
           person_relationships: [
             { relative: {
-              hbx_id: 'a95878c60b424759935bca542832d5b7',
-              first_name: 'John', middle_name: nil,
-              last_name: 'Smith1', ssn: '798092332',
-              no_ssn: false,
-              dob: Time.zone.today - 20.years, gender: 'male'
-            },
+                hbx_id: 'a95878c60b424759935bca542832d5b7',
+                first_name: 'John', middle_name: nil,
+                last_name: 'Smith1', ssn: '798092332',
+                no_ssn: false,
+                dob: Time.zone.today - 20.years, gender: 'male'
+              },
               kind: 'self' },
             {
               relative: { hbx_id: '39543c3271b444f79a9c727f39b48f0c', first_name: 'John', middle_name: nil,

@@ -13,6 +13,7 @@ gem 'puma', '~> 6.4.2'
 gem 'sass-rails', '>= 6'
 gem 'aasm'
 gem 'rack', '~> 2.2.8.1'
+gem 'globalid', '~> 1.2.1'
 
 # Internal gems
 gem 'aca_entities',  git:  'https://github.com/ideacrew/aca_entities.git', branch: 'trunk'

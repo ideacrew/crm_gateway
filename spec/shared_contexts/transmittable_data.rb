@@ -5,4 +5,9 @@ RSpec.shared_context 'a full transmittable setup with family as subject', shared
   let(:transmission)  { FactoryBot.create(:transmittable_transmission, job: job) }
   let(:family)        { FactoryBot.create(:family) }
   let(:transaction)   { FactoryBot.create(:transmittable_transaction, transactable: family, transmission: transmission) }
+
+  before :each do
+    transaction
+  end
+
 end

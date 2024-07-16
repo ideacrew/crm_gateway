@@ -8,6 +8,8 @@ module Transmittable
     include Mongoid::Document
     include Mongoid::Timestamps
 
+    include GlobalID::Identification
+
     # @!attribute [rw] job
     #   @return [Transmittable::Job, nil] The job associated with this transmission, if any.
     belongs_to :job, class_name: 'Transmittable::Job', optional: true, index: true
@@ -27,8 +29,6 @@ module Transmittable
     #   @return [Transmittable::ProcessStatus] the associated ProcessStatus object, polymorphically linked.
     has_one :process_status, as: :statusable, class_name: 'Transmittable::ProcessStatus', dependent: :destroy
 
-    accepts_nested_attributes_for :process_status
-
     # Establishes a one-to-many association with Transmittable::Error. This association allows a Transmission
     # object to have many associated errors. These errors are considered polymorphic, allowing for different
     # types of "errorable" objects. When a Transmission object is destroyed, all its associated Transmittable::Error
@@ -37,8 +37,6 @@ module Transmittable
     # @!attribute [rw] transmittable_errors
     #   @return [Array<Transmittable::Error>] the collection of associated Transmittable::Error objects.
     has_many :transmittable_errors, as: :errorable, class_name: 'Transmittable::Error', dependent: :destroy
-
-    accepts_nested_attributes_for :transmittable_errors
 
     # @!attribute [rw] key
     #   @return [Symbol] A unique key identifying the transmission.

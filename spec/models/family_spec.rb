@@ -15,6 +15,7 @@ RSpec.describe Family, type: :model do
     it { is_expected.to have_field(:inbound_payload).of_type(String) }
     it { is_expected.to have_field(:outbound_payload).of_type(String) }
     it { is_expected.to have_field(:job_id).of_type(String) }
+    it { is_expected.to have_field(:inbound_after_updated_at).of_type(DateTime) }
   end
 
   describe 'indexes' do
@@ -81,10 +82,6 @@ RSpec.describe Family, type: :model do
   end
 
   describe 'associations' do
-    before do
-      transaction
-    end
-
     describe 'has_many :transactions' do
       it 'returns the transactions associated with the family' do
         expect(family.transactions).to include(transaction)

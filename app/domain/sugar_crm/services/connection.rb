@@ -110,6 +110,37 @@ module SugarCRM
         )
         response.parsed
       end
+
+      # Fetches contacts associated with a given account ID from an external service.
+      # @param account_id [String] the ID of the account for which to fetch contacts
+      # @return [Array<Hash>] an array of hashes, each representing a contact associated with the account
+      def fetch_contacts_by_account_id(account_id)
+        get(
+          '/rest/v11_8/Contacts',
+          params: { filter: [{ account_id: account_id }] }
+        ).parsed['records']
+      end
+
+      # Fetches the first account matching a given HBX ID from an external service.
+      # @param hbx_id [String] the HBX ID of the account to fetch
+      # @return [Hash, nil] a hash representing the account if found, or nil if no accounts match the HBX ID
+      def fetch_account_by_hbx_id(hbx_id)
+        response = get('/rest/v11_8/Accounts', params: { filter: [{ hbxid_c: hbx_id }] })
+        return if response.parsed['records'].empty?
+
+        response.parsed['records'].first
+      end
+
+      # Fetches an account and its associated contacts from SugarCRM by the account's HBX ID.
+      # @param hbx_id [String] The HBX ID of the account to fetch.
+      # @return [Hash, nil] A hash containing the account and its contacts if found, otherwise nil.
+      def fetch_account_including_contacts_by_hbx_id(hbx_id)
+        account = fetch_account_by_hbx_id(hbx_id)
+        return unless account
+
+        contacts = fetch_contacts_by_account_id(account['id'])
+        account.merge(contacts: contacts)
+      end
     end
   end
 end

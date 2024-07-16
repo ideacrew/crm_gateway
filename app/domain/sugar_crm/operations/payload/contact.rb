@@ -2,7 +2,6 @@
 
 require 'dry/monads'
 require 'dry/monads/do'
-#require_relative "../../sugar_crm/services/connection"
 require 'date'
 
 module SugarCRM
@@ -26,7 +25,6 @@ module SugarCRM
             relationship_c: relationship_to_primary
           )
         end
-
       end
     end
   end
