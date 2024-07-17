@@ -14,7 +14,7 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
 
     before do
       @result = described_class.new.call({
-                                           inbound_family_cv: cv3_family_payload,
+                                           inbound_family_cv: cv3_family,
                                            inbound_after_updated_at: after_save_updated_at,
                                            job: job
                                          })

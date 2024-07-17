@@ -13,7 +13,7 @@ RSpec.describe Operations::SugarCRM::Transmittable::GenerateRequestObjects, dbcl
 
     before do
       @result = described_class.new.call({
-                                           inbound_family_cv: cv3_family_payload,
+                                           inbound_family_cv: cv3_family,
                                            inbound_after_updated_at: after_save_updated_at
                                          })
     end
