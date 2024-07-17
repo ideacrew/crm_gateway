@@ -85,15 +85,15 @@ module Operations
 
         def create_contacts_request_transactions(contacts_transactions_params)
           contact_transactions = contacts_transactions_params.each do |contact_transaction_params|
-                                  create_request_transaction(contact_transaction_params, @job)
-                                end
+            create_request_transaction(contact_transaction_params, @job)
+          end
           Success(contact_transactions)
         end
 
         def construct_contacts_transactions_params
           family_entity = @family.inbound_family_entity
           Success(
-          family_entity.family_members.collect do |family_member|
+            family_entity.family_members.collect do |family_member|
               {
                 transmission: transmission,
                 subject: @family,
@@ -106,8 +106,8 @@ module Operations
                 state_key: :initial,
                 correlation_id: family_member.hbx_id
               }
-          end
-        )
+            end
+          )
         end
 
         def request_objects
