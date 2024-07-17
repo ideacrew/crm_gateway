@@ -373,7 +373,7 @@ GEM
     rbtree (0.4.6)
     redis (4.5.1)
     regexp_parser (2.9.2)
-    rexml (3.2.9)
+    rexml (3.3.2)
       strscan
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
@@ -506,7 +506,7 @@ DEPENDENCIES
   rails (~> 7.0.8.4)
   rbtree (~> 0.4.5)
   resource_registry!
-  rexml (~> 3.2.7)
+  rexml (~> 3.3.2)
   rspec-rails (~> 4.0)
   rubocop
   rubocop-git

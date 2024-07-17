@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require Rails.root.join('spec/shared_contexts/sugar_crm_account_data.rb')
 
-RSpec.describe Operations::Transmittable::GenerateRequestObjects, dbclean: :after_each do
-  let(:file_data) { File.read("spec/test_data/cv3_payload.json") }
-  let(:cv3_family_payload) { JSON.parse(JSON.parse(file_data), symbolize_names: true) }
+RSpec.describe Operations::SugarCRM::Transmittable::GenerateRequestObjects, dbclean: :after_each do
+
+  include_context 'sugar account and contacts'
+
   let(:after_save_updated_at) { DateTime.now.to_s }
 
   describe "Success" do
@@ -33,10 +35,9 @@ RSpec.describe Operations::Transmittable::GenerateRequestObjects, dbclean: :afte
       expect(@result.success[:subject]).to be_a(Family)
     end
 
-    it "generates a transaction" do
+    it "generates an account transaction" do
       expect(@result.success[:transaction]).to be_a(Transmittable::Transaction)
     end
-
   end
 
   describe "Failure" do

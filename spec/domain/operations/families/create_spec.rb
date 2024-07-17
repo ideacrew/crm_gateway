@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require Rails.root.join('spec/shared_contexts/sugar_crm_account_data.rb')
 
 RSpec.describe Operations::Families::Create, dbclean: :after_each do
-  let(:file_data) { File.read("spec/test_data/cv3_payload.json") }
-  let(:cv3_family_payload) { JSON.parse(JSON.parse(file_data), symbolize_names: true) }
+
+  include_context 'sugar account and contacts'
+
   let(:after_save_updated_at) { DateTime.now.to_s }
   let(:job) { FactoryBot.create(:transmittable_job) }
 

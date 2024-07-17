@@ -40,11 +40,10 @@ module Operations
             correlation_id: values[:inbound_family_cv][:hbx_id],
             family_hbx_id: values[:inbound_family_cv][:hbx_id],
             inbound_raw_payload: values[:inbound_family_cv],
-            inbound_payload: values[:inbound_family_cv],
+            inbound_payload: values[:inbound_family_cv].to_json,
             primary_person_hbx_id: @primary_person_hbx_id,
             job_id: values[:job].id,
             inbound_after_updated_at: values[:inbound_after_updated_at]
-            # outbound_payload:
           }
         )
       end

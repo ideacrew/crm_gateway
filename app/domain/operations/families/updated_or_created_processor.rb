@@ -25,7 +25,7 @@ module Operations
       end
 
       def create_request_transmittable(family_entity, after_updated_at)
-        ::Operations::Transmittable::GenerateRequestObjects.new.call({inbound_family_cv: family_entity, inbound_after_updated_at: after_updated_at})
+        ::Operations::SugarCRM::Transmittable::GenerateRequestObjects.new.call({inbound_family_cv: family_entity, inbound_after_updated_at: after_updated_at})
       end
 
       def validate(params)
