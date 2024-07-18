@@ -10,7 +10,7 @@ RSpec.describe Operations::SugarCRM::FetchAccount do
 
   let(:result) { subject.call({ account_hbx_id: account_hbx_id }) }
 
-  let(:account_response_monad) { Success(input_params) }
+  let(:account_response_monad) { Success(sugar_acount_and_contact_params) }
 
   describe '#call' do
     before :each do

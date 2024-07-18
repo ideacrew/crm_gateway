@@ -958,10 +958,12 @@ RSpec.shared_context 'sugar account and contacts', shared_context: :metadata do
     ]
   end
 
+  let(:primary_full_name) { 'Jane Test Doe' }
+
   let(:sugar_account) do
     {
       :id => "cd9ddce6-2c39-11ec-9752-06605441e25d",
-      :name => "Jane Test Doe",
+      :name => primary_full_name,
       :date_entered => "2021-10-13T15:25:31+00:00",
       :date_modified => "2024-07-02T17:47:54+00:00",
       :modified_user_id => "75166564-1c91-11ec-83e9-36c3beb387af",
@@ -1059,7 +1061,7 @@ RSpec.shared_context 'sugar account and contacts', shared_context: :metadata do
     }
   end
 
-  let(:input_params) do
+  let(:sugar_acount_and_contact_params) do
     sugar_account.merge({ contacts: sugar_contacts })
   end
 
