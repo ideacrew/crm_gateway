@@ -106,7 +106,7 @@ module Operations
         return Success(nil) if is_stale || previous_crm_account.present?
 
         Operations::SugarCRM::FetchAccount.new.call(
-          { account_hbx_id: family.primary_applicant.hbx_id }
+          { account_hbx_id: family.primary_person_hbx_id }
         )
       end
 

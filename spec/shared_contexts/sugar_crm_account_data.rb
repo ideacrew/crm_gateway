@@ -1065,8 +1065,10 @@ RSpec.shared_context 'sugar account and contacts', shared_context: :metadata do
     sugar_account.merge({ contacts: sugar_contacts })
   end
 
+  let(:family_hbx_id) { "171686263144070" }
+
   let(:cv3_family) do
-    { :hbx_id => "171686263144070",
+    { :hbx_id => family_hbx_id,
       :family_members =>
       [{ :hbx_id => "732020",
          :is_primary_applicant => true,
