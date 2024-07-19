@@ -29,7 +29,7 @@ module Subscribers
       end
 
       def process_families_created_or_updated(payload, timestamps)
-        ::Operations::Families::UpdatedOrCreatedProcessor.new.call(
+        ::Operations::Families::CreatedOrUpdatedProcessor.new.call(
           {
             inbound_family_cv: payload,
             after_updated_at: timestamps[:after_updated_at]

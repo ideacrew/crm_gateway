@@ -3,7 +3,7 @@
 module Operations
   module Families
     # This class will create or update Transmittable objects
-    class UpdatedOrCreatedProcessor
+    class CreatedOrUpdatedProcessor
       include ::Operations::Transmittable::TransmittableUtils
 
       def call(params)

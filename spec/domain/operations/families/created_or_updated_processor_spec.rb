@@ -3,7 +3,7 @@
 require 'rails_helper'
 require Rails.root.join('spec/shared_contexts/sugar_crm_account_data.rb')
 
-RSpec.describe Operations::Families::UpdatedOrCreatedProcessor, dbclean: :after_each do
+RSpec.describe Operations::Families::CreatedOrUpdatedProcessor, dbclean: :after_each do
   include Dry::Monads[:result]
 
   include_context 'sugar account and contacts'
