@@ -26,7 +26,7 @@ RSpec.describe Operations::Families::CreatedOrUpdatedProcessor, dbclean: :after_
   end
 
   let(:compare_object) do
-    ::Operations::AccountComparison::Create.new.call(comparison_params).success
+    Operations::AccountComparison::Create.new.call(comparison_params).success
   end
 
   before :each do
