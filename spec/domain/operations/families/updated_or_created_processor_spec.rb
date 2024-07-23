@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require Rails.root.join('spec/shared_contexts/sugar_crm_account_data.rb')
 
 RSpec.describe Operations::Families::UpdatedOrCreatedProcessor, dbclean: :after_each do
-  let(:file_data) { File.read("spec/test_data/cv3_payload.json") }
-  let(:cv3_family_payload) { JSON.parse(JSON.parse(file_data), symbolize_names: true) }
+
+  include_context 'sugar account and contacts'
+
   let(:after_save_updated_at) { DateTime.now.to_s }
 
   describe "Success" do
 
     before do
       @result = described_class.new.call({
-                                           inbound_family_cv: cv3_family_payload,
+                                           inbound_family_cv: cv3_family,
                                            after_updated_at: after_save_updated_at
                                          })
     end
@@ -23,6 +25,38 @@ RSpec.describe Operations::Families::UpdatedOrCreatedProcessor, dbclean: :after_
       end
     end
 
+    context "persisted objects" do
+
+      it "persists a Job" do
+        expect(Transmittable::Job.count).to eq 1
+      end
+      it "persists a Transmission" do
+        expect(Transmittable::Transmission.count).to eq 1
+      end
+
+      it "persists a Family object" do
+        expect(Family.count).to eq 1
+      end
+
+      it "persists an Account Transaction" do
+        expect(Transmittable::Transaction.where(key: :account_created_or_updated).count).to eq 1
+      end
+
+      it "persists multiple Contact Transactions" do
+        family_members = cv3_family[:family_members]
+        expect(Transmittable::Transaction.where(key: :contact_created_or_updated).count).to eq family_members.count
+      end
+
+      it "has a subject with transactions" do
+        expect(Family.first.transactions).to be_truthy
+      end
+
+      it "has a relationship between transactions and transmissions" do
+        Transmittable::Transaction.all.each do |transaction|
+          expect(transaction.transmissions).to be_truthy
+        end
+      end
+    end
   end
 
   describe "Failure" do
