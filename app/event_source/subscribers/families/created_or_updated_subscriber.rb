@@ -12,8 +12,8 @@ module Subscribers
         subscriber_logger = subscriber_logger_for(:on_families_created_or_updated)
         payload = JSON.parse(response, symbolize_names: true)
         timestamps = metadata.headers.deep_symbolize_keys
-        pre_process_message(subscriber_logger, payload, timestamps)
 
+        pre_process_message(subscriber_logger, payload, timestamps)
         process_families_created_or_updated(payload[:after_save_cv_family], timestamps)
 
         ack(delivery_info.delivery_tag)
