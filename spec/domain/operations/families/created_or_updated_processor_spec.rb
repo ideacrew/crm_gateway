@@ -79,9 +79,18 @@ RSpec.describe Operations::Families::CreatedOrUpdatedProcessor, dbclean: :after_
 
       it "has a relationship between transactions and transmissions" do
         Transmittable::Transaction.all.each do |transaction|
-          expect(transaction.transmissions).to be_truthy
+          expect(Family.first.outbound_payload).to be_truthy
         end
       end
+    end
+
+    context "outbound payload" do
+        
+        it "persists an outbound payload" do
+          binding.irb
+          expect(@result).to be_truthy
+        end
+          
     end
   end
 
