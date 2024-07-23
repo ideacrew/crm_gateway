@@ -34,7 +34,7 @@ module Operations
           }
         )
       end
-      
+
       def create_outbound_payload(params)
         family = params[:subject]
         family_entity = family.inbound_family_entity
@@ -44,7 +44,8 @@ module Operations
           family.outbound_payload = outbound_payload.value!.to_json
           family.save
         else
-          add_error(:create_outbound_payload, "Failed to create outbound payload for family: #{family.primary_person_hbx_id} due to: #{outbound_payload.failure}", { job: params[:job], transmission: params[:transmission], transaction: params[:transaction] })
+          add_error(:create_outbound_payload, "Failed to create outbound payload for family: #{family.primary_person_hbx_id} due to: #{outbound_payload.failure}",
+                    { job: params[:job], transmission: params[:transmission], transaction: params[:transaction] })
           return Failure("Failed to create outbound payload for family: #{family.primary_person_hbx_id} due to: #{outbound_payload.failure}")
         end
         Success(family)
