@@ -4,7 +4,7 @@ require 'aca_entities/crm/libraries/crm_library'
 
 module Operations
   module Transformers
-    # operation to transform a family entity into an outbound payload with an accounts and contacts
+    # operation to transform a family entity into an outbound payload with an account and contacts
     class GenerateOutboundPayload
       include Dry::Monads[:result, :do, :try]
 
