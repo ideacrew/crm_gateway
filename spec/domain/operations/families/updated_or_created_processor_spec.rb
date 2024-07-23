@@ -57,6 +57,13 @@ RSpec.describe Operations::Families::UpdatedOrCreatedProcessor, dbclean: :after_
         end
       end
     end
+
+    context "Outbound Payload" do
+
+      it "persists an outbound payload" do
+        expect(Family.first.outbound_payload).to be_truthy
+      end
+    end
   end
 
   describe "Failure" do
