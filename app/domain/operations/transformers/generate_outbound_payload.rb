@@ -9,7 +9,6 @@ module Operations
       include Dry::Monads[:result, :do, :try]
 
       def call(params)
-
         family_entity = yield validate(params)
         generate_outbound_payload(family_entity)
       rescue StandardError => e
