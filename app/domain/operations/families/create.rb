@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'aca_entities/crm/libraries/crm_library'
+
 module Operations
   module Families
     # This class will create a Family object
@@ -10,7 +12,9 @@ module Operations
         values = yield validate(params)
 
         @primary_person_hbx_id = yield find_primary_person_hbx_id(values[:inbound_family_cv])
-        family_params = yield create_family_params(values)
+        family_entity = yield construct_family_entity(values[:inbound_family_cv])
+        outbound_account_entity = yield construct_outbound_account_entity(family_entity)
+        family_params = yield create_family_params(outbound_account_entity, values)
         create_family(family_params)
       end
 
@@ -34,18 +38,31 @@ module Operations
         end
       end
 
-      def create_family_params(values)
+      def create_family_params(outbound_account_entity, values)
         Success(
           {
             correlation_id: values[:inbound_family_cv][:hbx_id],
             family_hbx_id: values[:inbound_family_cv][:hbx_id],
             inbound_raw_payload: values[:inbound_family_cv],
             inbound_payload: values[:inbound_family_cv].to_json,
+            outbound_payload: outbound_account_entity.to_json,
             primary_person_hbx_id: @primary_person_hbx_id,
             job_id: values[:job].id,
             inbound_after_updated_at: values[:inbound_after_updated_at]
           }
         )
+      end
+
+      def construct_family_entity(family_cv)
+        inbound_family_entity = ::AcaEntities::Operations::CreateFamily.new.call(family_cv)
+        inbound_family_entity.success? ? Success(inbound_family_entity.value!) : Failure(inbound_family_entity.failure)
+      rescue StandardError => e
+        Failure("Failed to construct outbound account entity: #{e.message} backtrace: #{e.backtrace.join("\n")} for family: #{family_cv[:hbx_id]}")
+      end
+
+      def construct_outbound_account_entity(family_entity)
+        account = ::AcaEntities::Crm::Transformers::FamilyTo::Account.new.call(family_entity)
+        account.success? ? Success(account.value!) : Failure(account.failure)
       end
 
       def find_primary_person_hbx_id(family_cv_payload)

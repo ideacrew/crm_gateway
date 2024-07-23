@@ -82,6 +82,10 @@ RSpec.describe Operations::Families::CreatedOrUpdatedProcessor, dbclean: :after_
           expect(transaction.transmissions).to be_truthy
         end
       end
+
+      it "persists an outbound payload" do
+        expect(Family.first.outbound_payload).to be_truthy
+      end
     end
   end
 
