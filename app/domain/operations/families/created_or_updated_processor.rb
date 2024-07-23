@@ -9,7 +9,6 @@ module Operations
       def call(params)
         after_updated_at, family_cv = yield validate(params)
         request_objects = yield create_request_transmittable(family_cv, after_updated_at)
-        _outbound_payload = yield create_outbound_payload(request_objects)
         comparison_result = yield compare_accounts(after_updated_at, request_objects[:subject])
         # updated_result = yield update_sugar_crm(comparison_result, request_objects)
         # response_objects = yield create_response_transmittable(updated_result)
@@ -33,22 +32,6 @@ module Operations
             inbound_after_updated_at: after_updated_at
           }
         )
-      end
-
-      def create_outbound_payload(params)
-        family = params[:subject]
-        family_entity = family.inbound_family_entity
-
-        outbound_payload = ::Operations::Transformers::GenerateOutboundPayload.new.call(family_entity)
-        if outbound_payload.success?
-          family.outbound_payload = outbound_payload.value!.to_json
-          family.save
-        else
-          add_error(:create_outbound_payload, "Failed to create outbound payload for family: #{family.primary_person_hbx_id} due to: #{outbound_payload.failure}",
-                    { job: params[:job], transmission: params[:transmission], transaction: params[:transaction] })
-          return Failure("Failed to create outbound payload for family: #{family.primary_person_hbx_id} due to: #{outbound_payload.failure}")
-        end
-        Success(family)
       end
 
       def compare_accounts(after_updated_at, family)
