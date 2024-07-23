@@ -40,9 +40,7 @@ module Operations
       # @param hbx_id [String] The HBX ID of the account to fetch.
       # @return [Dry::Monads::Result] Success monad with account parameters or Failure monad with error message.
       def sugar_account(hbx_id)
-        Success(
-          ::SugarCRM::Services::Connection.new.fetch_account_including_contacts_by_hbx_id(hbx_id)
-        )
+        Success(::SugarCRM::Services::Connection.new.fetch_account_including_contacts_by_hbx_id(hbx_id))
       rescue StandardError => e
         Failure("Unable to fetch account from SugarCRM: #{e.message} for account: #{hbx_id}")
       end

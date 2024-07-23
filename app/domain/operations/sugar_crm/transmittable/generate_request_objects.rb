@@ -21,7 +21,7 @@ module Operations
           contacts_transactions_params = yield construct_contacts_transactions_params
           _contact_transaction = yield create_contacts_request_transactions(contacts_transactions_params)
 
-          request_objects
+          Success(request_objects)
         end
 
         private
@@ -111,14 +111,12 @@ module Operations
         end
 
         def request_objects
-          Success(
-            {
-              transaction: @account_transaction,
-              transmission: @transmission,
-              job: @job,
-              subject: @family
-            }
-          )
+          {
+            transaction: @account_transaction,
+            transmission: @transmission,
+            job: @job,
+            subject: @family
+          }
         end
       end
     end

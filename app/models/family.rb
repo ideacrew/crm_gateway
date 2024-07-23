@@ -90,8 +90,7 @@ class Family
     return if outbound_account_cv_hash.blank?
     return @outbound_account_entity if defined? @outbound_account_entity
 
-    # TODO: Create an operation to create an account entity in AcaEntities.
-    @outbound_account_entity = ::AcaEntities::Crms::Operations::CreateAccount.new.call(
+    @outbound_account_entity = ::AcaEntities::Crm::Operations::CreateAccount.new.call(
       outbound_account_cv_hash
     ).success
   end
