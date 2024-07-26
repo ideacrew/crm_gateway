@@ -5,14 +5,6 @@ require 'aca_entities/crm/libraries/crm_library'
 require Rails.root.join('spec/shared_contexts/sugar_crm_account_data.rb')
 require Rails.root.join('spec/shared_contexts/transmittable_data.rb')
 
-# validate
-# fetch_eligible_subject
-# check_stale
-# fetch_previos_crm_account
-# fetch_sugar_account
-# compare_accounts_and_contacts
-# create_comparison_object
-
 RSpec.describe Operations::SugarCRM::CompareRequest do
   include Dry::Monads[:do, :result]
 

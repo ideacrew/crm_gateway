@@ -8,11 +8,11 @@ module Operations
 
       def call(params)
         after_updated_at, family_cv = yield validate(params)
-        request_objects = yield create_request_transmittable(family_cv, after_updated_at)
-        comparison_result = yield compare_accounts(after_updated_at, request_objects[:subject])
-        # updated_result = yield update_sugar_crm(comparison_result, request_objects)
+        request_objects             = yield create_request_transmittable(family_cv, after_updated_at)
+        comparison                  = yield compare_accounts(after_updated_at, request_objects[:subject])
+        updated_comparison          = yield update_sugar_crm(comparison, request_objects)
         # response_objects = yield create_response_transmittable(updated_result)
-        Success(comparison_result)
+        Success(updated_comparison)
       end
 
       def validate(params)
@@ -43,8 +43,16 @@ module Operations
         )
       end
 
-      def update_sugar_crm(comparison_result, request_objects)
-        # If the comparison_result is no-op or stale, then wewould simply return Success with a message that the update is not needed.
+      def update_sugar_crm(comparison, request_objects)
+        # If the comparison is no-op or stale, then wewould simply return Success with a message that the update is not needed.
+        return Success(comparison) if comparison.noop_or_stale?
+
+        ::Operations::SugarCRM::Update.new.call(
+          {
+            comparison: comparison,
+            request_objects: request_objects
+          }
+        )
       end
     end
   end
