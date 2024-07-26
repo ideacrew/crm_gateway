@@ -75,7 +75,15 @@ module Operations
         csv << field_names
 
         transmittable_data.each do |data|
-          csv << [data[:primary_person_hbx_id], data[:transaction_status], data[:transaction_errors], data[:transmission_status], data[:transmission_errors], data[:job_status], data[:job_errors], data[:error_message], data[:error_backtrace]]
+          csv << [data[:primary_person_hbx_id],
+                  data[:transaction_status],
+                  data[:transaction_errors],
+                  data[:transmission_status],
+                  data[:transmission_errors],
+                  data[:job_status],
+                  data[:job_errors],
+                  data[:error_message],
+                  data[:error_backtrace]]
         end
       end
       Success("Generated transmittable report: #{file_name}")
