@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :transmittable_error, class: '::Transmittable::Error' do
-    key         { :error_key }
+    key         { :test_key }
     message     { 'Error Message' }
   end
 end
