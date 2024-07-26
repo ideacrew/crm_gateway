@@ -24,9 +24,14 @@ module Transmittable
     #   @return [Transmittable::ProcessStatus] the process status associated with this transaction.
     has_one :process_status, as: :statusable, class_name: 'Transmittable::ProcessStatus', dependent: :destroy
 
+
     # @!attribute [rw] transmittable_errors
     #   @return [Array<Transmittable::Error>] the errors associated with this transaction.
     has_many :transmittable_errors, as: :errorable, class_name: 'Transmittable::Error', dependent: :destroy
+
+    # Nested attributes
+    accepts_nested_attributes_for :process_status
+    accepts_nested_attributes_for :transmittable_errors
 
     # Fields
 
