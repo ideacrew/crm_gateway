@@ -10,27 +10,56 @@ RSpec.describe Operations::Families::CreatedOrUpdatedProcessor, dbclean: :after_
 
   let(:after_save_updated_at) { DateTime.now.to_s }
 
-  let(:compare_contacts_params) do
+  let(:compare_contacts_params1) do
     cv3_family[:family_members].map do |member|
       { action: :create, hbx_id: member[:hbx_id] }
     end
   end
 
-  let(:comparison_params) do
+  let(:comparison_params1) do
     {
       action: :create,
       account_hbx_id: family_hbx_id,
       account_action: :update,
-      contacts: compare_contacts_params
+      contacts: compare_contacts_params1
     }
   end
 
-  let(:compare_object) do
-    Operations::AccountComparison::Create.new.call(comparison_params).success
+  let(:compare_contacts_params2) do
+    cv3_family[:family_members].map do |member|
+      {
+        action: :update,
+        hbx_id: member[:hbx_id],
+        response_code: '200',
+        response_body: { contact_id: member[:hbx_id] }.to_json,
+        response_message: 'Contact updated successfully'
+      }
+    end
+  end
+
+  let(:comparison_params2) do
+    {
+      action: :create,
+      account_hbx_id: family_hbx_id,
+      account_action: :update,
+      response_code: '200',
+      response_body: { account_id: family_hbx_id }.to_json,
+      response_message: 'Account updated successfully',
+      contacts: compare_contacts_params2
+    }
+  end
+
+  let(:compare_object1) do
+    Operations::AccountComparison::Create.new.call(comparison_params1).success
+  end
+
+  let(:compare_object2) do
+    Operations::AccountComparison::Create.new.call(comparison_params2).success
   end
 
   before :each do
-    allow(subject).to receive(:compare_accounts).and_return(Success(compare_object))
+    allow(subject).to receive(:compare_accounts).and_return(Success(compare_object1))
+    allow(subject).to receive(:update_sugar_crm).and_return(Success(compare_object2))
   end
 
   describe "Success" do
@@ -52,7 +81,6 @@ RSpec.describe Operations::Families::CreatedOrUpdatedProcessor, dbclean: :after_
     end
 
     context "persisted objects" do
-
       it "persists a Job" do
         expect(Transmittable::Job.count).to eq 1
       end

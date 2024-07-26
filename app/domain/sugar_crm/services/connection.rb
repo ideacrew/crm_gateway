@@ -141,6 +141,52 @@ module SugarCRM
         contacts = fetch_contacts_by_account_id(account['id'])
         account.merge(contacts: contacts)
       end
+
+      # Creates a new account in the system via a POST request.
+      # @param payload [Hash] The data to be sent as the body of the request.
+      # @return [Hash] Raw response from the API after creating the account.
+      def create_an_account(payload:)
+        post(
+          '/rest/v11_8/Accounts',
+          body: payload.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+      end
+
+      # Updates an existing account identified by the given ID via a PUT request.
+      # @param id [String] The ID of the account to update.
+      # @param payload [Hash] The data to be sent as the body of the request.
+      # @return [Hash] Raw response from the API after updating the account.
+      def update_the_account(id:, payload:)
+        put(
+          "/rest/v11_8/Accounts/#{id}",
+          body: payload.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+      end
+
+      # Creates a new contact in the system via a POST request.
+      # @param payload [Hash] The data to be sent as the body of the request.
+      # @return [Hash] Raw response from the API after creating the contact.
+      def create_a_contact(payload:)
+        post(
+          '/rest/v11_8/Contacts',
+          body: payload.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+      end
+
+      # Updates an existing contact identified by the given ID via a PUT request.
+      # @param id [String] The ID of the contact to update.
+      # @param payload [Hash] The data to be sent as the body of the request.
+      # @return [Hash] Raw response from the API after updating the contact.
+      def update_the_contact(id:, payload:)
+        put(
+          "/rest/v11_8/Contacts/#{id}",
+          body: payload.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+      end
     end
   end
 end

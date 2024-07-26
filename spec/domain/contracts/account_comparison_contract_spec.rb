@@ -7,22 +7,53 @@ RSpec.describe Contracts::AccountComparisonContract do
 
   describe '#call' do
     context 'when valid parameters are provided' do
+      let(:response_code) { '200' }
+
       let(:valid_input) do
         {
           action: :create,
           account_hbx_id: '12345',
           account_action: :update,
+          response_code: response_code,
+          response_message: 'Account updated successfully',
+          response_body: { account_id: '12345' }.to_json,
           contacts: [
-            { hbx_id: 'contact1', action: :create },
-            { hbx_id: 'contact2', action: :update }
+            {
+              hbx_id: 'contact1',
+              action: :create,
+              response_code: response_code,
+              response_message: 'Contact created successfully',
+              response_body: { contact_id: 'contact1' }.to_json
+            },
+            {
+              hbx_id: 'contact2',
+              action: :update,
+              response_code: '400',
+              response_message: 'Unable to create contact successfully',
+              response_body: { error: 'Invalid contact' }.to_json
+            }
           ]
         }
       end
 
-      it 'succeeds validation' do
-        result = contract.call(valid_input)
+      context 'when coercion is not needed' do
+        it 'succeeds validation' do
+          result = contract.call(valid_input)
 
-        expect(result).to be_success
+          expect(result).to be_success
+        end
+      end
+
+      context 'when coercion is needed' do
+        let(:response_code) { 200 }
+
+        it 'succeeds validation' do
+          result = contract.call(valid_input)
+
+          expect(result).to be_success
+          expect(result[:response_code]).to be_a(String)
+          expect(result[:contacts].first[:response_code]).to be_a(String)
+        end
       end
     end
 
@@ -31,7 +62,14 @@ RSpec.describe Contracts::AccountComparisonContract do
         {
           account_hbx_id: '12345',
           account_action: :update,
-          contacts: [{ hbx_id: 'contact1', action: :create }]
+          contacts: [
+            {
+              hbx_id: 'contact1',
+              action: :create,
+              response_code: '200',
+              response_message: 'Contact created successfully'
+            }
+          ]
         }
       end
 

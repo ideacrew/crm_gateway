@@ -1067,6 +1067,32 @@ RSpec.shared_context 'sugar account and contacts', shared_context: :metadata do
 
   let(:family_hbx_id) { "171686263144070" }
 
+  let(:child1_reference) do
+    {
+      hbx_id: '732021',
+      first_name: 'John',
+      last_name: 'Smith2',
+      middle_name: nil,
+      dob: Time.zone.today,
+      gender: 'male',
+      ssn: nil
+    }
+  end
+
+  let(:child2_reference) do
+    {
+      hbx_id: '732022',
+      first_name: 'John',
+      last_name: 'Smith3',
+      middle_name: nil,
+      dob: Time.zone.today,
+      gender: 'male',
+      ssn: nil
+    }
+  end
+
+  let(:person_relationships) { [{ kind: 'child', relative: child1_reference }, { kind: 'child', relative: child2_reference }] }
+
   let(:cv3_family) do
     { :hbx_id => family_hbx_id,
       :family_members =>
@@ -1104,7 +1130,7 @@ RSpec.shared_context 'sugar account and contacts', shared_context: :metadata do
           :is_applying_for_assistance => nil,
           :is_active => true,
           :is_disabled => nil,
-          :person_relationships => [],
+          :person_relationships => person_relationships,
           :consumer_role =>
           { :five_year_bar => false,
             :requested_coverage_start_date => Time.zone.today,

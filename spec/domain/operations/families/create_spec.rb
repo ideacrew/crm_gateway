@@ -13,7 +13,6 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
   let(:city) { cv3_family[:family_members].first[:person][:addresses].first[:city] }
   let(:zip) { cv3_family[:family_members].first[:person][:addresses].first[:zip] }
   let(:email) { cv3_family[:family_members].first[:person][:emails].first[:address] }
-  let(:phone_number) { cv3_family[:family_members].first[:person][:phones].first[:full_phone_number] }
   let(:name) { cv3_family[:family_members].first[:person][:person_name][:full_name] }
 
   describe "Success" do
@@ -54,7 +53,7 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
       end
 
       it "has phones" do
-        expect(@outbound_payload[:phone_office]).to eql(phone_number)
+        expect(@outbound_payload[:phone_office]).to eql('(202) 111-1111')
       end
 
       it "has name" do
