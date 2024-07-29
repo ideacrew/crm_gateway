@@ -50,6 +50,7 @@ module Operations
         result = ::Operations::Transmittable::CreateTransaction.new.call(transaction_params)
         return result if result.success?
 
+        transmission = transaction_params[:transmission]
         add_errors(
           :create_request_transaction,
           "Failed to create transaction due to #{result.failure} for params: #{transaction_params}",
@@ -109,7 +110,7 @@ module Operations
         add_errors(
           :create_response_transaction,
           "Failed to create transaction due to #{result.failure} for params: #{transaction_params}",
-          { job: job, transmission: transmission }
+          transmittable_objects
         )
         status_result = update_status(result.failure, :failed, transmittable_objects)
         status_result.failure? ? status_result : result
@@ -138,7 +139,11 @@ module Operations
       def find_job_by_global_id(job_gid)
         job = GlobalID::Locator.locate(job_gid)
 
-        job.present? ? Success(job) : Failure("No Transmittable::Job found with given global ID: #{job_gid}")
+        if job.present?
+          Success(job)
+        else
+          Failure("No Transmittable::Job found with given global ID: #{job_gid}")
+        end
       end
 
       # Finds a Transmittable::Transmission based on its global identifier.
@@ -148,7 +153,11 @@ module Operations
       def find_transmission_by_global_id(transmission_gid)
         transmission = GlobalID::Locator.locate(transmission_gid)
 
-        transmission.present? ? Success(transmission) : Failure("No Transmittable::Transmission found with given global ID: #{transmission_gid}")
+        if transmission.present?
+          Success(transmission)
+        else
+          Failure("No Transmittable::Transmission found with given global ID: #{transmission_gid}")
+        end
       end
 
       # Finds a Transmittable::Transaction based on its global identifier.
@@ -157,7 +166,11 @@ module Operations
       def find_transaction_by_global_id(transaction_gid)
         transaction = GlobalID::Locator.locate(transaction_gid)
 
-        transaction.present? ? Success(transaction) : Failure("No Transmittable::Transaction found with given global ID: #{transaction_gid}")
+        if transaction.present?
+          Success(transaction)
+        else
+          Failure("No Transmittable::Transaction found with given global ID: #{transaction_gid}")
+        end
       end
 
       # Finds a subject based on its global identifier.
@@ -166,7 +179,11 @@ module Operations
       def find_subject_by_global_id(subject_gid)
         subject = GlobalID::Locator.locate(subject_gid)
 
-        subject.present? ? Success(subject) : Failure("No subject found with given global ID: #{subject_gid}")
+        if subject.present?
+          Success(subject)
+        else
+          Failure("No subject found with given global ID: #{subject_gid}")
+        end
       end
     end
   end

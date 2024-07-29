@@ -19,7 +19,7 @@ module Operations
           account_transaction_params = yield construct_account_transaction_params
           @account_transaction = yield create_request_transaction(account_transaction_params, @job)
           contacts_transactions_params = yield construct_contacts_transactions_params
-          _contact_transaction = yield create_contacts_request_transactions(contacts_transactions_params)
+          @contact_transactions = yield create_contacts_request_transactions(contacts_transactions_params)
 
           Success(request_objects)
         end
@@ -54,7 +54,7 @@ module Operations
           Success(
             {
               job: @job,
-              key: :family_created_or_updated,
+              key: :family_created_or_updated_request,
               title: "Transmission that processes a family created or updated event for family: #{family_hbx_id}.",
               description: "Transmission that processes a family created or updated event for family: #{family_hbx_id}.",
               publish_on: Time.zone.now,
@@ -71,7 +71,7 @@ module Operations
             {
               transmission: transmission,
               subject: @family,
-              key: :account_created_or_updated,
+              key: :account_created_or_updated_request,
               title: "Account created or updated transaction for family: #{@family.family_hbx_id}.",
               description: "Account created or updated transaction for family: #{@family.family_hbx_id}.",
               publish_on: Time.zone.now,
@@ -84,10 +84,12 @@ module Operations
         end
 
         def create_contacts_request_transactions(contacts_transactions_params)
-          contact_transactions = contacts_transactions_params.each do |contact_transaction_params|
-            create_request_transaction(contact_transaction_params, @job)
-          end
-          Success(contact_transactions)
+          Success(
+            contacts_transactions_params.collect do |contact_transaction_params|
+              result = create_request_transaction(contact_transaction_params, @job)
+              result.success? ? result.success : result.failure
+            end
+          )
         end
 
         def construct_contacts_transactions_params
@@ -97,7 +99,7 @@ module Operations
               {
                 transmission: transmission,
                 subject: @family,
-                key: :contact_created_or_updated,
+                key: :contact_created_or_updated_request,
                 title: "Contact created or updated transaction for family: #{@family.family_hbx_id}.",
                 description: "Contact created or updated transaction for family: #{@family.family_hbx_id}.",
                 publish_on: Time.zone.now,
@@ -115,7 +117,8 @@ module Operations
             transaction: @account_transaction,
             transmission: @transmission,
             job: @job,
-            subject: @family
+            subject: @family,
+            request_transactions: [@account_transaction] + @contact_transactions
           }
         end
       end
