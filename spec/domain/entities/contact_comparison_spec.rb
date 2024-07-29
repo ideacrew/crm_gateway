@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Entities::ContactComparison do
-  subject { described_class.new(hbx_id: '12345', action: :create) }
-
   describe 'initialization' do
+    let(:params) { { hbx_id: '12345', action: :create } }
+    let(:subject) { described_class.new(params) }
+
     it 'creates a ContactComparison instance with hbx_id and action' do
       expect(subject.hbx_id).to eq('12345')
       expect(subject.action).to eq(:create)

@@ -10,10 +10,10 @@ module Operations
 
       def call(params)
         values = yield validate(params)
-
         @primary_person_hbx_id = yield find_primary_person_hbx_id(values[:inbound_family_cv])
         family_entity = yield construct_family_entity(values[:inbound_family_cv])
-        outbound_account_entity = yield construct_outbound_account_entity(family_entity)
+        outbound_account_hash = yield fetch_outbound_account_hash(family_entity)
+        outbound_account_entity = yield construct_outbound_account_entity(outbound_account_hash)
         family_params = yield create_family_params(outbound_account_entity, values)
         create_family(family_params)
       end
@@ -54,15 +54,15 @@ module Operations
       end
 
       def construct_family_entity(family_cv)
-        inbound_family_entity = ::AcaEntities::Operations::CreateFamily.new.call(family_cv)
-        inbound_family_entity.success? ? Success(inbound_family_entity.value!) : Failure(inbound_family_entity.failure)
-      rescue StandardError => e
-        Failure("Failed to construct outbound account entity: #{e.message} backtrace: #{e.backtrace.join("\n")} for family: #{family_cv[:hbx_id]}")
+        ::AcaEntities::Operations::CreateFamily.new.call(family_cv)
       end
 
-      def construct_outbound_account_entity(family_entity)
-        account = ::AcaEntities::Crm::Transformers::FamilyTo::Account.new.call(family_entity)
-        account.success? ? Success(account.value!) : Failure(account.failure)
+      def fetch_outbound_account_hash(family_entity)
+        ::AcaEntities::Crm::Transformers::FamilyTo::Account.new.call(family_entity)
+      end
+
+      def construct_outbound_account_entity(outbound_account_hash)
+        ::AcaEntities::Crm::Operations::CreateAccount.new.call(outbound_account_hash)
       end
 
       def find_primary_person_hbx_id(family_cv_payload)
