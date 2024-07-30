@@ -61,7 +61,6 @@ module Operations
 
         return Success(nil) if families.blank?
 
-        # TODO: Need to pull specific(by status and/or transmit_action) transactions.
         transaction = ::Transmittable::Transaction.where(
           :transactable_id.in => families.pluck(:id)
         ).newest.first
@@ -110,7 +109,7 @@ module Operations
         )
       end
 
-      # Compares the accounts and contacts to determine necessary updates.
+      # Compares the accounts and contacts to determine the action for each eligible object.
       #
       # @param family [Family] The family involved in the comparison.
       # @param sugar_account [Account] The SugarCRM account to compare against.
@@ -118,9 +117,9 @@ module Operations
       # @param is_stale [Boolean] Indicates if the subject is stale.
       # @return [Dry::Monads::Result] Success with the comparison parameters.
       def compare_accounts_and_contacts(family, sugar_account, previous_crm_account, is_stale)
-        return Success({ action: :stale }) if is_stale
-
         current_account = family.outbound_account_entity
+        return Success(construct_stale_account_comparison_params(current_account)) if is_stale
+
         comparable_account = previous_crm_account || sugar_account
         compare_info = {}
         compare_info[:account_hbx_id] = current_account.hbxid_c
@@ -134,6 +133,19 @@ module Operations
         compare_info[:action] = fetch_comparison_action(compare_info)
 
         Success(compare_info)
+      end
+
+      # Returns comparison params for :stale action.
+      #
+      # @param account [Account] The account to be marked as stale.
+      # @return [Hash] A hash containing the stale comparison details.
+      def construct_stale_account_comparison_params(account)
+        {
+          action: :stale,
+          account_hbx_id: account.hbxid_c,
+          account_action: :stale,
+          contacts: account.contacts.map { |c| { hbx_id: c.hbxid_c, action: :stale } }
+        }
       end
 
       # Determines the overall comparison action based on account and contact actions.

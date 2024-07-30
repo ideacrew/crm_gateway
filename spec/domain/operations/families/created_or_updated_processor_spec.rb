@@ -80,39 +80,56 @@ RSpec.describe Operations::Families::CreatedOrUpdatedProcessor, dbclean: :after_
       end
     end
 
-    context "persisted objects" do
-      it "persists a Job" do
+    context 'creates transmittable jobs' do
+      let(:request_account_transactions) { Transmittable::Transaction.where(key: :account_created_or_updated_request) }
+      let(:request_contact_transactions) { Transmittable::Transaction.where(key: :contact_created_or_updated_request) }
+      let(:transmittable_subject) { Family.all.first }
+      let(:transmittable_job) { Transmittable::Job.where(key: :family_created_or_updated).first }
+
+      # 2 transactions for each family member as contacts + 2 transactions for the family as an account
+      # One request transaction and response transaction per contact and account
+      let(:transactions_count) { (cv3_family[:family_members].count * 2) + 2 }
+
+      it 'creates a Job' do
         expect(Transmittable::Job.count).to eq 1
       end
-      it "persists a Transmission" do
-        expect(Transmittable::Transmission.count).to eq 1
+
+      it 'creates both request and response transmissions' do
+        expect(transmittable_job.transmissions.count).to eq 2
+        expect(transmittable_job.transmissions.pluck(:key)).to eq(%i[family_created_or_updated_request family_created_or_updated_response])
+        expect(Transmittable::Transmission.where(key: :family_created_or_updated_request).count).to eq 1
+        expect(Transmittable::Transmission.where(key: :family_created_or_updated_response).count).to eq 1
       end
 
-      it "persists a Family object" do
-        expect(Family.count).to eq 1
+      it 'creates a subject that is a family' do
+        expect(Family.all.count).to eq 1
+        expect(transmittable_subject.job_id).to eq(transmittable_job.id.to_s)
+        expect(transmittable_subject.transactions.count).to eq(transactions_count)
       end
 
-      it "persists an Account Transaction" do
-        expect(Transmittable::Transaction.where(key: :account_created_or_updated).count).to eq 1
+      it 'creates account transaction' do
+        expect(request_account_transactions.count).to eq 1
+        expect(request_account_transactions.first.transactable).to eq(transmittable_subject)
       end
 
-      it "persists multiple Contact Transactions" do
+      it 'creates multiple Contact Transactions' do
         family_members = cv3_family[:family_members]
-        expect(Transmittable::Transaction.where(key: :contact_created_or_updated).count).to eq family_members.count
+        expect(request_contact_transactions.count).to eq family_members.count
+        expect(request_contact_transactions.map(&:transactable).uniq).to eq([transmittable_subject])
       end
 
-      it "has a subject with transactions" do
-        expect(Family.first.transactions).to be_truthy
+      it 'has a subject with transactions' do
+        expect(transmittable_subject.transactions).to be_truthy
       end
 
-      it "has a relationship between transactions and transmissions" do
+      it 'creates a relationship between transactions and transmissions' do
         Transmittable::Transaction.all.each do |transaction|
-          expect(transaction.transmissions).to be_truthy
+          expect(transaction.transmissions.first).to be_a(Transmittable::Transmission)
         end
       end
 
-      it "persists an outbound payload" do
-        expect(Family.first.outbound_payload).to be_truthy
+      it 'persists an outbound payload' do
+        expect(transmittable_subject.outbound_payload).to be_truthy
       end
     end
   end

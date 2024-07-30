@@ -81,6 +81,69 @@ RSpec.describe Family, type: :model do
     end
   end
 
+  let(:comparison_params) do
+    {
+      action: :create,
+      account_hbx_id: '12345',
+      account_action: :update,
+      response_code: '200',
+      response_message: 'Account updated successfully',
+      response_body: { account_id: '12345' }.to_json,
+      contacts: [
+        {
+          hbx_id: 'contact1',
+          action: :create,
+          response_code: '200',
+          response_message: 'Contact created successfully',
+          response_body: { contact_id: 'contact1' }.to_json
+        },
+        {
+          hbx_id: 'contact2',
+          action: :update,
+          response_code: '400',
+          response_message: 'Unable to create contact successfully',
+          response_body: { error: 'Invalid contact' }.to_json
+        }
+      ]
+    }
+  end
+
+  describe '#comparison_hash' do
+    context 'when comparison_payload is present' do
+      let(:family) { FactoryBot.create(:family, comparison_payload: comparison_params.to_json) }
+
+      it 'parses the comparison_payload into a hash' do
+        expect(family.comparison_hash).to be_truthy
+      end
+    end
+
+    context 'when comparison_payload is blank' do
+      let(:family) { FactoryBot.create(:family, comparison_payload: nil) }
+
+      it 'returns nil' do
+        expect(family.comparison_hash).to be_nil
+      end
+    end
+  end
+
+  describe '#comparison_entity' do
+    context 'when comparison_payload is present' do
+      let(:family) { FactoryBot.create(:family, comparison_payload: comparison_params.to_json) }
+
+      it 'parses the comparison_payload into a hash' do
+        expect(family.comparison_entity).to be_a(Entities::AccountComparison)
+      end
+    end
+
+    context 'when comparison_payload is blank' do
+      let(:family) { FactoryBot.create(:family, comparison_payload: nil) }
+
+      it 'returns nil' do
+        expect(family.comparison_entity).to be_nil
+      end
+    end
+  end
+
   describe 'associations' do
     describe 'has_many :transactions' do
       it 'returns the transactions associated with the family' do
