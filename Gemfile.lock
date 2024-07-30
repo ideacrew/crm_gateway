@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ideacrew/aca_entities.git
-  revision: ae558c33b43fc177b8021bfe9b8158c32fc99998
+  revision: 147a4c34900e59acfa3051c23022023fdb702938
   branch: trunk
   specs:
     aca_entities (0.10.0)
@@ -241,7 +241,7 @@ GEM
     ice_nine (0.11.2)
     iso_country_codes (0.7.8)
     json (2.7.2)
-    json-schema (4.3.0)
+    json-schema (4.3.1)
       addressable (>= 2.8)
     jwt (2.2.3)
     language_server-protocol (3.17.0.3)
