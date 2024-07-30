@@ -139,12 +139,12 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
     end
 
     context "with a nil Sugar Account" do
-       include_context 'a full transmittable setup with family as subject'
+      include_context 'a full transmittable setup with family as subject'
 
-       let(:input_params) { { after_updated_at: Time.current + 10.days, family: family } }
+      let(:input_params) { { after_updated_at: Time.current + 10.days, family: family } }
 
       before :each do
-        allow_any_instance_of(::SugarCRM::Services::Connection).to receive(:fetch_account_including_contacts_by_hbx_id).with(family.primary_person_hbx_id).and_return(nil)
+        allow_any_instance_of(SugarCRM::Services::Connection).to receive(:fetch_account_including_contacts_by_hbx_id).with(family.primary_person_hbx_id).and_return(nil)
         allow(subject).to receive(:fetch_previous_crm_account).with(nil, false).and_return(Success(nil))
         family.update(outbound_payload: crm_account_contact_payload)
       end
