@@ -25,6 +25,7 @@ RSpec.shared_context 'transmittable job transmission transaction', shared_contex
     transaction = family.transactions.create(key: :sugar_update, started_at: DateTime.now, xml_payload: payload)
     transaction.process_status = FactoryBot.create(:transmittable_process_status, statusable: transaction)
     transaction.process_status.process_states << FactoryBot.create(:transmittable_process_state, process_status: transaction.process_status)
+    transaction.transmittable_errors << FactoryBot.create(:transmittable_error, errorable: transaction)
     transaction.save
     transaction
   end

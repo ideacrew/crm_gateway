@@ -38,6 +38,10 @@ module Transmittable
     #   @return [Array<Transmittable::Error>] the collection of associated Transmittable::Error objects.
     has_many :transmittable_errors, as: :errorable, class_name: 'Transmittable::Error', dependent: :destroy
 
+    # Nested attributes
+    accepts_nested_attributes_for :process_status
+    accepts_nested_attributes_for :transmittable_errors
+
     # @!attribute [rw] key
     #   @return [Symbol] A unique key identifying the transmission.
     field :key, type: Symbol

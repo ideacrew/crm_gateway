@@ -18,6 +18,9 @@ module Transmittable
     #   @return [Array<Transmittable::ProcessState>] Embedded documents representing the states this process has gone through.
     embeds_many :process_states, class_name: 'Transmittable::ProcessState'
 
+    # Nested attributes
+    accepts_nested_attributes_for :process_states
+
     # Fields
 
     # @!attribute [rw] initial_state_key
