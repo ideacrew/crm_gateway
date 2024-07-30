@@ -33,5 +33,10 @@ module Types
   #   Types::ContactActionKind[:invalid] # Raises Dry::Types::ConstraintError
   #
   # @type [Dry::Types::Type] Enum type for contact actions.
-  AccountOrContactActionKind = Types::Coercible::Symbol.enum(:create, :noop, :update)
+  AccountOrContactActionKind = Types::Coercible::Symbol.enum(
+    :create,
+    :noop,
+    :stale,
+    :update
+  )
 end

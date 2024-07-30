@@ -45,6 +45,11 @@ class Family
   # @return [DateTime] the updated_at timestamp of the inbound payload
   field :inbound_after_updated_at, type: DateTime
 
+  # @!attribute [rw] comparison_payload
+  # @return [String] the comparison payload has the information about the comparison between the current outbound_payload to the previous outbound_payload.
+  # @note This JSON payload also has information about the results that came back from the SugarCRM.
+  field :comparison_payload, type: String
+
   # indexes
   index({ correlation_id: 1 })
   index({ primary_person_hbx_id: 1 })
@@ -92,6 +97,26 @@ class Family
 
     @outbound_account_entity = ::AcaEntities::Crm::Operations::CreateAccount.new.call(
       outbound_account_cv_hash
+    ).success
+  end
+
+  # Converts the json comparison_payload into a hash if present, memoizes and returns the hash, or nil if comparison_payload is blank.
+  # @return [Hash, nil] the parsed comparison payload as a hash, or nil if comparison_payload is blank
+  def comparison_hash
+    return if comparison_payload.blank?
+    return @comparison_hash if defined? @comparison_hash
+
+    @comparison_hash = JSON.parse(comparison_payload, symbolize_names: true)
+  end
+
+  # Creates a comparison entity from the comparison hash, memoizes and returns it, or nil if comparison_hash is blank.
+  # @return [Entities::AccountComparison, nil] the created comparison entity, or nil if comparison_hash is blank
+  def comparison_entity
+    return if comparison_hash.blank?
+    return @comparison_entity if defined? @comparison_entity
+
+    @comparison_entity = ::Operations::AccountComparison::Create.new.call(
+      comparison_hash
     ).success
   end
 end

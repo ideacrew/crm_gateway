@@ -68,9 +68,12 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
         let(:after_updated_at) { Time.current - 10.days }
 
         it 'returns a success result' do
+          family2.update(outbound_payload: crm_account_contact_payload)
           result = subject.call(input_params)
           expect(result.success).to be_a(Entities::AccountComparison)
           expect(result.success.action).to eq(:stale)
+          expect(result.success.account_action).to eq(:stale)
+          expect(result.success.contacts.map(&:action).uniq).to eq([:stale])
         end
       end
 
