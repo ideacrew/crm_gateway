@@ -24,6 +24,18 @@ RSpec.describe Operations::SugarCRM::FetchAccount do
         expect(result).to be_success
         expect(result.success).to be_a(AcaEntities::Crm::Account)
       end
+
+      context "when a Sugar CRM Account is not present" do
+
+        before do
+          allow(subject).to receive(:sugar_account).with(account_hbx_id).and_return(Success(nil))
+        end
+
+        it 'returns nil' do
+          expect(result).to be_success
+          expect(result.success).to eq(nil)
+        end
+      end
     end
 
     context 'for failure' do

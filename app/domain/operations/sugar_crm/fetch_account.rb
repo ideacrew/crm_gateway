@@ -49,6 +49,7 @@ module Operations
       # @param account_params [Hash] The raw account parameters from SugarCRM.
       # @return [Dry::Monads::Result] Success monad with parsed account parameters or Failure monad with error message.
       def parse_account_params(account_params)
+        return Success(nil) if account_params.blank?
         Success(JSON.parse(account_params.to_json, symbolize_names: true))
       rescue JSON::ParserError => e
         Failure("Unable to parse account params from SugarCRM: #{e.message} for account: #{account_params}")
@@ -58,6 +59,7 @@ module Operations
       # @param parsed_account_params [Hash] The parsed account parameters.
       # @return [Dry::Monads::Result] Success monad with transformed account parameters.
       def transform_account(parsed_account_params)
+        return Success(nil) if parsed_account_params.blank?
         ::AcaEntities::Crm::Transformers::SugarAccountTo::Account.new.call(parsed_account_params)
       end
 
@@ -65,6 +67,7 @@ module Operations
       # @param account_params [Hash] The transformed account parameters.
       # @return [Dry::Monads::Result] Success monad with the account entity.
       def account_entity(account_params)
+        return Success(nil) if account_params.blank?
         ::AcaEntities::Crm::Operations::CreateAccount.new.call(account_params)
       end
     end
