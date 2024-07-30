@@ -140,5 +140,23 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
         expect(result.success.action).to eq(:create)
       end
     end
+
+    context "with a nil Sugar Account" do
+      include_context 'a full transmittable setup with family as subject'
+
+      let(:input_params) { { after_updated_at: Time.current + 10.days, family: family } }
+
+      before :each do
+        allow_any_instance_of(SugarCRM::Services::Connection).to receive(:fetch_account_including_contacts_by_hbx_id).with(family.primary_person_hbx_id).and_return(nil)
+        allow(subject).to receive(:fetch_previous_crm_account).with(nil, false).and_return(Success(nil))
+        family.update(outbound_payload: crm_account_contact_payload)
+      end
+
+      it "returns a success result" do
+        result = subject.call(input_params)
+        expect(result.success).to be_a(Entities::AccountComparison)
+        expect(result.success.action).to eq(:create)
+      end
+    end
   end
 end
