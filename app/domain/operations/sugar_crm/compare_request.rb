@@ -109,7 +109,7 @@ module Operations
         )
       end
 
-      # Compares the accounts and contacts to determine necessary updates.
+      # Compares the accounts and contacts to determine the action for each eligible object.
       #
       # @param family [Family] The family involved in the comparison.
       # @param sugar_account [Account] The SugarCRM account to compare against.
