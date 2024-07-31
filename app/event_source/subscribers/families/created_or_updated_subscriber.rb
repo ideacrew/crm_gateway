@@ -14,8 +14,8 @@ module Subscribers
         timestamps = metadata.headers.deep_symbolize_keys
 
         pre_process_message(subscriber_logger, payload, timestamps)
-        process_families_created_or_updated(payload[:after_save_cv_family], timestamps)
-
+        result = process_families_created_or_updated(payload[:after_save_cv_family], timestamps)
+        subscriber_logger.info {result.success? ? result.success : result.failure}
         ack(delivery_info.delivery_tag)
       rescue StandardError, SystemStackError => e
         subscriber_logger.error "FamiliesSubscriber::CreatedOrUpdated payload: #{payload}, error message: #{e.message}, backtrace: #{e.backtrace}"
