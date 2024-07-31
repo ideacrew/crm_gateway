@@ -3,14 +3,16 @@
 require 'rails_helper'
 require Rails.root.join('spec/shared_examples/transmittable.rb')
 
-RSpec.describe Operations::CRMTransmittableProcessor do
+RSpec.describe Operations::SugarCRM::GenerateReport do
   include Dry::Monads[:do, :result]
 
   include_context 'transmittable job transmission transaction'
 
+  let(:date) { DateTime.now.strftime('%Y-%m-%d').to_date }
+
   describe 'success' do
     before :each do
-      @result = described_class.new.call(1)
+      @result = described_class.new.call(limit: 1, date: date)
     end
 
     it "returns success" do
@@ -58,6 +60,24 @@ RSpec.describe Operations::CRMTransmittableProcessor do
 
       it "contains job status" do
         expect(@csv[1][5]).to eql(job.process_status.latest_state.to_s)
+      end
+    end
+  end
+
+  describe 'Failure' do
+
+    context "With Incorrect Date Format" do
+
+      before :each do
+        @result = described_class.new.call({limit: 100, date: '2024/01/01'})
+      end
+
+      it "returns failure" do
+        expect(@result).to be_failure
+      end
+
+      it "returns failure message" do
+        expect(@result.failure).to eql("Date is not a date")
       end
     end
   end
