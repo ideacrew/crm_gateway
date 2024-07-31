@@ -22,6 +22,10 @@ module Transmittable
     #   @return [Array<Transmittable::Error>] the errors associated with this job.
     has_many :transmittable_errors, as: :errorable, class_name: 'Transmittable::Error', dependent: :destroy
 
+    # Nested attributes
+    accepts_nested_attributes_for :process_status
+    accepts_nested_attributes_for :transmittable_errors
+
     # Fields
     field :job_id, type: String
     field :saga_id, type: String
