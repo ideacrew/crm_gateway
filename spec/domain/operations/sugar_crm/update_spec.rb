@@ -80,8 +80,33 @@ RSpec.describe Operations::SugarCRM::Update do
       end
     end
 
+    context 'with update as actions' do
+      let(:action) { :update }
+      let(:account_action) { :update }
+      let(:contact_action) { :update }
+      let(:account_hbx_id_sugar) do
+        input.dig(:request_objects, :subject)&.outbound_account_entity.hbxid_c
+      end
+
+      before do
+        allow(subject).to receive(:find_sugar_account_id).and_return(Success(nil))
+        family.update(outbound_payload: crm_account_contact_payload)
+      end
+
+      it 'returns a Failure' do
+        result = subject.call(input)
+        expect(result.failure).to eq(
+          "Cannot update Account with hbx_id: #{account_hbx_id_sugar} in SugarCRM without Sugar Account ID"
+        )
+      end
+    end
+
     context 'with valid comparison and request_objects' do
       before do
+        allow(subject).to receive(:find_sugar_account_id).and_return(
+          Success('random-sugar-account-id')
+        )
+
         allow(subject).to receive(:update_sugar_for_account).with(any_args).and_return(
           Success(
             {
