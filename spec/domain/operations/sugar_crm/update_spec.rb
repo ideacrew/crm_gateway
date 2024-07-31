@@ -84,9 +84,7 @@ RSpec.describe Operations::SugarCRM::Update do
       let(:action) { :update }
       let(:account_action) { :update }
       let(:contact_action) { :update }
-      let(:account_hbx_id_sugar) do
-        input.dig(:request_objects, :subject)&.outbound_account_entity.hbxid_c
-      end
+      let(:account_hbx_id_sugar) { input.dig(:request_objects, :subject)&.outbound_account_entity&.hbxid_c }
 
       before do
         allow(subject).to receive(:find_sugar_account_id).and_return(Success(nil))
