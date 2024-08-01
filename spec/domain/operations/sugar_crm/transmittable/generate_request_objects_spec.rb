@@ -38,6 +38,30 @@ RSpec.describe Operations::SugarCRM::Transmittable::GenerateRequestObjects, dbcl
     it "generates an account transaction" do
       expect(@result.success[:transaction]).to be_a(Transmittable::Transaction)
     end
+
+    it "generates a process status for job" do
+      expect(@result.success[:job].process_status).to be_a(Transmittable::ProcessStatus)
+    end
+
+    it "generates a process state for job" do
+      expect(@result.success[:job].process_status.process_states.first).to be_a(Transmittable::ProcessState)
+    end
+
+    it "generates a process status for transmission" do
+      expect(@result.success[:transmission].process_status).to be_a(Transmittable::ProcessStatus)
+    end
+
+    it "generates a process state for transmission" do
+      expect(@result.success[:transmission].process_status.process_states.first).to be_a(Transmittable::ProcessState)
+    end
+
+    it "generates a process status for transaction" do
+      expect(@result.success[:transaction].process_status).to be_a(Transmittable::ProcessStatus)
+    end
+
+    it "generates a process state for transaction" do
+      expect(@result.success[:transaction].process_status.process_states.first).to be_a(Transmittable::ProcessState)
+    end
   end
 
   describe "Failure" do
