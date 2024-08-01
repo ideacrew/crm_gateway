@@ -75,6 +75,30 @@ RSpec.describe Operations::SugarCRM::Transmittable::Responses::Create do
       it 'returns response transactions' do
         expect(result[:response_transactions].map(&:class).uniq).to eq([Transmittable::Transaction])
       end
+
+      it "generates a process status for job" do
+        expect(result[:job].process_status).to be_a(Transmittable::ProcessStatus)
+      end
+  
+      it "generates a process state for job" do
+        expect(result[:job].process_status.process_states.first).to be_a(Transmittable::ProcessState)
+      end
+  
+      it "generates a process status for transmission" do
+        expect(result[:response_transmission].process_status).to be_a(Transmittable::ProcessStatus)
+      end
+  
+      it "generates a process state for transmission" do
+        expect(result[:response_transmission].process_status.process_states.first).to be_a(Transmittable::ProcessState)
+      end
+  
+      it "generates a process status for transaction" do
+        expect(result[:request_transactions].map(&:process_status).first).to be_a(Transmittable::ProcessStatus)
+      end
+  
+      it "generates a process state for transaction" do
+        expect(result[:request_transactions].map(&:process_status).first.process_states.first).to be_a(Transmittable::ProcessState)
+      end
     end
 
     context 'with invalid input params' do
