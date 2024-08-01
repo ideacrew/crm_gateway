@@ -43,7 +43,7 @@ module Operations
       # @return [Dry::Monads::Result] Success if valid, failure otherwise.
       def validate(params)
         return Failure('after_updated_at and family are required') if params.blank?
-        return Failure('a valid after_updated_at is required') unless params[:after_updated_at].is_a?(Time)
+        return Failure('a valid after_updated_at is required') unless params[:after_updated_at].is_a?(DateTime)
         return Failure('a valid family is required') unless params[:family].is_a?(::Family)
 
         Success([params[:after_updated_at], params[:family]])
