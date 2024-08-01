@@ -291,7 +291,7 @@ module Operations
       # @return [Result] The result of the create operation, typically a Success or Failure object.
       def create_comparison(tranformed_comparion)
         result = ::Operations::AccountComparison::Create.new.call(tranformed_comparion)
-        Rails.logger.info { result.success? ? result.value! : Failure(result.failure) }
+        Rails.logger.info { result.success? ? result.value!.inspect : Failure(result.failure) }
         result
       end
     end
