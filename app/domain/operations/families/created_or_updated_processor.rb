@@ -52,7 +52,7 @@ module Operations
         return Failure("Inbound family cv payload not present") if params[:inbound_family_cv].blank?
         return Failure("After updated at timestamp not present") if params[:after_updated_at].blank?
 
-        Success([params[:after_updated_at], params[:inbound_family_cv]])
+        Success([params[:after_updated_at].to_datetime, params[:inbound_family_cv]])
       rescue StandardError => e
         Failure("Invalid After Updated At timestamp. Error raised #{e.message}")
       end
