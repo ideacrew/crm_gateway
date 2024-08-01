@@ -98,6 +98,41 @@ RSpec.describe Operations::SugarCRM::Update do
         )
       end
     end
+    context "create contact" do
+
+      before do
+        allow(subject).to receive(:find_sugar_account_id).and_return(
+          Success(nil)
+        )
+
+        allow(subject).to receive(:update_sugar_for_account).with(any_args).and_return(
+          Success(
+            {
+              response_code: 200,
+              response_body: { account_id: family.family_hbx_id }.to_json,
+              response_message: "Account with hbx_id: #{family.family_hbx_id} created successfully in SugarCRM"
+            }
+          )
+        )
+
+        allow(subject).to receive(:update_sugar_for_account).with(any_args).and_return(
+          Success(
+            {
+              response_code: 200,
+              response_body: { account_id: family.family_hbx_id }.to_json,
+              response_message: "Account with hbx_id: #{family.family_hbx_id} created successfully in SugarCRM"
+            }
+          )
+        )
+        family.update(outbound_payload: crm_account_contact_payload)
+        comparison_params[:contacts].first.merge!(:hbx_id => account_hbx_id)
+      end
+
+      it "returns a Success" do
+        result = subject.call(input)
+        expect(result.success).to be_a(Entities::AccountComparison)
+      end
+    end
 
     context 'with valid comparison and request_objects' do
       before do
