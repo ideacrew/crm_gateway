@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ideacrew/aca_entities.git
-  revision: 819f6144081fdbe8b1353947c2d024f5f76c9114
+  revision: a594cb2ab90dce26c13095e0172238e16b4d1d7c
   branch: trunk
   specs:
     aca_entities (0.10.0)
@@ -373,7 +373,7 @@ GEM
     rbtree (0.4.6)
     redis (4.5.1)
     regexp_parser (2.9.2)
-    rexml (3.3.2)
+    rexml (3.3.4)
       strscan
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
@@ -506,7 +506,7 @@ DEPENDENCIES
   rails (~> 7.0.8.4)
   rbtree (~> 0.4.5)
   resource_registry!
-  rexml (~> 3.3.2)
+  rexml (>= 3.3.3)
   rspec-rails (~> 4.0)
   rubocop
   rubocop-git

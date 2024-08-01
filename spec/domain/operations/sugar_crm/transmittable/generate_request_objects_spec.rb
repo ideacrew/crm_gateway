@@ -26,6 +26,10 @@ RSpec.describe Operations::SugarCRM::Transmittable::GenerateRequestObjects, dbcl
       expect(@result.success[:job]).to be_a(Transmittable::Job)
     end
 
+    it 'creates job title by including family hbx_id' do
+      expect(@result.success[:job].title).to include(cv3_family[:hbx_id])
+    end
+
     it "generates a transmission" do
       expect(@result.success[:transmission]).to be_a(Transmittable::Transmission)
     end

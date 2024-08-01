@@ -11,7 +11,7 @@ module Operations
 
         def call(params)
           values = yield validate(params)
-          job_params = yield construct_job_params
+          job_params = yield construct_job_params(values)
           @job = yield create_job(job_params)
           transmission_params = yield construct_transmission_params(values)
           @transmission = yield create_request_transmission(transmission_params, @job)
@@ -36,11 +36,11 @@ module Operations
           ::Operations::Families::Create.new.call(params.merge({job: @job}))
         end
 
-        def construct_job_params
+        def construct_job_params(values)
           Success(
             {
               key: :family_created_or_updated,
-              title: "Family Created or Updated",
+              title: "Family Created or Updated for family: #{values.dig(:inbound_family_cv, :hbx_id)}.",
               description: "Job that processes a family created or updated event",
               publish_on: DateTime.now,
               started_at: DateTime.now
