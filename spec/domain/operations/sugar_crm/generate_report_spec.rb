@@ -30,10 +30,13 @@ RSpec.describe Operations::SugarCRM::GenerateReport do
       it "contains the correct headers" do
         headers = [
                     "Primary Person Hbx Id",
+                    "Transaction Created At",
                     "Transaction Status",
                     "Transaction Errors",
+                    "Transmission Created At",
                     "Transmission Status",
                     "Transmission Errors",
+                    "Job Created At",
                     "Job Status",
                     "Job Errors",
                     "Error Message",
@@ -47,19 +50,19 @@ RSpec.describe Operations::SugarCRM::GenerateReport do
       end
 
       it "contains transaction status" do
-        expect(@csv[1][1]).to eql(transaction.process_status.latest_state.to_s)
+        expect(@csv[1][2]).to eql(transaction.process_status.latest_state.to_s)
       end
 
       it "contains transaction errors" do
-        expect(@csv[1][2]).to eql(transaction.transmittable_errors.first.message.to_s)
+        expect(@csv[1][3]).to eql(transaction.transmittable_errors.first.message.to_s)
       end
 
       it "contains transmission status" do
-        expect(@csv[1][3]).to eql(transmission.process_status.latest_state.to_s)
+        expect(@csv[1][5]).to eql(transmission.process_status.latest_state.to_s)
       end
 
       it "contains job status" do
-        expect(@csv[1][5]).to eql(job.process_status.latest_state.to_s)
+        expect(@csv[1][8]).to eql(job.process_status.latest_state.to_s)
       end
     end
   end

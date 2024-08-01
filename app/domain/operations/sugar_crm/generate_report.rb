@@ -32,7 +32,7 @@ module Operations
       def construct_transmittable_data(params)
         transmittable_data = []
         families_range = Family.where(created_at: params[:date].beginning_of_day..params[:date].end_of_day)
-        families = families_range.order(created_at: :desc).limit(params[:limit]).to_a
+        families = Family.all.order(created_at: :desc).limit(params[:limit]).to_a
         families.each do |family|
           primary_person_hbx_id = family.primary_person_hbx_id
           family.transactions.each do |transaction|
@@ -49,7 +49,7 @@ module Operations
                 :transaction_created_at => transaction.created_at,
                 :transaction_status => transaction_status,
                 :transaction_errors => transaction_errors,
-                :transmission_created_at => transmssion.created_at,
+                :transmission_created_at => transmission.created_at,
                 :transmission_status => transmission_status,
                 :transmission_errors => transmission_errors,
                 :job_created_at => transmission.job.created_at,
