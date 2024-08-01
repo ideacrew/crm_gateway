@@ -44,6 +44,10 @@ module Transmittable
     # Validations
     validates :message_id, uniqueness: true
 
+    # Indexes
+    index({ job_id: 1 })
+    index({ message_id: 1 })
+
     # Scopes
     # @!method latest
     #   @return [Mongoid::Criteria] a criteria object to find the most recently created jobs.

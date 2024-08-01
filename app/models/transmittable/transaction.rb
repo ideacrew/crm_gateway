@@ -68,6 +68,7 @@ module Transmittable
 
     # Indexes
     index({ key: 1 })
+    index({ transactable_id: 1 })
 
     # Scopes
     scope :blocked,          -> { where(status: :blocked) }
