@@ -11,7 +11,7 @@ if ARGV[0].blank?
 end
 
 limit = ARGV[0].to_i
-date = ARGV[1]&.to_date || Date.today
+date = ARGV[1]&.to_date || Time.zone.today
 result = Operations::SugarCRM::GenerateReport.new.call({limit: limit, date: date})
 
 if result.success?
