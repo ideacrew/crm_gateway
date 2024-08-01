@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require Rails.root.join('spec/shared_contexts/transmittable_data.rb')
+require 'aca_entities/crm/libraries/crm_library'
 
 RSpec.describe Family, type: :model do
   include_context 'a full transmittable setup with family as subject'
@@ -77,6 +78,43 @@ RSpec.describe Family, type: :model do
 
       it 'returns nil' do
         expect(family.outbound_account_cv_hash).to be_nil
+      end
+    end
+  end
+
+  describe '#outbound_account_entity' do
+    context 'when outbound_payload is present' do
+      let(:date_of_birth) { (Time.zone.today - 10.years).to_s }
+
+      let(:outbound_payload) do
+        {
+          hbxid_c: '12345',
+          name: 'John Doe',
+          dob_c: date_of_birth,
+          contacts: [
+            {
+              hbxid_c: '12345',
+              first_name: 'John',
+              last_name: 'Doe',
+              birthdate: date_of_birth,
+              relationship_c: 'Self'
+            }
+          ]
+        }
+      end
+
+      let(:family) { FactoryBot.create(:family, outbound_payload: outbound_payload.to_json) }
+
+      it 'returns a account entity' do
+        expect(family.outbound_account_entity).to be_a(AcaEntities::Crm::Account)
+      end
+    end
+
+    context 'when outbound_payload is blank' do
+      let(:family) { FactoryBot.create(:family, outbound_payload: nil) }
+
+      it 'returns nil' do
+        expect(family.outbound_account_entity).to eq(nil)
       end
     end
   end

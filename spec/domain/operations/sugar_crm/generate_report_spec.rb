@@ -84,4 +84,11 @@ RSpec.describe Operations::SugarCRM::GenerateReport do
       end
     end
   end
+
+  after :all do
+    # Clean up the CSV files created during the test
+    Dir.glob(Rails.root.join('crm_transmittable_report_*.csv')).each do |file|
+      FileUtils.rm(file)
+    end
+  end
 end

@@ -59,10 +59,10 @@ jobs:
             bundler-cache: true
         - name: install bundler-audit
           run: |
-            gem install bundler-audit && bundle-audit update
+            gem install bundler-audit && bundler-audit update
         - name: run bundler-audit
           run: |
-            bundle-audit --output=bundler_audit.txt
+            bundler-audit --output=bundler_audit.txt
         - name: upload bundler-audit failure report
           uses: actions/upload-artifact@v3
           if: failure()
