@@ -63,12 +63,14 @@ module Operations
       # @param [Time] after_updated_at the timestamp after which updates are considered
       # @return [Dry::Monads::Result] the result of the request object generation operation
       def create_request_transmittable(family_cv, after_updated_at)
-        ::Operations::SugarCRM::Transmittable::GenerateRequestObjects.new.call(
+        result = ::Operations::SugarCRM::Transmittable::GenerateRequestObjects.new.call(
           {
             inbound_family_cv: family_cv,
             inbound_after_updated_at: after_updated_at
           }
         )
+        Rails.logger.info {result.success? ? result.value![:subject] : Failure(result.failure) }
+        result
       end
 
       # Compares accounts based on the given timestamp and family.
