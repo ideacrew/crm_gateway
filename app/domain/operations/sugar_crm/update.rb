@@ -177,7 +177,6 @@ module Operations
       # @option return [String] :response_message A message describing the result of the operation.
       # @raise [StandardError] Raises an error if the contact creation fails.
       def create_contact(contact)
-        Rails.logger.info { @sugar_account_id }
         unless @sugar_account_id
           return {
             response_code: nil,
@@ -290,9 +289,7 @@ module Operations
       # @param transformed_comparison [Hash] The transformed comparison hash containing account and contact comparison details.
       # @return [Result] The result of the create operation, typically a Success or Failure object.
       def create_comparison(tranformed_comparion)
-        result = ::Operations::AccountComparison::Create.new.call(tranformed_comparion)
-        Rails.logger.info { result.success? ? result.value!.inspect : Failure(result.failure) }
-        result
+        ::Operations::AccountComparison::Create.new.call(tranformed_comparion)
       end
     end
   end
