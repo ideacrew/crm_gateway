@@ -51,6 +51,7 @@ class Family
   field :comparison_payload, type: String
 
   # indexes
+  index({ created_at: 1})
   index({ correlation_id: 1 })
   index({ primary_person_hbx_id: 1 })
   index({ family_hbx_id: 1 })
