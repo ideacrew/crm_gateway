@@ -38,6 +38,28 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
 
     context "outbound payload" do
 
+      let(:relationship_kinds) do
+        [
+          'self',
+          'spouse',
+          'domestic_partner',
+          'child',
+          'parent',
+          'sibling',
+          'unrelated',
+          'aunt_or_uncle',
+          'nephew_or_niece',
+          'grandchild',
+          'grandparent',
+          'father_or_mother_in_law',
+          'daughter_or_son_in_law',
+          'brother_or_sister_in_law',
+          'cousin',
+          'domestic_partners_child',
+          'parents_domestic_partner'
+        ]
+      end
+
       before do
         @outbound_payload = @result.success.outbound_account_cv_hash
       end
@@ -62,6 +84,20 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
 
       it "has contacts" do
         expect(@outbound_payload[:contacts]).to be_truthy
+      end
+
+      it "has proper relationships" do
+        relationship_kinds.each do |kind|
+          cv3_family[:family_members].first[:person][:person_relationships].last.merge!({ kind: kind })
+          result = described_class.new.call({
+                                              inbound_family_cv: cv3_family,
+                                              inbound_after_updated_at: after_save_updated_at,
+                                              job: job
+                                            })
+          outbound_payload = result.success.outbound_account_cv_hash
+          relationship_mapper = AcaEntities::Crm::Types::ACA_TO_SUGAR_RELATIONSHIP_MAPPING[kind]
+          expect(outbound_payload[:contacts].last[:relationship_c]).to eql(relationship_mapper)
+        end
       end
     end
   end
