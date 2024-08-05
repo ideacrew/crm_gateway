@@ -63,14 +63,12 @@ module Operations
       # @param [Time] after_updated_at the timestamp after which updates are considered
       # @return [Dry::Monads::Result] the result of the request object generation operation
       def create_request_transmittable(family_cv, after_updated_at)
-        result = ::Operations::SugarCRM::Transmittable::GenerateRequestObjects.new.call(
+        ::Operations::SugarCRM::Transmittable::GenerateRequestObjects.new.call(
           {
             inbound_family_cv: family_cv,
             inbound_after_updated_at: after_updated_at
           }
         )
-        Rails.logger.info {result.success? ? result.value![:subject].inspect : Failure(result.failure) }
-        result
       end
 
       # Compares accounts based on the given timestamp and family.
@@ -97,7 +95,6 @@ module Operations
       # @return [Dry::Monads::Result] the result of the update operation
       def update_sugar_crm(comparison, request_objects)
         # If the comparison is no-op or stale, then wewould simply return Success with a message that the update is not needed.
-        Rails.logger.info { "comparison: #{comparison.inspect}" }
         return Success(comparison) if comparison.noop_or_stale?
 
         ::Operations::SugarCRM::Update.new.call(

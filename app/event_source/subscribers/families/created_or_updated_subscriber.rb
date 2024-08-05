@@ -15,7 +15,8 @@ module Subscribers
 
         pre_process_message(subscriber_logger, payload, timestamps)
         result = process_families_created_or_updated(payload[:after_save_cv_family], timestamps)
-        subscriber_logger.info {result.success? ? result.success : result.failure}
+        subscriber_logger.info { result.success? ? 'Success' : 'Failure' }
+
         ack(delivery_info.delivery_tag)
       rescue StandardError, SystemStackError => e
         subscriber_logger.error "FamiliesSubscriber::CreatedOrUpdated payload: #{payload}, error message: #{e.message}, backtrace: #{e.backtrace}"
@@ -25,7 +26,33 @@ module Subscribers
 
       def pre_process_message(subscriber_logger, payload, headers)
         subscriber_logger.info "Headers: #{headers}"
-        subscriber_logger.info "FamiliesSubscriber::CreatedOrUpdated, response: #{payload}"
+        subscriber_logger.info "FamiliesSubscriber::CreatedOrUpdated, Family Hbx ID: #{family_hbx_id(payload)}, Primary Person Hbx ID: #{primary_person_hbx_id(payload)}"
+      end
+
+      # Retrieves the HBX ID of the primary person from the given payload.
+      #
+      # @param payload [Hash] The payload containing family information.
+      # @return [String, nil] The HBX ID of the primary person, or nil if not found or if the payload is invalid.
+      def primary_person_hbx_id(payload)
+        return nil unless payload.is_a?(Hash)
+
+        family_members = payload.dig(:after_save_cv_family, :family_members)
+        return nil unless family_members.is_a?(Array)
+
+        primary = family_members.detect { |member| member[:is_primary_applicant] == true }
+        return nil unless primary.is_a?(Hash)
+
+        primary[:hbx_id]
+      end
+
+      # Retrieves the HBX ID of the family from the given payload.
+      #
+      # @param payload [Hash] The payload containing family information.
+      # @return [String, nil] The HBX ID of the family, or nil if not found or if the payload is invalid.
+      def family_hbx_id(payload)
+        return nil unless payload.is_a?(Hash)
+
+        payload.dig(:after_save_cv_family, :hbx_id)
       end
 
       def process_families_created_or_updated(payload, timestamps)
