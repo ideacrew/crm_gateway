@@ -101,7 +101,6 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
         end
       end
 
-
       it "has proper relationships" do
         relationship_kinds.each do |kind|
           cv3_family[:family_members].first[:person][:person_relationships].last.merge!({ kind: kind })
