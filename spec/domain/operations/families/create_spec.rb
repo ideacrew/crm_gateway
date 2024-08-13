@@ -10,10 +10,13 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
   let(:after_save_updated_at) { DateTime.now.to_s }
   let(:job) { FactoryBot.create(:transmittable_job) }
   let(:address_1) { cv3_family[:family_members].first[:person][:addresses].first[:address_1] }
+  let(:address_2) { cv3_family[:family_members].first[:person][:addresses].first[:address_2] }
+  let(:address_3) { cv3_family[:family_members].first[:person][:addresses].first[:address_3] }
   let(:city) { cv3_family[:family_members].first[:person][:addresses].first[:city] }
   let(:zip) { cv3_family[:family_members].first[:person][:addresses].first[:zip] }
   let(:email) { cv3_family[:family_members].first[:person][:emails].first[:address] }
   let(:name) { cv3_family[:family_members].first[:person][:person_name][:full_name] }
+  let(:contact_email) { cv3_family[:family_members].last[:person][:emails].first[:address] }
 
   describe "Success" do
 
@@ -66,6 +69,8 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
 
       it "has addresses" do
         expect(@outbound_payload[:billing_address_street]).to eql(address_1)
+        expect(@outbound_payload[:billing_address_street_2]).to eql(address_2)
+        expect(@outbound_payload[:billing_address_street_3]).to eql(address_3)
         expect(@outbound_payload[:billing_address_city]).to eql(city)
         expect(@outbound_payload[:billing_address_postalcode]).to eql(zip)
       end
@@ -82,9 +87,20 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
         expect(@outbound_payload[:name]).to eql(name)
       end
 
-      it "has contacts" do
-        expect(@outbound_payload[:contacts]).to be_truthy
+      context "contacts" do
+        it "has contacts" do
+          expect(@outbound_payload[:contacts]).to be_truthy
+        end
+
+        it "has contact email" do
+          expect(@outbound_payload[:contacts].last[:email1]).to eql(contact_email)
+        end
+
+        it "has contact phones" do
+          expect(@outbound_payload[:contacts].last[:phone_mobile]).to eql("(202) 111-1115")
+        end
       end
+
 
       it "has proper relationships" do
         relationship_kinds.each do |kind|
