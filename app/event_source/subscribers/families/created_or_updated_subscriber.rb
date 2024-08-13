@@ -15,7 +15,7 @@ module Subscribers
 
         pre_process_message(subscriber_logger, payload, timestamps)
         result = process_families_created_or_updated(payload[:after_save_cv_family], timestamps)
-        subscriber_logger.info { result.success? ? 'Success' : 'Failure' }
+        subscriber_logger.info { result.success? ? 'Success' : result.failure.inspect }
 
         ack(delivery_info.delivery_tag)
       rescue StandardError, SystemStackError => e

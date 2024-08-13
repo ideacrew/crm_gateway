@@ -1220,7 +1220,7 @@ RSpec.shared_context 'sugar account and contacts', shared_context: :metadata do
              :vlp_documents => [] }],
           :user => {},
           :addresses =>
-          [{ :kind => "home", :address_1 => "1111 Awesome Street NE", :address_2 => "#111", :address_3 => "",
+          [{ :kind => "home", :address_1 => "1111 Awesome Street NE", :address_2 => "#111", :address_3 => "#113", :address_4 => '#114',
              :city => "Washington", :county => "Hampden", :state => "DC", :zip => "01001", :country_name => "United States of America",
              :has_fixed_address => true },
            { :kind => "home", :address_1 => "1112 Awesome Street NE", :address_2 => "#112", :address_3 => "",
