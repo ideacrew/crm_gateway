@@ -373,8 +373,7 @@ GEM
     rbtree (0.4.6)
     redis (4.5.1)
     regexp_parser (2.9.2)
-    rexml (3.3.4)
-      strscan
+    rexml (3.3.7)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -451,7 +450,6 @@ GEM
       rack
       rails (>= 5.2)
       redis
-    strscan (3.1.0)
     thor (1.2.2)
     thread-local (1.1.0)
     tilt (2.2.0)
@@ -506,7 +504,7 @@ DEPENDENCIES
   rails (~> 7.0.8.4)
   rbtree (~> 0.4.5)
   resource_registry!
-  rexml (>= 3.3.3)
+  rexml (>= 3.3.6)
   rspec-rails (~> 4.0)
   rubocop
   rubocop-git
