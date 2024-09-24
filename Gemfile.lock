@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ideacrew/aca_entities.git
-  revision: 9aa24fcfb671e2f0393f11adb0af2160e5b277c7
+  revision: 0af6856acbf4d49b584b9907df74844db6a82a72
   branch: trunk
   specs:
     aca_entities (0.10.0)
@@ -18,10 +18,10 @@ GIT
 
 GIT
   remote: https://github.com/ideacrew/event_source.git
-  revision: f71404eb41d256ff4fcb388afee9198569eedbb9
+  revision: 6d3acdb73fe67394081abcbb39fb7b4caadecd70
   branch: trunk
   specs:
-    event_source (0.5.7)
+    event_source (0.5.8)
       addressable (>= 2.8.0)
       bunny (>= 2.14)
       deep_merge (~> 1.2.0)
