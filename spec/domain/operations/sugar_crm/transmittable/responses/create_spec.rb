@@ -36,7 +36,7 @@ RSpec.describe Operations::SugarCRM::Transmittable::Responses::Create do
     }
   end
 
-  let(:after_save_updated_at) { DateTime.now.to_s }
+  let(:after_save_updated_at) { Time.zone.now }
 
   let(:comparison) do
     Operations::AccountComparison::Create.new.call(comparison_params).success
