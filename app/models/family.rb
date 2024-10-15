@@ -42,8 +42,8 @@ class Family
   field :job_id, type: String
 
   # @!attribute [rw] inbound_after_updated_at
-  # @return [DateTime] the updated_at timestamp of the inbound payload
-  field :inbound_after_updated_at, type: DateTime
+  # @return [Time] the updated_at timestamp of the inbound payload
+  field :inbound_after_updated_at, type: Time
 
   # @!attribute [rw] comparison_payload
   # @return [String] the comparison payload has the information about the comparison between the current outbound_payload to the previous outbound_payload.

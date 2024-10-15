@@ -14,7 +14,8 @@ module Operations
         family_entity = yield construct_family_entity(values[:inbound_family_cv])
         outbound_account_hash = yield fetch_outbound_account_hash(family_entity)
         outbound_account_entity = yield construct_outbound_account_entity(outbound_account_hash)
-        family_params = yield create_family_params(outbound_account_entity, values)
+        inbound_after_updated_at = yield transform_timestamp(values[:inbound_after_updated_at])
+        family_params = yield create_family_params(outbound_account_entity, values, inbound_after_updated_at)
         create_family(family_params)
       end
 
@@ -38,7 +39,13 @@ module Operations
         end
       end
 
-      def create_family_params(outbound_account_entity, values)
+      def transform_timestamp(inbound_after_updated_at_string)
+        ::AcaEntities::Operations::DateTimeTransforms::ConvertStringToTime.new.call(
+          { time_string: inbound_after_updated_at_string }
+        )
+      end
+
+      def create_family_params(outbound_account_entity, values, inbound_after_updated_at)
         Success(
           {
             correlation_id: values[:inbound_family_cv][:hbx_id],
@@ -48,7 +55,7 @@ module Operations
             outbound_payload: outbound_account_entity.to_json,
             primary_person_hbx_id: @primary_person_hbx_id,
             job_id: values[:job].id,
-            inbound_after_updated_at: values[:inbound_after_updated_at]
+            inbound_after_updated_at: inbound_after_updated_at
           }
         )
       end

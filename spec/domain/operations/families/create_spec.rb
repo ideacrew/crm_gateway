@@ -7,7 +7,11 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
 
   include_context 'sugar account and contacts'
 
-  let(:after_save_updated_at) { DateTime.now.to_s }
+  let(:after_save_updated_at) do
+    AcaEntities::Operations::DateTimeTransforms::ConvertTimeToString.new.call(
+      { time: Time.zone.now }
+    ).success
+  end
   let(:job) { FactoryBot.create(:transmittable_job) }
   let(:address_1) { cv3_family[:family_members].first[:person][:addresses].first[:address_1] }
   let(:address_2) { cv3_family[:family_members].first[:person][:addresses].first[:address_2] }
@@ -36,6 +40,12 @@ RSpec.describe Operations::Families::Create, dbclean: :after_each do
 
       it "returns a family" do
         expect(@result.success).to be_a(Family)
+      end
+
+      it 'sets inbound_after_updated_at for family as expected' do
+        expect(
+          @result.success.inbound_after_updated_at.to_time
+        ).to eql(after_save_updated_at.to_time)
       end
     end
 

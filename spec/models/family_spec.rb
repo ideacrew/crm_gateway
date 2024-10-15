@@ -16,7 +16,7 @@ RSpec.describe Family, type: :model do
     it { is_expected.to have_field(:inbound_payload).of_type(String) }
     it { is_expected.to have_field(:outbound_payload).of_type(String) }
     it { is_expected.to have_field(:job_id).of_type(String) }
-    it { is_expected.to have_field(:inbound_after_updated_at).of_type(DateTime) }
+    it { is_expected.to have_field(:inbound_after_updated_at).of_type(Time) }
   end
 
   describe 'indexes' do
