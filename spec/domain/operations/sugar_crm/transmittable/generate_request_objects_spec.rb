@@ -7,7 +7,7 @@ RSpec.describe Operations::SugarCRM::Transmittable::GenerateRequestObjects, dbcl
 
   include_context 'sugar account and contacts'
 
-  let(:after_save_updated_at) { DateTime.now.to_s }
+  let(:after_save_updated_at) { Time.zone.now }
 
   describe "Success" do
 

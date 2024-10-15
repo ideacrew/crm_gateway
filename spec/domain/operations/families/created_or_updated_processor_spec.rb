@@ -8,7 +8,11 @@ RSpec.describe Operations::Families::CreatedOrUpdatedProcessor, dbclean: :after_
 
   include_context 'sugar account and contacts'
 
-  let(:after_save_updated_at) { DateTime.now.to_s }
+  let(:after_save_updated_at) do
+    AcaEntities::Operations::DateTimeTransforms::ConvertTimeToString.new.call(
+      { time: Time.zone.now }
+    ).success
+  end
 
   let(:compare_contacts_params1) do
     cv3_family[:family_members].map do |member|
@@ -151,7 +155,7 @@ RSpec.describe Operations::Families::CreatedOrUpdatedProcessor, dbclean: :after_
       end
 
       it "returns a failure message" do
-        expect(@result.failure).to eql("Inbound family cv payload not present")
+        expect(@result.failure).to eql('Inbound family cv payload not present.')
       end
     end
 
@@ -161,7 +165,9 @@ RSpec.describe Operations::Families::CreatedOrUpdatedProcessor, dbclean: :after_
       it 'returns a failure monad with a message' do
         result = subject.call(input_params)
         expect(result.failure?).to be_truthy
-        expect(result.failure).to match(/Invalid After Updated At timestamp. Error raised/)
+        expect(result.failure).to eq(
+          'Invalid After Updated At timestamp. Must be a valid timestamp in string format.'
+        )
       end
     end
   end
