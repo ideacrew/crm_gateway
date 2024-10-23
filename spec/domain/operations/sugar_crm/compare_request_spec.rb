@@ -35,8 +35,16 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
         end
       end
 
+      context 'with incorrect after updated at format' do
+        let(:input_params) { { after_updated_at: DateTime.new, family: double('Family') } }
+
+        it 'returns a failure result' do
+          expect(subject.call(input_params)).to eq(Failure('a valid after_updated_at is required'))
+        end
+      end
+
       context 'with missing family' do
-        let(:input_params) { { after_updated_at: DateTime.now } }
+        let(:input_params) { { after_updated_at: Time.now.utc } }
 
         it 'returns a failure result' do
           expect(subject.call(input_params)).to eq(Failure('a valid family is required'))
@@ -52,7 +60,7 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
       end
 
       context 'with invalid family' do
-        let(:input_params) { { after_updated_at: DateTime.now, family: 'invalid' } }
+        let(:input_params) { { after_updated_at: Time.now.utc, family: 'invalid' } }
 
         it 'returns a failure result' do
           expect(subject.call(input_params)).to eq(Failure('a valid family is required'))
@@ -61,11 +69,11 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
     end
 
     context 'with an eligible previous subject' do
-      let(:after_updated_at) { DateTime.now }
+      let(:after_updated_at) { Time.now.utc }
       let(:input_params) { { after_updated_at: after_updated_at, family: family2 } }
 
       context 'with a stale action' do
-        let(:after_updated_at) { DateTime.now - 10.days }
+        let(:after_updated_at) { Time.now.utc - 10.days }
 
         it 'returns a success result' do
           family2.update(outbound_payload: crm_account_contact_payload)
@@ -132,7 +140,7 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
         family.update(outbound_payload: crm_account_contact_payload)
       end
 
-      let(:input_params) { { after_updated_at: DateTime.now + 10.days, family: family } }
+      let(:input_params) { { after_updated_at: Time.now.utc + 10.days, family: family } }
 
       it 'returns a success result' do
         result = subject.call(input_params)
@@ -144,7 +152,7 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
     context "with a nil Sugar Account" do
       include_context 'a full transmittable setup with family as subject'
 
-      let(:input_params) { { after_updated_at: DateTime.now + 10.days, family: family } }
+      let(:input_params) { { after_updated_at: Time.now.utc + 10.days, family: family } }
 
       before :each do
         allow_any_instance_of(SugarCRM::Services::Connection).to receive(:fetch_account_including_contacts_by_hbx_id).with(family.primary_person_hbx_id).and_return(nil)
