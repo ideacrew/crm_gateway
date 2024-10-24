@@ -23,7 +23,7 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
     context 'with invalid params' do
       context 'with missing keys' do
         it 'returns a failure result' do
-          expect(subject.call).to eq(Failure('after_updated_at and family are required'))
+          expect(subject.call).to eq(Failure('a valid after_updated_at is required'))
         end
       end
 

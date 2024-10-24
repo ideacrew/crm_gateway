@@ -15,10 +15,10 @@ module Operations
       # @option params [String] :inbound_family_cv the inbound family CV payload
       # @return [Dry::Monads::Result] the result of the operation
       def call(params)
-        after_updated_at_str, family_cv = yield validate(params)
+        after_updated_at_str, family_cv, force_sync = yield validate(params)
         after_updated_at                = yield transform_timestamp(after_updated_at_str)
         request_objects                 = yield create_request_transmittable(family_cv, after_updated_at)
-        comparison                      = yield compare_accounts(after_updated_at, request_objects[:subject])
+        comparison                      = yield compare_accounts(after_updated_at, request_objects[:subject], force_sync)
         updated_comparison              = yield update_sugar_crm(comparison, request_objects)
         _persisted_result               = yield persist_comparison(updated_comparison, request_objects[:subject])
         _response_objects               = yield create_response_transmittable(updated_comparison, request_objects)
@@ -54,7 +54,7 @@ module Operations
         return Failure('After updated at timestamp not present.') if params[:after_updated_at].blank?
         return Failure('Invalid After Updated At timestamp. Must be a valid timestamp in string format.') unless params[:after_updated_at].is_a?(String)
 
-        Success([params[:after_updated_at], params[:inbound_family_cv]])
+        Success([params[:after_updated_at], params[:inbound_family_cv], params[:force_sync]])
       rescue StandardError => e
         Failure("Invalid After Updated At timestamp. Error raised #{e.message}")
       end
@@ -88,9 +88,10 @@ module Operations
       # @param after_updated_at [Time] the timestamp after which updates are considered
       # @param family [::Family] the family object to compare
       # @return [Dry::Monads::Result] the result of the account comparison operation
-      def compare_accounts(after_updated_at, family)
+      def compare_accounts(after_updated_at, family, force_sync: false)
         ::Operations::SugarCRM::CompareRequest.new.call(
           {
+            force_sync: force_sync,
             after_updated_at: after_updated_at,
             family: family
           }
