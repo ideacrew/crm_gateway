@@ -24,13 +24,13 @@ module Operations
       #
       # @return [Dry::Monads::Result] The result of the comparison operation, either a success or failure.
       def call(params = {})
-        after_updated_at, family  = yield validate(params)
-        eligible_subject          = yield fetch_eligible_subject(family)
-        is_stale                  = yield check_stale(after_updated_at, eligible_subject)
-        previous_crm_account      = yield fetch_previous_crm_account(eligible_subject, is_stale)
-        sugar_account             = yield fetch_sugar_account(previous_crm_account, family, is_stale)
-        comparison_params         = yield compare_accounts_and_contacts(family, sugar_account, previous_crm_account, is_stale)
-        comparison_object         = yield create_comparison_object(comparison_params)
+        after_updated_at, family, force_sync = yield validate(params)
+        eligible_subject                     = yield fetch_eligible_subject(family, force_sync)
+        is_stale                             = yield check_stale(after_updated_at, eligible_subject)
+        previous_crm_account                 = yield fetch_previous_crm_account(eligible_subject, is_stale)
+        sugar_account                        = yield fetch_sugar_account(previous_crm_account, family, is_stale)
+        comparison_params                    = yield compare_accounts_and_contacts(family, sugar_account, previous_crm_account, is_stale)
+        comparison_object                    = yield create_comparison_object(comparison_params)
 
         Success(comparison_object)
       end
@@ -42,18 +42,18 @@ module Operations
       # @param params [Hash] The parameters to validate.
       # @return [Dry::Monads::Result] Success if valid, failure otherwise.
       def validate(params)
-        return Failure('after_updated_at and family are required') if params.blank?
         return Failure('a valid after_updated_at is required') unless params[:after_updated_at].is_a?(Time)
         return Failure('a valid family is required') unless params[:family].is_a?(::Family)
 
-        Success([params[:after_updated_at], params[:family]])
+        Success([params[:after_updated_at], params[:family], params[:force_sync]])
       end
 
       # Fetches the eligible subject for comparison based on the family details.
       #
       # @param family [Family] The family object to find the eligible subject for.
       # @return [Dry::Monads::Result] Success with the eligible subject, or nil if not found.
-      def fetch_eligible_subject(family)
+      def fetch_eligible_subject(family, force_sync)
+        return Success(nil) if force_sync
         families = ::Family.by_family_and_primary_person_hbx_id(
           family.family_hbx_id,
           family.primary_person_hbx_id

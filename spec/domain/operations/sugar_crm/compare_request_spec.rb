@@ -23,7 +23,7 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
     context 'with invalid params' do
       context 'with missing keys' do
         it 'returns a failure result' do
-          expect(subject.call).to eq(Failure('after_updated_at and family are required'))
+          expect(subject.call).to eq(Failure('a valid after_updated_at is required'))
         end
       end
 
@@ -70,7 +70,7 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
 
     context 'with an eligible previous subject' do
       let(:after_updated_at) { Time.now.utc }
-      let(:input_params) { { after_updated_at: after_updated_at, family: family2 } }
+      let(:input_params) { { after_updated_at: after_updated_at, family: family2, force_sync: false } }
 
       context 'with a stale action' do
         let(:after_updated_at) { Time.now.utc - 10.days }

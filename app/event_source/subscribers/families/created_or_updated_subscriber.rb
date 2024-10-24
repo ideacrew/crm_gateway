@@ -11,10 +11,10 @@ module Subscribers
       subscribe(:on_created_or_updated) do |delivery_info, metadata, response|
         subscriber_logger = subscriber_logger_for(:on_families_created_or_updated)
         payload = JSON.parse(response, symbolize_names: true)
-        timestamps = metadata.headers.deep_symbolize_keys
+        headers = metadata.headers.deep_symbolize_keys
 
-        pre_process_message(subscriber_logger, payload, timestamps)
-        result = process_families_created_or_updated(payload[:after_save_cv_family], timestamps)
+        pre_process_message(subscriber_logger, payload, headers)
+        result = process_families_created_or_updated(payload[:after_save_cv_family], headers)
         subscriber_logger.info { result.success? ? 'Success' : result.failure.inspect }
 
         ack(delivery_info.delivery_tag)
@@ -55,11 +55,13 @@ module Subscribers
         payload.dig(:after_save_cv_family, :hbx_id)
       end
 
-      def process_families_created_or_updated(payload, timestamps)
+      def process_families_created_or_updated(payload, headers)
+        force_sync = headers[:force_sync].present? && headers[:force_sync] == 'true'
         ::Operations::Families::CreatedOrUpdatedProcessor.new.call(
           {
             inbound_family_cv: payload,
-            after_updated_at: timestamps[:after_updated_at]
+            after_updated_at: headers[:after_updated_at],
+            force_sync: force_sync
           }
         )
       end
