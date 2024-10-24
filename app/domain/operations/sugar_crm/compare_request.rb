@@ -52,7 +52,7 @@ module Operations
       #
       # @param family [Family] The family object to find the eligible subject for.
       # @return [Dry::Monads::Result] Success with the eligible subject, or nil if not found.
-      def fetch_eligible_subject(family, force_sync: false)
+      def fetch_eligible_subject(family, force_sync)
         return Success(nil) if force_sync
         families = ::Family.by_family_and_primary_person_hbx_id(
           family.family_hbx_id,

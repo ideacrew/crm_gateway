@@ -70,7 +70,7 @@ RSpec.describe Operations::SugarCRM::CompareRequest do
 
     context 'with an eligible previous subject' do
       let(:after_updated_at) { Time.now.utc }
-      let(:input_params) { { after_updated_at: after_updated_at, family: family2 } }
+      let(:input_params) { { after_updated_at: after_updated_at, family: family2, force_sync: false } }
 
       context 'with a stale action' do
         let(:after_updated_at) { Time.now.utc - 10.days }
